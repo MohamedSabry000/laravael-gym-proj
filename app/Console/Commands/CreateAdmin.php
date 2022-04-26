@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Hash;
 
 class CreateAdmin extends Command
 {
@@ -11,7 +12,7 @@ class CreateAdmin extends Command
      *
      * @var string
      */
-    protected $signature = 'command:name';
+    protected $signature = 'create:admin {email} {password}';
 
     /**
      * The console command description.
@@ -27,6 +28,13 @@ class CreateAdmin extends Command
      */
     public function handle()
     {
-        return 0;
+        $email = $this->argument('email');
+        $password = $this->argument('password');
+        $user = \App\Models\User::factory()->create([
+            'email' => $email,
+            'password' => Hash::make($password),
+        ]);
+        $user->assignRole('admin');
+        echo $user;
     }
 }
