@@ -29,9 +29,9 @@ class AdminSeeder extends Seeder
         // $makeAdmin->assignRole('admin');
 
         User::firstOrCreate([
-            'name' => 'admona',
-            'email' => 'admona@admin.com',
-            'gender' => 'female',
+            'name' => 'admin',
+            'email' => 'admin@admin.com',
+            'gender' => 'male',
             'password' => bcrypt('123456')
         ]);
         // $makeAdmona = User::latest()->first(); //to get last row add in DB and make it admin
