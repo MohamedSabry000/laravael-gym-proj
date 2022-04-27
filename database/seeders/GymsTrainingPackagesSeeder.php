@@ -17,7 +17,7 @@ class GymsTrainingPackagesSeeder extends Seeder
     {
         for ($i = 0; $i < 10; $i++) {
             DB::table('gyms_training_packages')->insert([
-                'gym_id' => rand(1, 50),
+                'gym_id' => rand(1, 20),
                 'training_package_id' => rand(1, 10),
             ]);
         }

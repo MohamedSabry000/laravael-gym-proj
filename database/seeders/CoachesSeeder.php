@@ -15,9 +15,9 @@ class CoachesSeeder extends Seeder
      */
     public function run()
     {
-        User::factory(60)->create();
+        User::factory(20)->create();
         //to get last 60 row add in DB
-        $coachesManager = User::latest()->take(60)->get();
+        $coachesManager = User::latest()->take(20)->get();
 
         //give them role => coach
         foreach ($coachesManager as $coachRole) {

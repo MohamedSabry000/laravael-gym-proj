@@ -16,7 +16,7 @@ class UpdateCityManagerIDSeeder extends Seeder
     public function run()
     {
         //Because the system has only 24 cities
-        for ($i = 1; $i <= 24; $i++) {
+        for ($i = 1; $i <= 10; $i++) {
             DB::table('cities')->where('id', '=', $i)->update(['manager_id' => ($i + 2)]);
         }
     }

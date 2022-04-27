@@ -19,7 +19,7 @@ class TrainingPackageFactory extends Factory
         return [
             'name' => $this->faker->name(),
             'price' => $this->faker->numberBetween(1000, 5000),
-            'sessions_number' => rand(10, 50),
+            'sessions_number' => rand(1, 10),
             'user_id' => rand(1, 2),
         ];
     }

@@ -6,7 +6,7 @@ use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class UserSeeder extends Seeder
+class UsersSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -15,9 +15,9 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        User::factory(100)->create();
+        User::factory(25)->create();
         //to get last 100 row add in DB
-        $users = User::latest()->take(100)->get();
+        $users = User::latest()->take(25)->get();
 
         //give them role => user
         foreach ($users as $userRole) {

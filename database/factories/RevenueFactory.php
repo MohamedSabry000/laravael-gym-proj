@@ -26,7 +26,7 @@ class RevenueFactory extends Factory
                 'PayPal', 'Amazon Pay', 'eBay Managed Payments', 'Google Pay', 'Apple Pay',
                 'Bank transfers', 'Prepaid cards', 'Digital currencies', 'bank'
             ]),
-            'user_id' => rand(123, 222),
+            'user_id' => rand(1, 25),
             'training_package_id' => rand(1, 10),
         ];
     }
