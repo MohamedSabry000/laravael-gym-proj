@@ -2,9 +2,9 @@
 
 namespace Database\Seeders;
 
+use App\Models\TrainingSession;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Spatie\Permission\Models\Role;
 
 class DatabaseSeeder extends Seeder
 {
@@ -15,11 +15,22 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
-
-        $role = Role::create(['name' => 'admin']);
-        // create super admin user
-        $user = \App\Models\User::factory()->create();
-        $user->assignRole('admin');
+        // \App\Models\User::factory(10)->create();
+        $this->call(PermissionsSeeder::class);
+        $this->call(CitiesSeeder::class);
+        $this->call(GymsSeeder::class);
+        $this->call(AdminSeeder::class);
+        $this->call(CitiesManagerSeeder::class);
+        $this->call(GymsManagerSeeder::class);
+        $this->call(CoachesSeeder::class);
+        $this->call(UsersSeeder::class);
+        $this->call(TrainingPackagesSeeder::class);
+        $this->call(RevenueSeeder::class);
+        $this->call(TrainingSessionSeeder::class);
+        $this->call(AttendanceSeeder::class);
+        $this->call(TrainingSessionUserSeeder::class);
+        $this->call(GymsTrainingPackagesSeeder::class);
+        $this->call(UpdateCityManagerIDSeeder::class);
+        $this->call(AddNewEmailTOUSer::class);
     }
 }
