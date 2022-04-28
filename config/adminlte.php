@@ -305,7 +305,7 @@ return [
             'submenu' => [
                 [
                     'text' => 'All Managers',
-                    'url'  => '#',
+                    'url'  => '/admin/gymManager',
                 ],
                 [
                     'text' => 'Add New',
@@ -341,7 +341,7 @@ return [
                 ],
             ],
         ],
-        
+
         [
             'text'    => 'Training Packages',
             'icon'    => 'fas fa-fw fa-cubes',

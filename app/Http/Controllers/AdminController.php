@@ -2,8 +2,7 @@
 
 namespace App\Http\Controllers;
 
-namespace App\Http\Controllers;
-  
+
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\City;
@@ -24,15 +23,15 @@ class AdminController extends Controller
     //         return DataTables::of($data)
     //                 ->addIndexColumn()
     //                 ->addColumn('action', function($row){
-     
+
     //                        $btn = '<a href="javascript:void(0)" class="edit btn btn-primary btn-sm">View</a>';
-    
+
     //                         return $btn;
     //                 })
     //                 ->rawColumns(['action'])
     //                 ->make(true);
     //     }
-        
+
     //     return view('users');
     // }
 
@@ -43,15 +42,15 @@ class AdminController extends Controller
             return DataTables::of($data)
                     ->addIndexColumn()
                     ->addColumn('action', function($row){
-     
+
                            $btn = '<a href="javascript:void(0)" class="edit btn btn-primary btn-sm">View</a>';
-    
+
                             return $btn;
                     })
                     ->rawColumns(['action'])
                     ->make(true);
         }
-        
+
         return view('allUsers.show');
     }
     public function showCites(Request $request)
@@ -61,15 +60,15 @@ class AdminController extends Controller
             return DataTables::of($data)
                     ->addIndexColumn()
                     ->addColumn('action', function($row){
-     
+
                            $btn = '<a href="javascript:void(0)" class="edit btn btn-primary btn-sm">View</a>';
-    
+
                             return $btn;
                     })
                     ->rawColumns(['action'])
                     ->make(true);
         }
-        
+
         return view('city.list');
     }
     public function showGyms(Request $request) {
@@ -79,33 +78,33 @@ class AdminController extends Controller
         // foreach( $data as $d ) {
         //     echo $d->city->name;
         // }
-    
+
         // $data = Gym::select('*')->with('city')->get();
-      
+
         if ($request->ajax()) {
-            
+
             // $data = Gym::all();
             return DataTables::of($data)
                     ->addIndexColumn()
                     ->addColumn('action', function($row){
-     
+
                            $btn = '<a href="javascript:void(0)" class="edit btn btn-primary btn-sm">View</a>';
-    
+
                             return $btn;
                     })->addColumn('city_name', function($row){
-     
+
                         // $btn = '<a href="javascript:void(0)" class="edit btn btn-primary btn-sm">View</a>';
- 
+
                          return $row->city->name;
                     })->addColumn('avatar', function($row){
-     
+
                         $avatar = "<img width='80' height='80' src='".$row->cover_image."' />";
 
                         return $avatar;
                     })->rawColumns(['action','avatar'])
                     ->make(true);
         }
-        
+
         return view('gym.list');
     }
 

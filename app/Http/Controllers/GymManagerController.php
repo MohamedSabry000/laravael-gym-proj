@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\GymManager;
 use Illuminate\Http\Request;
+use App\Models\User;
+use App\Models\City;
+use DataTables;
+
 
 class GymManagerController extends Controller
 {
@@ -12,9 +16,30 @@ class GymManagerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function showGymManager(Request $request)
     {
-        //
+        if ($request->ajax()) {
+            $data = User::role('gymManager');
+
+            return DataTables::of($data)
+                    ->addIndexColumn()
+                    ->addColumn('action', function($row){
+
+                           $btn = '<a href="javascript:void(0)" class="edit btn btn-primary btn-sm">View</a>';
+
+                            return $btn;
+                    })
+                    ->addColumn('avatar', function($row){
+
+                    $avatar = "<img width='80' height='80' src='".$row->profile_image."' />";
+
+                    return $avatar;
+                })
+                    ->rawColumns(['action','avatar'])
+                    ->make(true);
+        }
+
+        return view('gymManager.list');
     }
 
     /**
