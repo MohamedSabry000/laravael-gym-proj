@@ -14,7 +14,7 @@
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active">Create New City</li>
+                        <li class="breadcrumb-item active">Edit City Data</li>
                     </ol>
                 </div>
             </div>
@@ -56,7 +56,7 @@
                                     <optgroup label="Available City Managers">
                                         <option hidden>optional</option>
                                         @foreach ($cityManagers as $manager)
-                                        <option value={{ $manager->id }} <?php echo $cityManagers->id == $singleCity->manager_id? 'selected': '';  ?>>{{ $manager->name }}</option>
+                                        <option value={{ $manager->id }} <?php echo $manager->id == $singleCity->manager_id? 'selected': '';  ?>>{{ $manager->name }}</option>
                                         @endforeach
                                     </optgroup>
                                 </select>
