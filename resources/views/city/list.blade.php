@@ -43,7 +43,7 @@
                             <th class="project-state"> City ID</th>
 
                                 <th class="project-state"> City Name</th>
-                                <th class="project-state"> City Manager Id</th>
+                                <th class="project-state"> Manager Name</th>
                                 <th class="project-state"> Actions</th>
 
                                 <th class="project-state"></th>
@@ -93,8 +93,9 @@
                     columns: [
                         {data: 'id', name: 'id'},
                         {data: 'name', name: 'name'},
-                        {data: 'manager_id', name: 'manager_id'},
+                        {data: 'ManagerName', name: 'edit', orderable: false, searchable: false},
                         {data: 'action', name: 'edit', orderable: false, searchable: false},
+
                     ]
                 });
                 
