@@ -37,7 +37,7 @@ class GymController extends Controller
             'cover_image' => $imageName,
             'city_id'     => $data['city_id'],
         ]);
-    
+        dd($imageName);
         return redirect(route('showGyms'));
     }   
 
@@ -122,16 +122,12 @@ class GymController extends Controller
     {
         $gym = Gym::find($id);
         $validated = $request->validate([
-            'name' => 'required|max:20',
-            'city_id' => 'required',
-            'cover_image' => 'nullable|image|mimes:jpg,jpeg',
+            'name'         => 'required|max:20',
+            'city_id'      => 'required',
+            'cover_image'  => 'nullable|image|mimes:jpg,jpeg',
         ]);
 
-
-
         $gym->name = $request->name;
-
-
 
         if ($request->hasFile('cover_image')) {
             $image = $request->file('cover_image');
@@ -149,11 +145,12 @@ class GymController extends Controller
     }
     
     //Delete Function
-    public function deleteGym($id)
+    public function delete($id)
     {
 
         $singleGym = Gym::find($id);
         $singleGym->delete();
-        return response()->json(['success' => 'Record deleted successfully!']);
+        return redirect( route('showGyms') );
+        // return response()->json(['success' => 'Record deleted successfully!']);
     }
 }

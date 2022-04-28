@@ -291,11 +291,11 @@ return [
             'submenu' => [
                 [
                     'text' => 'Add Gym',
-                    'url'  => '#',
+                    'url'  => '/admin/addgym',
                 ],
                 [
                     'text' => 'List Gyms',
-                    'url'  => '#',
+                    'url'  => '/admin/allgyms',
                 ],
             ],
         ],

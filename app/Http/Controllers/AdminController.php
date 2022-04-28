@@ -74,35 +74,28 @@ class AdminController extends Controller
     public function showGyms(Request $request) {
      
         $data = Gym::with('city')->get();
-
         $data = Gym::all();
-        
-        // //  dd($data->city_id);
-        //  foreach( $data as $d ) {
-        //     $t = City::find($d->city_id); 
-        //     dd($t);
-        //     echo $t;
-        //     // echo  $d->city_id . "<br>";
-        //  }
+
         if ($request->ajax()) {        
             // $data = Gym::all();
             return DataTables::of($data)
                     ->addIndexColumn()
                     ->addColumn('action', function($row){
-                        $btn = '<a href="javascript:void(0)" class="edit btn btn-primary btn-sm">View</a>';
-                        return $btn;
+                        
+                        // Crud operations
+                        $btn =  "<a href='#' class='btn btn btn-primary'>View</a>";
+                        $btn .= "<a href = '".$row->id."' class = 'btn btn-success'>Edit</a>";
+                        $btn .= "<a href = '/admin/deletegym/".$row->id."' class = 'btn btn-danger'>Delete</a>";
+                          return $btn;
                     })->addColumn('city_name', function($row){
-                            
+            
                         // $btn = '<a href="javascript:void(0)" class="edit btn btn-primary btn-sm">View</a>';
-                      
-                        return $row->city->name;
+                        // return $row->city->name;
                     })->addColumn('avatar', function($row){
-
                         $avatar = "<img width='80' height='80' src='".$row->cover_image."' />";
- 
                         return $avatar;
-                    })->rawColumns(['action','avatar'])
-                    ->make(true);
+                        
+                    })->rawColumns(['action','avatar'])->make(true);
         }
 
         return view('gym.list');
