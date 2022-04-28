@@ -267,7 +267,7 @@ return [
                 ],
                 [
                     'text' => 'Add New',
-                    'url'  => '/admin/addCity',
+                    'url'  => '#',
                 ],
             ],
         ],
@@ -290,13 +290,23 @@ return [
             'icon'    => 'fas fa-fw fa-dumbbell',
             'submenu' => [
                 [
+<<<<<<< HEAD
                     'text' => 'Add Gym',
                     'url'  => '/admin/addgym',
                 ],
                 [
                     'text' => 'List Gyms',
                     'url'  => '/admin/allgyms',
+=======
+                    'text' => 'List Gyms',
+                    'url'  => '/admin/allgyms',
                 ],
+                [
+                    'text' => 'Add Gym',
+                    'url'  => '#',
+>>>>>>> origin/master
+                ],
+                
             ],
         ],
         [

@@ -43,7 +43,7 @@
                                 <th class="project-state">ID</th>
                                 <th class="project-state"> Name</th>
                                  <th class="project-state">Email</th>
-                                <th class="project-state">Profile Picture</th>
+                                <th class="project-state">Picture</th>
                                 <th class="project-state">National ID</th>
                                 <th class="project-state"> Actions</th>
                                 <th class="project-state"></th>
@@ -63,7 +63,7 @@
     <!-- <link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet"> -->
     <!-- <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet"> -->
     <link href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css" rel="stylesheet">
-
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous"/>
     <!-- <style>
         .content-wrapper{
             width: 90% !important;
@@ -72,6 +72,8 @@
     </style> -->
     @stop
     @section('js')
+    <script defer src="https://use.fontawesome.com/releases/v5.15.4/js/solid.js" integrity="sha384-/BxOvRagtVDn9dJ+JGCtcofNXgQO/CCCVKdMfL115s3gOgQxWaX/tSq5V8dRgsbc" crossorigin="anonymous"></script>
+  <script defer src="https://use.fontawesome.com/releases/v5.15.4/js/fontawesome.js" integrity="sha384-dPBGbj4Uoy1OOpM4+aRGfAOc0W37JkROT+3uynUgTHZCHZNMHfGXsmmvYTffZjYO" crossorigin="anonymous"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.js"></script>
         <!-- <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script> -->
@@ -97,7 +99,8 @@
                         {data: 'avatar', name: 'profile_image',overable:false,searchable:false},
                         {data: 'national_id', name: 'national_id'},
 
-                        {data: 'edit', name: 'edit', orderable: false, searchable: false},
+                        {data: 'show', name: 'show', orderable: false, searchable: false},
+                        {data: 'delete', name: 'delete', orderable: false, searchable: false},
                     ]
                 });
 
