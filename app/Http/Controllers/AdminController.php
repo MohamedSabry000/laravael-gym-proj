@@ -74,24 +74,20 @@ class AdminController extends Controller
 
         if ($request->ajax()) {        
             // $data = Gym::all();
-            return DataTables::of($data)
-                    ->addIndexColumn()
-                    ->addColumn('action', function($row){
-                        
-                        // Crud operations
-                        $btn =  "<a href='#' class='btn btn btn-primary'>View</a>";
-                        $btn .= "<a href = '".$row->id."' class = 'btn btn-success'>Edit</a>";
-                        $btn .= "<a href = '/admin/deletegym/".$row->id."' class = 'btn btn-danger'>Delete</a>";
-                          return $btn;
-                    })->addColumn('city_name', function($row){
-            
-                        // $btn = '<a href="javascript:void(0)" class="edit btn btn-primary btn-sm">View</a>';
-                        return !empty($row->city->name) ? $row->city->name : 'null and this is error';
-                    })->addColumn('avatar', function($row){
-                        $avatar = "<img width='80' height='80' src='".$row->cover_image."' />";
-                        return $avatar;
-                        
-                    })->rawColumns(['action','avatar'])->make(true);
+            return DataTables::of($data)->addIndexColumn() ->addColumn('action', function($row){    
+            // Crud operations
+            $btn =  "<a href='/admin/gym/".$row->id."' class='btn btn btn-primary'>View</a>";
+            $btn .= "<a href = '".$row->id."' class = 'btn btn-success'>Edit</a>";
+            $btn .= "<a href = '/admin/deletegym/".$row->id."' class = 'btn btn-danger'>Delete</a>";
+            return $btn;
+            })->addColumn('city_name', function($row){
+                // $btn = '<a href="javascript:void(0)" class="edit btn btn-primary btn-sm">View</a>';
+                return !empty($row->city->name) ? $row->city->name : 'null and this is error';
+            })->addColumn('avatar', function($row){
+                $avatar = "<img width='80' height='80' src='".$row->cover_image."' />";
+                return $avatar;
+                
+            })->rawColumns(['action','avatar'])->make(true);
         }
 
         return view('gym.list');
