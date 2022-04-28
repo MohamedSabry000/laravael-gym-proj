@@ -20,52 +20,7 @@ class CityController extends Controller
         return view('admin.index');
     }
 
-    // public function index(Request $request)
-    // {
-    //     if ($request->ajax()) {
-    //         $data = User::select('*');
-    //         return DataTables::of($data)
-    //                 ->addIndexColumn()
-    //                 ->addColumn('action', function($row){
-     
-    //                        $btn = '<a href="javascript:void(0)" class="edit btn btn-primary btn-sm">View</a>';
-    
-    //                         return $btn;
-    //                 })
-    //                 ->rawColumns(['action'])
-    //                 ->make(true);
-    //     }
-        
-    //     return view('users');
-    // }
-
-    public function showCites(Request $request)
-    {
-        if ($request->ajax()) {
-            $data = City::select('*');
-            return DataTables::of($data)
-                    ->addIndexColumn()
-                    ->addColumn('ManagerName', function($row){
-
-
-                        return User::find($row->manager_id)->name??"not assiend";
-                })
-                    ->addColumn('action', function($row){
-     
-                           $btn = '<a href="javascript:void(0)" class="edit btn btn-primary btn-sm">View</a>';
-    
-                            return $btn;
-                    })
-           
-                
-                    ->rawColumns(['action','ManagerName'])
-                    ->make(true);
-        }
-        
-        return view('city.list');
-    }
-
-   #=======================================================================================#
+    #=======================================================================================#
     #			                          list Function                                   	#
     #=======================================================================================#
     public function list()
@@ -77,47 +32,90 @@ class CityController extends Controller
         return view("city.list", ['allCities' => $allCities]);
     }
 
+    public function showCites(Request $request)
+    {
+        if ($request->ajax()) {
+            $data = City::select('*');
+            return DataTables::of($data)
+                    ->addIndexColumn()
+                    ->addColumn('ManagerName', function ($row) {
+                        return User::find($row->manager_id)->name??"not assiend";
+                    })
+                    ->addColumn('action', function ($row) {
+                        $btn = '<a href="/admin/cities/'.$row->id.'" class="edit btn btn-primary btn-sm">View</a>';
+    
+                        return $btn;
+                    })
+                    ->rawColumns(['action','ManagerName'])
+                    ->make(true);
+        }
+        
+        return view('city.list');
+    }
+
+    #=======================================================================================#
+    #			                          store Function                                   #
+    #=======================================================================================#
+    public function store(Request $request)
+    {
+        $requestData = request()->all();
+        if ($requestData['manager_id'] == 'optional') {
+            City::create([
+                'name' => $requestData['name'],
+            ]);
+        } else {
+            City::create($requestData);
+        }
+        return redirect(route('showCites'));
+    }
+
     #=======================================================================================#
     #			                          show Function                                   	#
     #=======================================================================================#
-    public function show($cityID)
+    public function show($id)
     {
-        $totalRevenue = 0;
-        $gymsManagers = 0;
-        $coaches = 0;
-        $users = 0;
-
-        $cityData = City::find($cityID);
-        $userOfCity = $cityData->users;
-
-        $citiesManagers = User::find($cityData->manager_id);
-
-        foreach ($userOfCity as $usersID) {
-            $totalRevenue += (Revenue::where('user_id', '=', $usersID['id'])->sum('price')) / 100;
-        }
-        $revenueInDollars = number_format($totalRevenue, 2, ',', '.');
-
-        $gyms = count(Gym::where('city_id', '=', $cityID)->get());
-
-        //get users by type in cityManager city
-        foreach ($userOfCity as $singleUser) {
-            if ($singleUser->hasRole('gymManager')) {
-                $gymsManagers++;
-            } elseif ($singleUser->hasRole('coach')) {
-                $coaches++;
-            } elseif ($singleUser->hasRole('user')) {
-                $users++;
-            }
-        }
-        return view("city.show", [
-            'citiesManagers' => $citiesManagers,
-            'gyms' => $gyms,
-            'gymsManagers' => $gymsManagers,
-            'coaches' => $coaches,
-            'users' => $users,
-            'revenueInDollars' => $revenueInDollars,
-        ]);
+        $singleCity = City::findorfail($id);
+        $cityManager = User::findorfail($singleCity->manager_id);
+        return view("city.show", ['singleCity' => $singleCity, 'cityManager' => $cityManager->name]);
     }
+    // public function show($cityID)
+    // {
+    //     $totalRevenue = 0;
+    //     $gymsManagers = 0;
+    //     $coaches = 0;
+    //     $users = 0;
+
+    //     $cityData = City::find($cityID);
+    //     $userOfCity = $cityData->users;
+
+    //     $citiesManagers = User::find($cityData->manager_id);
+
+    //     foreach ($userOfCity as $usersID) {
+    //         $totalRevenue += (Revenue::where('user_id', '=', $usersID['id'])->sum('price')) / 100;
+    //     }
+    //     $revenueInDollars = number_format($totalRevenue, 2, ',', '.');
+
+    //     $gyms = count(Gym::where('city_id', '=', $cityID)->get());
+
+    //     //get users by type in cityManager city
+    //     foreach ($userOfCity as $singleUser) {
+    //         if ($singleUser->hasRole('gymManager')) {
+    //             $gymsManagers++;
+    //         } elseif ($singleUser->hasRole('coach')) {
+    //             $coaches++;
+    //         } elseif ($singleUser->hasRole('user')) {
+    //             $users++;
+    //         }
+    //     }
+    //     return view("city.show", [
+    //         'citiesManagers' => $citiesManagers,
+    //         'gyms' => $gyms,
+    //         'gymsManagers' => $gymsManagers,
+    //         'coaches' => $coaches,
+    //         'users' => $users,
+    //         'revenueInDollars' => $revenueInDollars,
+    //     ]);
+    // }
     #=======================================================================================#
     #			                          create Function                                   #
     #=======================================================================================#
@@ -126,10 +124,7 @@ class CityController extends Controller
         $cityManagers = $this->selectCityManagers();
         return view("city.create", ['cityManagers' => $cityManagers]);
     }
-    #=======================================================================================#
-    #			                          store Function                                   #
-    #=======================================================================================#
-
+    
     #=======================================================================================#
     #			                          edit Function                                     #
     #=======================================================================================#
@@ -174,7 +169,6 @@ class CityController extends Controller
     #=======================================================================================#
     private function selectCityManagers()
     {
-
         return User::select('users.*', 'cities.manager_id')
             ->role('cityManager')
             ->leftJoin('cities', 'users.id', '=', 'cities.manager_id')
@@ -183,18 +177,4 @@ class CityController extends Controller
     }
     #=======================================================================================#
     #                                      store
-    public function store(Request $request)
-    {
-   
-            $requestData = request()->all();
-            if ($requestData['manager_id'] == 'optional') {
-                City::create([
-                'name' => $requestData['name'],
-            ]);
-        } else {
-            City::create($requestData);
-        }
-        return redirect(route('showCites'));
-        
-    }
 }
