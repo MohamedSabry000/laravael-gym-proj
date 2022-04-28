@@ -31,7 +31,7 @@ Route::get('/admin/cities', [App\Http\Controllers\CityController::class, 'showCi
 Route::get('/admin/allgyms', [App\Http\Controllers\AdminController::class, 'showGyms'])->name('showGyms')->middleware('auth');
 Route::get('/admin/addCity', [App\Http\Controllers\CityController::class, 'create'])->name('create')->middleware('auth');
 
-Route::post('/cities', [App\Http\Controllers\CityController::class, 'store'])->name('city.store')->middleware('auth');
+Route::post('/admin/cities', [App\Http\Controllers\CityController::class, 'store'])->name('city.store')->middleware('auth');
 
 // Route::post('/admin/storeCity', [App\Http\Controllers\CityController::class, 'store'])->name('store')->middleware('auth');
 
