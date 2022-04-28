@@ -95,7 +95,6 @@
                         {data: 'name', name: 'name'},
                         {data: 'ManagerName', name: 'edit', orderable: false, searchable: false},
                         {data: 'action', name: 'edit', orderable: false, searchable: false},
-
                     ]
                 });
                 

@@ -44,8 +44,8 @@ class CityController extends Controller
             return DataTables::of($data)
                     ->addIndexColumn()
                     ->addColumn('ManagerName', function($row){
-     
- 
+
+
                         return User::find($row->manager_id)->name;
                 })
                     ->addColumn('action', function($row){
@@ -54,12 +54,14 @@ class CityController extends Controller
     
                             return $btn;
                     })
+           
                 
-                    ->rawColumns(['action'])
+                    ->rawColumns(['action','ManagerName'])
                     ->make(true);
         }
         
         return view('city.list');
     }
+ 
 
 }
