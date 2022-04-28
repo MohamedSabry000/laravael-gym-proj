@@ -76,14 +76,14 @@ class AdminController extends Controller
         $data = Gym::with('city')->get();
 
         $data = Gym::all();
-        dd(City::all());
-        //  dd($data->city_id);
-         foreach( $data as $d ) {
-            $t = City::find($d->city_id); 
-            dd($t);
-            echo $t;
-            // echo  $d->city_id . "<br>";
-         }
+        
+        // //  dd($data->city_id);
+        //  foreach( $data as $d ) {
+        //     $t = City::find($d->city_id); 
+        //     dd($t);
+        //     echo $t;
+        //     // echo  $d->city_id . "<br>";
+        //  }
         if ($request->ajax()) {        
             // $data = Gym::all();
             return DataTables::of($data)
@@ -94,7 +94,8 @@ class AdminController extends Controller
                     })->addColumn('city_name', function($row){
                             
                         // $btn = '<a href="javascript:void(0)" class="edit btn btn-primary btn-sm">View</a>';
-                         return $row->city->name;
+                      
+                        return $row->city->name;
                     })->addColumn('avatar', function($row){
 
                         $avatar = "<img width='80' height='80' src='".$row->cover_image."' />";
