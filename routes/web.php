@@ -30,7 +30,8 @@ Route::get('/admin/allusers', [App\Http\Controllers\AdminController::class, 'sho
 Route::get('/admin/cities', [App\Http\Controllers\CityController::class, 'showCites'])->name('showCites')->middleware('auth');
 Route::get('/admin/allgyms', [App\Http\Controllers\AdminController::class, 'showGyms'])->name('showGyms')->middleware('auth');
 Route::get('/admin/addCity', [App\Http\Controllers\CityController::class, 'create'])->name('create')->middleware('auth');
-Route::get('/admin/gymManager', [App\Http\Controllers\GymManagerController::class, 'showGymManager'])->name('showGymManager')->middleware('auth');
+Route::get('/admin/gymManagers', [App\Http\Controllers\GymManagerController::class, 'showGymManagers'])->name('showGymManagers')->middleware('auth');
+Route::get('/admin/gymManager/{id}', [App\Http\Controllers\GymManagerController::class, 'show'])->name('show')->middleware('auth');
 
 Route::post('/cities', [App\Http\Controllers\CityController::class, 'store'])->name('city.store')->middleware('auth');
 Route::get('/admin/allcoaches', [App\Http\Controllers\CoachController::class, 'showCoaches'])->name('showCoaches')->middleware('auth');

@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Edit City')
+@section('title', 'list GYM Managers')
 
 @section('content')
     <!-- Content Wrapper. Contains page content -->
@@ -89,7 +89,7 @@
                 var table = $('.data-table').DataTable({
                     processing: true,
                     serverSide: true,
-                    ajax: "{{ route('showGymManager') }}",
+                    ajax: "{{ route('showGymManagers') }}",
                     columns: [
                         {data: 'id', name: 'id'},
                         {data: 'name', name: 'name'},
@@ -97,7 +97,7 @@
                         {data: 'avatar', name: 'profile_image',overable:false,searchable:false},
                         {data: 'national_id', name: 'national_id'},
 
-                        {data: 'action', name: 'action', orderable: false, searchable: false},
+                        {data: 'edit', name: 'edit', orderable: false, searchable: false},
                     ]
                 });
 

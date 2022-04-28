@@ -305,7 +305,7 @@ return [
             'submenu' => [
                 [
                     'text' => 'All Managers',
-                    'url'  => '/admin/gymManager',
+                    'url'  => '/admin/gymManagers',
                 ],
                 [
                     'text' => 'Add New',

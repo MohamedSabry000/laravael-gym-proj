@@ -16,16 +16,17 @@ class GymManagerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function showGymManager(Request $request)
+    public function showGymManagers(Request $request)
     {
         if ($request->ajax()) {
             $data = User::role('gymManager');
 
             return DataTables::of($data)
                     ->addIndexColumn()
-                    ->addColumn('action', function($row){
+                    ->addColumn('edit', function($row){
 
-                           $btn = '<a href="javascript:void(0)" class="edit btn btn-primary btn-sm">View</a>';
+                           $btn = "<a href='/admin/gymManager/".$row->id."' class='edit btn btn-primary btn-sm'>View</a>";
+                        //    $btn = "mmmmmm";
 
                             return $btn;
                     })
@@ -35,7 +36,7 @@ class GymManagerController extends Controller
 
                     return $avatar;
                 })
-                    ->rawColumns(['action','avatar'])
+                    ->rawColumns(['edit','avatar'])
                     ->make(true);
         }
 
@@ -69,9 +70,10 @@ class GymManagerController extends Controller
      * @param  \App\Models\GymManager  $gymManager
      * @return \Illuminate\Http\Response
      */
-    public function show(GymManager $gymManager)
+    public function show($id)
     {
-        //
+        $singleManager = User::findorfail($id);
+        return view("gymManager.show", ['singleManager' => $singleManager]);
     }
 
     /**
