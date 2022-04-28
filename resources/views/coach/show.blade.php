@@ -1,4 +1,4 @@
-@extends('layouts.user-layout')
+@extends('adminlte::page')
 @section('content')
 
 <!-- Content Wrapper. Contains page content -->
@@ -35,9 +35,9 @@
                             <p class="my-3">{{$singleCoach->id}}</p>
                             <p class="my-3">{{$singleCoach->name}}</p>
                             <p class="my-3">{{$singleCoach->email}}</p>
-                            <p class="my-3">{{$singleCoach->city->name}}</p>
+                            <p class="my-3">{{$singleCoach->city->id}}</p>
                             <p class="my-3">{{$singleCoach->created_at}}</p>
-                            
+
                         </div>
                     </div>
                 </div>

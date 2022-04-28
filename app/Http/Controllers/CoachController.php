@@ -27,7 +27,7 @@ class CoachController extends Controller
     #=======================================================================================#
     public function show($id)
     {
-        $singleCoach = User::find($id);
+        $singleCoach = User::findorfail($id);
         return view("coach.show", ['singleCoach' => $singleCoach]);
     }
 
@@ -134,7 +134,7 @@ class CoachController extends Controller
                     ->addIndexColumn()
                     ->addColumn('action', function($row){
      
-                           $btn = '<a href="javascript:void(0)" class="edit btn btn-primary btn-sm">View</a>';
+                           $btn = "<a href='/admin/allcoaches/".$row->id."' class='edit btn btn-primary btn-sm'>View</a>";
     
                             return $btn;
                     })->addColumn('avatar', function($row){
