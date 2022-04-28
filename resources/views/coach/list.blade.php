@@ -1,18 +1,20 @@
 @extends('adminlte::page')
 
-@section('title', 'Show User Number')
-
-
 @section('content')
-
 <!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper content-inner-wrapper">
+<div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-
+                    <h4>All Coaches</h4>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item active">Coaches</li>
+                    </ol>
                 </div>
             </div>
         </div><!-- /.container-fluid -->
@@ -22,25 +24,39 @@
 
         <!-- Default box -->
         <div class="card">
-
+            <div class="card-header">
+                <h3 class="card-title">Coaches</h3>
+                <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                    <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
             <div class="card-body p-0">
                 <table class="table table-bordered data-table">
                     <thead>
                         <tr>
-                            <th>No</th>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th width="100px">Action</th>
+                            <th class="project-state"> id</th>
+                            <th class="project-state">Coach Name</th>
+                            <th class="project-state">Coach Email</th>
+                            <th class="project-state">Action</th>
+                            <!-- <th class="project-state">Created at</th>
+                            <th class="project-state">Coach Image</th> -->
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
+
                     </tbody>
                 </table>
-
             </div>
             <!-- /.card-body -->
         </div>
         <!-- /.card -->
+
     </section>
     @section('css')
     <link rel="stylesheet"
@@ -75,7 +91,7 @@
         var table = $('.data-table').DataTable({
             processing: true,
             serverSide: true,
-            ajax: "{{ route('showUsers') }}",
+            ajax: "{{ route('showCoaches') }}",
             columns: [{
                     data: 'id',
                     name: 'id'
@@ -102,5 +118,35 @@
     @stop
 </div>
 <!-- /.content-wrapper -->
+<script>
+function banUser(id) {
+    if (confirm("Do you want to ban this user?")) {
+        $.ajax({
+            url: '/banUser/' + id,
+            type: 'get',
+            data: {
+                _token: $("input[name=_token]").val()
+            },
+            success: function(response) {
+                $("#cid" + id).remove();
+            }
+        });
+    }
+}
 
-@stop
+function deleteCoach(id) {
+    if (confirm("Do you want to delete this record?")) {
+        $.ajax({
+            url: '/coach/' + id,
+            type: 'DELETE',
+            data: {
+                _token: $("input[name=_token]").val()
+            },
+            success: function(response) {
+                $("#cid" + id).remove();
+            }
+        });
+    }
+}
+</script>
+@endsection
