@@ -263,7 +263,7 @@ return [
             'submenu' => [
                 [
                     'text' => 'All City Managers',
-                    'url'  => '#',
+                    'url'  => '/admin/cities',
                 ],
                 [
                     'text' => 'Add New',
