@@ -42,10 +42,10 @@
                             <th class="project-state"> id</th>
                             <th class="project-state">Coach Name</th>
                             <th class="project-state">Coach Email</th>
+                            <th class="project-state">City</th>
+                            <th class="project-state">Coach Image</th>
                             <th class="project-state">Action</th>
-                            <!-- <th class="project-state">Created at</th>
-                            <th class="project-state">Coach Image</th> -->
-                            <th></th>
+
                         </tr>
                     </thead>
                     <tbody>
@@ -104,6 +104,19 @@
                     data: 'email',
                     name: 'email'
                 },
+                {
+                    data: 'city_id',
+                    name: 'city_id'
+                },
+                {
+
+                    data: 'avatar',
+                    name: 'profile_image',
+                    overable: false,
+                    searchable: false
+
+                },
+
                 {
                     data: 'action',
                     name: 'action',

@@ -72,7 +72,7 @@ class CoachController extends Controller
         $user->profile_image = $imageName;
         $user->assignRole('coach');
         $user->save();
-        return redirect()->route('coach.list');
+        return redirect(route('showCoaches'));    
     }
 
     #=======================================================================================#
@@ -129,6 +129,7 @@ class CoachController extends Controller
     {
         if ($request->ajax()) {
             $data = User::role('coach');
+
             return DataTables::of($data)
                     ->addIndexColumn()
                     ->addColumn('action', function($row){
@@ -136,11 +137,16 @@ class CoachController extends Controller
                            $btn = '<a href="javascript:void(0)" class="edit btn btn-primary btn-sm">View</a>';
     
                             return $btn;
-                    })
-                    ->rawColumns(['action'])
+                    })->addColumn('avatar', function($row){
+
+                        $avatar = "<img width='80' height='80' src='".$row->profile_image."' />";
+
+                        return $avatar;
+                    })->rawColumns(['action','avatar'])
                     ->make(true);
         }
         
         return view('coach.list');
     }
+    
 }
