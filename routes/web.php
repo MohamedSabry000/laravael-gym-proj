@@ -33,6 +33,7 @@ Route::get('/admin/addCity', [App\Http\Controllers\CityController::class, 'creat
 Route::get('/admin/gymManager', [App\Http\Controllers\GymManagerController::class, 'showGymManager'])->name('showGymManager')->middleware('auth');
 
 Route::post('/cities', [App\Http\Controllers\CityController::class, 'store'])->name('city.store')->middleware('auth');
+Route::get('/admin/allcoaches', [App\Http\Controllers\CoachController::class, 'showCoaches'])->name('showCoaches')->middleware('auth');
 
 // Route::post('/admin/storeCity', [App\Http\Controllers\CityController::class, 'store'])->name('store')->middleware('auth');
 
