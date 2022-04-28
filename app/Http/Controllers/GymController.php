@@ -11,10 +11,36 @@ use App\Models\User;
 use Illuminate\Support\Facades\File;
 
 class GymController extends Controller
-{
-    #=======================================================================================#
-    #			                          List Function                                   	#
-    #=======================================================================================#
+{   
+
+    public function store(Request $request) 
+    {
+        $request->validate([
+            'name'        => ['required', 'string', 'min:2'],
+            'cover_image' => ['nullable', 'mimes:jpg,jpeg'],
+            'city_id'     => ['required'],
+        ]);
+
+        $data = $request->all();
+       
+        if ($request->hasFile('cover_image') == null) {
+                $imageName = 'imgs/defaultImg.jpg';
+            } else {
+                $image = $request->file('cover_image');
+                $name = time() . \Str::random(30) . '.' . $image->getClientOriginalExtension();
+                $destinationPath = public_path('/imgs');
+                $image->move($destinationPath, $name);
+                $imageName = 'imgs/' . $name;
+            }        //store the request data in the db
+        Gym::create([
+            'name'        => $data['name'],
+            'cover_image' => $imageName,
+            'city_id'     => $data['city_id'],
+        ]);
+    
+        return redirect(route('showGyms'));
+    }   
+
     public function list()
     {
         $gymsFromDB = Gym::all();
@@ -35,45 +61,47 @@ class GymController extends Controller
     #=======================================================================================#
     #			                           Create Function                              	#
     #=======================================================================================#
-    public function create()
-    {
+        public function create()
+        {
 
-        $gyms =  User::role('gymManager')->withoutBanned()->get();
-        $cities = City::all();
-        return view('gym.create', [
-            'users' => $gyms,
-            'cities' => $cities,
-        ]);
-    }
+            $city = City::all();
+            $user = User::role('gymManager')->get();
+        
+            return view('gym.create', [
+                'cityData' => $city,
+                'users'    => $user
+            ]);
+            
+        }
     #=======================================================================================#
     #			                           Store Function                                 	#
     #=======================================================================================#
-    public function store(Request $request)
-    {
-        $request->validate([
-            'name' => ['required', 'string', 'min:2'],
-            'cover_image' => ['nullable', 'mimes:jpg,jpeg'],
-            'city_id' => ['required'],
-        ]);
-        if ($request->hasFile('cover_image') == null) {
-            $imageName = 'imgs/defaultImg.jpg';
-        } else {
-            $image = $request->file('cover_image');
-            $name = time() . \Str::random(30) . '.' . $image->getClientOriginalExtension();
-            $destinationPath = public_path('/imgs');
-            $image->move($destinationPath, $name);
-            $imageName = 'imgs/' . $name;
-        }
+    // public function store(Request $request)
+    // {
+    //     $request->validate([
+    //         'name' => ['required', 'string', 'min:2'],
+    //         'cover_image' => ['nullable', 'mimes:jpg,jpeg'],
+    //         'city_id' => ['required'],
+    //     ]);
+    //     if ($request->hasFile('cover_image') == null) {
+    //         $imageName = 'imgs/defaultImg.jpg';
+    //     } else {
+    //         $image = $request->file('cover_image');
+    //         $name = time() . \Str::random(30) . '.' . $image->getClientOriginalExtension();
+    //         $destinationPath = public_path('/imgs');
+    //         $image->move($destinationPath, $name);
+    //         $imageName = 'imgs/' . $name;
+    //     }
 
 
-        $requestData = request()->all();
-        Gym::create([
-            'name' => $requestData['name'],
-            'city_id' => $requestData['city_id'],
-            'cover_image' => $imageName,
-        ]);
-        return redirect()->route('gym.list');
-    }
+    //     $requestData = request()->all();
+    //     Gym::create([
+    //         'name' => $requestData['name'],
+    //         'city_id' => $requestData['city_id'],
+    //         'cover_image' => $imageName,
+    //     ]);
+    //     return redirect()->route('gym.list');
+    // }
 
 
     #=======================================================================================#
@@ -105,7 +133,6 @@ class GymController extends Controller
 
 
 
-
         if ($request->hasFile('cover_image')) {
             $image = $request->file('cover_image');
             $name = time() . \Str::random(30) . '.' . $image->getClientOriginalExtension();
@@ -117,11 +144,11 @@ class GymController extends Controller
             $gym->cover_image = $imageName;
         }
         $gym->save();
+        
         return redirect()->route('gym.list');
     }
-
+    
     //Delete Function
-
     public function deleteGym($id)
     {
 
