@@ -40,9 +40,12 @@
                     <table class="table table-striped projects data-table ">
                         <thead>
                             <tr>
-                                <th class="project-state"> ID </th>
+                            <th class="project-state"> City ID</th>
+
                                 <th class="project-state"> City Name</th>
                                 <th class="project-state"> City Manager Id</th>
+                                <th class="project-state"> Actions</th>
+
                                 <th class="project-state"></th>
                             </tr>
                         </thead>
@@ -89,8 +92,9 @@
                     ajax: "{{ route('showCites') }}",
                     columns: [
                         {data: 'id', name: 'id'},
-                        {data: 'name', name: 'manager_id'},
-                        {data: 'action', name: 'action', orderable: false, searchable: false},
+                        {data: 'name', name: 'name'},
+                        {data: 'manager_id', name: 'manager_id'},
+                        {data: 'action', name: 'edit', orderable: false, searchable: false},
                     ]
                 });
                 
