@@ -61,8 +61,29 @@ class CityManagerController extends Controller
     #=======================================================================================#
     #			                           List Function                                	#
     #=======================================================================================#
-    public function list()
+    public function showCityManager(Request $request)
     {
+        if ($request->ajax()) {
+            $data = CityManager::select('*');
+            return DataTables::of($data)
+                    ->addIndexColumn()
+                    ->addColumn('CityManagerName', function ($row) {
+                        return User::find($row->manager_id)->name??"not assiend";
+                    })
+                    ->addColumn('action', function ($row) {
+                        $btn = '<a href="javascript:void(0)" class="edit btn btn-primary btn-sm">View</a>';
+    
+                        return $btn;
+                    })
+           
+                
+                    ->rawColumns(['action','CityManagerName'])
+                    ->make(true);
+        }
+        
+        return view('cityManager.list');
+    }
+        public function list(){
         $usersFromDB =  User::role('cityManager')->withoutBanned()->get();
         // $usersFromDB = User::all();
         // $usersFromDB =  User::role('cityManager')->get();
