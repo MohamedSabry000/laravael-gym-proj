@@ -55,7 +55,9 @@ class GymController extends Controller
 
     public function show($id)
     {
-        $singleGym = Gym::find($id);
+        
+        $singleGym = Gym::with('city')->find($id);
+        dd($singleGym);
         return view("gym.show", ['singleGym' => $singleGym]);
     }
     #=======================================================================================#

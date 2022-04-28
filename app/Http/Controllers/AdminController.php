@@ -71,7 +71,6 @@ class AdminController extends Controller
     public function showGyms(Request $request) {
      
         $data = Gym::with('city')->get();
-        $data = Gym::all();
 
         if ($request->ajax()) {        
             // $data = Gym::all();
@@ -87,7 +86,7 @@ class AdminController extends Controller
                     })->addColumn('city_name', function($row){
             
                         // $btn = '<a href="javascript:void(0)" class="edit btn btn-primary btn-sm">View</a>';
-                        // return $row->city->name;
+                        return !empty($row->city->name) ? $row->city->name : 'null and this is error';
                     })->addColumn('avatar', function($row){
                         $avatar = "<img width='80' height='80' src='".$row->cover_image."' />";
                         return $avatar;
