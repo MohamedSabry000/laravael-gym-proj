@@ -43,7 +43,7 @@
                                 <th class="project-state">ID</th>
                                 <th class="project-state"> Name</th>
                                  <th class="project-state">Email</th>
-                                <th class="project-state">Profile Picture</th>
+                                <th class="project-state">Picture</th>
                                 <th class="project-state">National ID</th>
                                 <th class="project-state"> Actions</th>
                                 <th class="project-state"></th>
