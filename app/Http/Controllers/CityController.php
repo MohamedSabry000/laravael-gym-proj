@@ -63,5 +63,13 @@ class CityController extends Controller
         return view('city.list');
     }
  
+    public function createCity()
+    {
+        return view('city.create');
 
+    }
+    public function store()
+    {
+        
+    }
 }

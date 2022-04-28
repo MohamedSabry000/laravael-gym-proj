@@ -29,6 +29,7 @@ Route::get('/admin', [App\Http\Controllers\AdminController::class, 'index'])->na
 Route::get('/admin/allusers', [App\Http\Controllers\AdminController::class, 'showUsers'])->name('showUsers')->middleware('auth');
 Route::get('/admin/cities', [App\Http\Controllers\CityController::class, 'showCites'])->name('showCites')->middleware('auth');
 Route::get('/admin/allgyms', [App\Http\Controllers\AdminController::class, 'showGyms'])->name('showGyms')->middleware('auth');
+Route::get('/admin/addCity', [App\Http\Controllers\CityController::class, 'createCity'])->name('createCity')->middleware('auth');
 
 // Route::get('admin', function () {
 //     return view('admin');
