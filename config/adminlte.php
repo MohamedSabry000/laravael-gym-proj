@@ -263,6 +263,20 @@ return [
             'submenu' => [
                 [
                     'text' => 'All City Managers',
+                    'url'  => '#',
+                ],
+                [
+                    'text' => 'Add New',
+                    'url'  => '/admin/addCity',
+                ],
+            ],
+        ],
+        [
+            'text'    => 'Cities',
+            'icon'    => 'fas fa-fw fa-city',
+            'submenu' => [
+                [
+                    'text' => 'All Cities',
                     'url'  => '/admin/cities',
                 ],
                 [
@@ -363,6 +377,11 @@ return [
         ],
         [
             'text'    => 'Banned Users',
+            'url'     => '#',
+            'icon'    => 'fas fa-fw fa-user',
+        ],
+        [
+            'text'    => 'Buy Package For Users',
             'url'     => '#',
             'icon'    => 'fas fa-fw fa-user',
         ],
