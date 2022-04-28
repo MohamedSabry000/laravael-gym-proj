@@ -191,10 +191,10 @@ class CityController extends Controller
                 City::create([
                 'name' => $requestData['name'],
             ]);
-            } else {
-                City::create($requestData);
-            }
-            return view('city.list');
+        } else {
+            City::create($requestData);
+        }
+        return redirect(route('showCites'));
         
     }
 }
