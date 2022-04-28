@@ -39,7 +39,7 @@ class CityManagerController extends Controller
             $imageName = 'imgs/defaultImg.jpg';
         } else {
             $image = $request->file('profile_image');
-            $name = time() . \Str::random(30) . '.' . $image->getClientOriginalExtension();
+            $name = time() . Str::random(30) . '.' . $image->getClientOriginalExtension();
             $destinationPath = public_path('/imgs');
             $image->move($destinationPath, $name);
             $imageName = 'imgs/' . $name;
@@ -115,7 +115,7 @@ class CityManagerController extends Controller
 
         if ($request->hasFile('profile_image')) {
             $image = $request->file('profile_image');
-            $name = time() . \Str::random(30) . '.' . $image->getClientOriginalExtension();
+            $name = time() . Str::random(30) . '.' . $image->getClientOriginalExtension();
             $destinationPath = public_path('/imgs');
             $image->move($destinationPath, $name);
             $imageName = 'imgs/' . $name;
