@@ -98,6 +98,7 @@
                         {data: 'national_id', name: 'national_id'},
 
                         {data: 'edit', name: 'edit', orderable: false, searchable: false},
+                        {data: 'delete', name: 'delete', orderable: false, searchable: false},
                     ]
                 });
 

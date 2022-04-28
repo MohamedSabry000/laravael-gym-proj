@@ -26,7 +26,14 @@ class GymManagerController extends Controller
                     ->addColumn('edit', function($row){
 
                            $btn = "<a href='/admin/gymManager/".$row->id."' class='edit btn btn-primary btn-sm'>View</a>";
-                        //    $btn = "mmmmmm";
+
+
+                            return $btn;
+                    })
+                    ->addColumn('delete', function($row){
+
+                           $btn = "<a href='/admin/gymManager/".$row->id."' class='edit btn btn-danger btn-sm'>Delete</a>";
+
 
                             return $btn;
                     })
@@ -36,7 +43,7 @@ class GymManagerController extends Controller
 
                     return $avatar;
                 })
-                    ->rawColumns(['edit','avatar'])
+                    ->rawColumns(['edit','delete','avatar'])
                     ->make(true);
         }
 
@@ -105,8 +112,10 @@ class GymManagerController extends Controller
      * @param  \App\Models\GymManager  $gymManager
      * @return \Illuminate\Http\Response
      */
-    public function destroy(GymManager $gymManager)
+    public function delete($id)
     {
-        //
+        $singleManager = User::findorfail($id);
+        $singleManager->delete();
+        return redirect(route('showGymManagers'));
     }
 }
