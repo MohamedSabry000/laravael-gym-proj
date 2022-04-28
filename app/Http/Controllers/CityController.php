@@ -43,7 +43,7 @@ class CityController extends Controller
                     })
                     ->addColumn('action', function ($row) {
                         $btn = '<a href="/admin/cities/'.$row->id.'" class="edit btn btn-primary btn-sm">View</a> ';
-                        $btn .= '<a href="/admin/addEditCoach/'.$row->id.'" class="edit btn btn-warning btn-sm">Edit</a> ';
+                        $btn .= '<a href="/admin/addEditCity/'.$row->id.'" class="edit btn btn-warning btn-sm">Edit</a> ';
                         $btn .= '<a href="/admin/delCities/'.$row->id.'" class="edit btn btn-danger btn-sm">Delete</a>';
     
                         return $btn;
@@ -109,4 +109,17 @@ class CityController extends Controller
         $city->update($requestData);
         return redirect(route('showCites'));
     }
+
+    #=======================================================================================#
+    #			            private Function used in this controller                        #
+    #=======================================================================================#
+    private function selectCityManagers()
+    {
+        return User::select('users.*', 'cities.manager_id')
+            ->role('cityManager')
+            ->leftJoin('cities', 'users.id', '=', 'cities.manager_id')
+
+            ->get();
+    }
+    #=======================================================================================#
 }
