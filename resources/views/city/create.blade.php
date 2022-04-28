@@ -1,8 +1,6 @@
 @extends('adminlte::page')
 
 @section('title', 'Create City')
-
-
 @section('content')
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper pb-4">
@@ -24,7 +22,7 @@
         </section>
         <!-- Main content -->
         <section class="content">
-            <form  method="post" class="w-75 m-auto">
+            <form  method="post" action="{{ route('city.store') }}" class="w-75 m-auto">
                 @csrf
                 <div class="row">
                     <div class="col-md-12">
@@ -56,7 +54,9 @@
                                         name="manager_id" id="manager_id">
                                         <optgroup label="Available City Managers">
                                             <option hidden>optional</option>
-                            
+                                            @foreach ($cityManagers as $manager)
+                                                <option value={{ $manager->id }}>{{ $manager->name }}</option>
+                                            @endforeach
                                         </optgroup>
                                     </select>
                                     @error('manager_id')
