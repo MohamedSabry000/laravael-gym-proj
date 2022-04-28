@@ -23,7 +23,7 @@ class GymManagerController extends Controller
 
             return DataTables::of($data)
                     ->addIndexColumn()
-                    ->addColumn('edit', function($row){
+                    ->addColumn('show', function($row){
 
                            $btn = "<a href='/admin/gymManager/".$row->id."' class='edit btn btn-primary btn-sm'>View</a>";
 
@@ -32,7 +32,7 @@ class GymManagerController extends Controller
                     })
                     ->addColumn('delete', function($row){
 
-                           $btn = "<a href='/admin/gymManager/".$row->id."' class='edit btn btn-danger btn-sm'>Delete</a>";
+                           $btn = "<a href='/admin/gymManagerDel/".$row->id."' class='edit btn btn-danger btn-sm'>Delete</a>";
 
 
                             return $btn;
@@ -43,7 +43,7 @@ class GymManagerController extends Controller
 
                     return $avatar;
                 })
-                    ->rawColumns(['edit','delete','avatar'])
+                    ->rawColumns(['show','delete','avatar'])
                     ->make(true);
         }
 
