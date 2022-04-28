@@ -42,7 +42,9 @@ class CityController extends Controller
                         return User::find($row->manager_id)->name??"not assiend";
                     })
                     ->addColumn('action', function ($row) {
-                        $btn = '<a href="/admin/cities/'.$row->id.'" class="edit btn btn-primary btn-sm">View</a>';
+                        $btn = '<a href="/admin/cities/'.$row->id.'" class="edit btn btn-primary btn-sm">View</a> ';
+                        $btn .= '<a href="/admin/addEditCity/'.$row->id.'" class="edit btn btn-warning btn-sm">Edit</a> ';
+                        $btn .= '<a href="/admin/delCities/'.$row->id.'" class="edit btn btn-danger btn-sm">Delete</a>';
     
                         return $btn;
                     })
@@ -117,6 +119,41 @@ class CityController extends Controller
     //     ]);
     // }
     #=======================================================================================#
+    #			                          destroy Function                                  #
+    #=======================================================================================#
+    public function delete($id)
+    {
+        $city = City::findorfail($id);
+        $city->delete();
+        return redirect(route('showCites'));
+    }
+    #=======================================================================================#
+    #			                          edit Function                                     #
+    #=======================================================================================#
+    public function edit($id)
+    {
+        $singleCity = City::findorfail($id);
+        $cityManagers = $this->selectCityManagers();
+        return view("city.edit", ['singleCity' => $singleCity, 'cityManagers' => $cityManagers]);
+
+        
+        // $cityManagers = $this->selectCityManagers();
+        // return view('city.edit', ['cityData' => $cityData, 'cityManagers' => $cityManagers]);
+    }
+    public function editCity(Request $request, $id)
+    {
+        $requestData = request()->all();
+        $city = City::findorfail($id);
+        $city->update($requestData);
+        return redirect(route('showCites'));
+    }
+    // public function edit($cityID)
+    // {
+    //     $cityData = City::find($cityID);
+    //     $cityManagers = $this->selectCityManagers();
+    //     return view('city.edit', ['cityData' => $cityData, 'cityManagers' => $cityManagers]);
+    // }
+    #=======================================================================================#
     #			                          create Function                                   #
     #=======================================================================================#
     public function create()
@@ -125,25 +162,8 @@ class CityController extends Controller
         return view("city.create", ['cityManagers' => $cityManagers]);
     }
     
-    #=======================================================================================#
-    #			                          edit Function                                     #
-    #=======================================================================================#
-    public function edit($cityID)
-    {
-        $cityData = City::find($cityID);
-        $cityManagers = $this->selectCityManagers();
-        return view('city.edit', ['cityData' => $cityData, 'cityManagers' => $cityManagers]);
-    }
+    
 
-    #=======================================================================================#
-    #			                          destroy Function                                  #
-    #=======================================================================================#
-    public function destroy($cityID)
-    {
-        $city = City::find($cityID);
-        $city->delete($cityID);
-        return $this->list();
-    }
     #=======================================================================================#
     #			                 restored deleted Cities Function                           #
     #=======================================================================================#

@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\City;
@@ -41,11 +40,10 @@ class AdminController extends Controller
             $data = User::select('*');
             return DataTables::of($data)
                     ->addIndexColumn()
-                    ->addColumn('action', function($row){
+                    ->addColumn('action', function ($row) {
+                        $btn = '<a href="javascript:void(0)" class="edit btn btn-primary btn-sm">View</a>';
 
-                           $btn = '<a href="javascript:void(0)" class="edit btn btn-primary btn-sm">View</a>';
-
-                            return $btn;
+                        return $btn;
                     })
                     ->rawColumns(['action'])
                     ->make(true);
@@ -59,11 +57,10 @@ class AdminController extends Controller
             $data = City::select('*');
             return DataTables::of($data)
                     ->addIndexColumn()
-                    ->addColumn('action', function($row){
+                    ->addColumn('action', function ($row) {
+                        $btn = '<a href="javascript:void(0)" class="edit btn btn-primary btn-sm">View</a>';
 
-                           $btn = '<a href="javascript:void(0)" class="edit btn btn-primary btn-sm">View</a>';
-
-                            return $btn;
+                        return $btn;
                     })
                     ->rawColumns(['action'])
                     ->make(true);
@@ -71,7 +68,8 @@ class AdminController extends Controller
 
         return view('city.list');
     }
-    public function showGyms(Request $request) {
+    public function showGyms(Request $request)
+    {
         // dd(Gym::all()->first()->city->name);
         //   $data = Gym::all()->with('city')->get();
         $data = Gym::with('city')->get();
@@ -86,18 +84,16 @@ class AdminController extends Controller
             // $data = Gym::all();
             return DataTables::of($data)
                     ->addIndexColumn()
-                    ->addColumn('action', function($row){
+                    ->addColumn('action', function ($row) {
+                        $btn = '<a href="javascript:void(0)" class="edit btn btn-primary btn-sm">View</a>';
 
-                           $btn = '<a href="javascript:void(0)" class="edit btn btn-primary btn-sm">View</a>';
-
-                            return $btn;
-                    })->addColumn('city_name', function($row){
+                        return $btn;
+                    })->addColumn('city_name', function ($row) {
 
                         // $btn = '<a href="javascript:void(0)" class="edit btn btn-primary btn-sm">View</a>';
 
-                         return $row->city->name;
-                    })->addColumn('avatar', function($row){
-
+                        return $row->city->name;
+                    })->addColumn('avatar', function ($row) {
                         $avatar = "<img width='80' height='80' src='".$row->cover_image."' />";
 
                         return $avatar;
@@ -107,6 +103,4 @@ class AdminController extends Controller
 
         return view('gym.list');
     }
-    
-
 }
