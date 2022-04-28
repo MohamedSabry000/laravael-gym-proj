@@ -333,7 +333,7 @@ return [
             'submenu' => [
                 [
                     'text' => 'All Coaches',
-                    'url'  => '#',
+                    'url'  => '/admin/allcoaches',
                 ],
                 [
                     'text' => 'Add New',

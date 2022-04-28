@@ -108,5 +108,6 @@ class AdminController extends Controller
         
         return view('gym.list');
     }
+    
 
 }
