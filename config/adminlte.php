@@ -305,7 +305,7 @@ return [
             'submenu' => [
                 [
                     'text' => 'All Managers',
-                    'url'  => '#',
+                    'url'  => '/admin/gymManagers',
                 ],
                 [
                     'text' => 'Add New',
@@ -333,15 +333,15 @@ return [
             'submenu' => [
                 [
                     'text' => 'All Coaches',
-                    'url'  => '#',
+                    'url'  => '/admin/allcoaches',
                 ],
                 [
                     'text' => 'Add New',
-                    'url'  => '#',
+                    'url'  => '/admin/addcoach',
                 ],
             ],
         ],
-        
+
         [
             'text'    => 'Training Packages',
             'icon'    => 'fas fa-fw fa-cubes',

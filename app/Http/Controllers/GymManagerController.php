@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\GymManager;
 use Illuminate\Http\Request;
+use App\Models\User;
+use App\Models\City;
+use DataTables;
+
 
 class GymManagerController extends Controller
 {
@@ -12,9 +16,31 @@ class GymManagerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function showGymManagers(Request $request)
     {
-        //
+        if ($request->ajax()) {
+            $data = User::role('gymManager');
+
+            return DataTables::of($data)
+                    ->addIndexColumn()
+                    ->addColumn('edit', function($row){
+
+                           $btn = "<a href='/admin/gymManager/".$row->id."' class='edit btn btn-primary btn-sm'>View</a>";
+                        //    $btn = "mmmmmm";
+
+                            return $btn;
+                    })
+                    ->addColumn('avatar', function($row){
+
+                    $avatar = "<img width='80' height='80' src='".$row->profile_image."' />";
+
+                    return $avatar;
+                })
+                    ->rawColumns(['edit','avatar'])
+                    ->make(true);
+        }
+
+        return view('gymManager.list');
     }
 
     /**
@@ -44,9 +70,10 @@ class GymManagerController extends Controller
      * @param  \App\Models\GymManager  $gymManager
      * @return \Illuminate\Http\Response
      */
-    public function show(GymManager $gymManager)
+    public function show($id)
     {
-        //
+        $singleManager = User::findorfail($id);
+        return view("gymManager.show", ['singleManager' => $singleManager]);
     }
 
     /**
