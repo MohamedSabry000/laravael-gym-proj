@@ -84,6 +84,12 @@ Route::get('/admin/addEditPackage/{id}', [App\Http\Controllers\TrainingPackagesC
 Route::put('/admin/storeEditPackage/{id}', [App\Http\Controllers\TrainingPackagesController::class, 'editPackage'])->name('traningPackage.storeEdit')->middleware('auth');
 
 
+
+
+
+//****************************Attendance Table */
+Route::get('/admin/attendance', [App\Http\Controllers\AttendanceController::class, 'showAttendance'])->name('showAttendance')->middleware('auth');
+
 // Route::get('admin', function () {
 //     return view('admin');
 // });
