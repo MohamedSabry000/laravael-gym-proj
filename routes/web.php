@@ -63,11 +63,13 @@ Route::put('/admin/storeEditCity/{id}', [App\Http\Controllers\CityController::cl
 
 Route::get('/admin/cities/{id}', [App\Http\Controllers\CityController::class, 'show'])->name('city.show')->middleware('auth');
 Route::get('/admin/delCities/{id}', [App\Http\Controllers\CityController::class, 'delete'])->name('city.delete')->middleware('auth');
+
+
 /**         City Managers         */
-Route::get('/admin/allCityManagers', [App\Http\Controllers\CityManagerController::class, 'showCityManager'])->name('showCites')->middleware('auth');
+Route::get('/admin/allCityManagers', [App\Http\Controllers\CityManagerController::class, 'showCityManager'])->name('showCityManager')->middleware('auth');
 
 Route::get('/admin/addCityManager', [App\Http\Controllers\CityManagerController::class, 'create'])->name('create')->middleware('auth');
-Route::post('/allCityManagers', [App\Http\Controllers\CityManagerController::class, 'store'])->name('citymanager.store')->middleware('auth');
+Route::post('/allCityManagers', [App\Http\Controllers\CityManagerController::class, 'store'])->name('cityManager.store')->middleware('auth');
 
 Route::get('/admin/addEditCityManager/{id}', [App\Http\Controllers\CityManagerController::class, 'edit'])->name('citymanager.addEdit')->middleware('auth');
 Route::put('/admin/storeEditCityManager/{id}', [App\Http\Controllers\CityManagerController::class, 'editCityManager'])->name('citymanager.storeEdit')->middleware('auth');
