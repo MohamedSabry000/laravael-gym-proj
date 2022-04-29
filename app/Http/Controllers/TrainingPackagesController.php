@@ -76,7 +76,7 @@ class TrainingPackagesController extends Controller
 
                     ->addColumn('action', function ($row) {
                         $btn = '<a href="/admin/cities/'.$row->id.'" class="edit btn btn-primary btn-sm">View</a> ';
-                        $btn .= '<a href="/admin/addTraningPackage/'.$row->id.'" class="edit btn btn-warning btn-sm">Edit</a> ';
+                        $btn .= '<a href="/admin/addEditPackage/'.$row->id.'" class="edit btn btn-warning btn-sm">Edit</a> ';
                         $btn .= '<a href="/admin/delTaraningPackage/'.$row->id.'" class="edit btn btn-danger btn-sm">Delete</a>';
     
                         return $btn;
@@ -95,13 +95,12 @@ class TrainingPackagesController extends Controller
         $packages = TrainingPackage::all();
 
         $package = TrainingPackage::find($id);
+        $gyms = Gym::all();
 
-        return view('trainingPackeges.editPackege', ['package' => $package, 'packages' => $packages]);
+        return view('trainingPackeges.edit', ['package' => $package, 'packages' => $packages, 'gyms' => $gyms]);
     }
-    #=======================================================================================#
-    #			                             update                                         #
-    #=======================================================================================#
-    public function update(Request $request, $id)
+
+    public function editPackage(Request $request, $id)
     {
         $request->validate([
             'name' => ['required'],
@@ -109,19 +108,15 @@ class TrainingPackagesController extends Controller
             'sessions_number' => ['required', 'numeric', 'min:1', 'max:60']
         ]);
 
+        $packages = TrainingPackage::findorfail($id);
 
-        TrainingPackage::where('id', $id)->update([
-
-            'name' => $request->all()['name'],
-            'price' => $request->price * 100,
-            'sessions_number' => $request->sessions_number,
-
-
-
-
-        ]);
-        return redirect()->route('trainingPackeges.listPackeges');
+        $packages->name = $request->name;
+        $packages->price = $request->price;
+        $packages->sessions_number = $request->sessions_number;
+        $packages->update();
+        return redirect(route('showPackages'));
     }
+
     #=======================================================================================#
     #			                             destroy                                       	#
     #=======================================================================================#
