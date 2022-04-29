@@ -50,7 +50,7 @@ class CoachController extends Controller
     #=======================================================================================#
     public function create()
     {
-        $coaches = User::role('coach');
+        $coaches = User::all();
         $cities = City::all();
         return view('coach.create', [
             'users' => $coaches,

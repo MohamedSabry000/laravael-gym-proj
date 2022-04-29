@@ -112,10 +112,7 @@ class CityManagerController extends Controller
 
 
 
-    #=======================================================================================#
-    #			                           Update Function                                	#
-    #=======================================================================================#
-    public function update(Request $request, $id)
+    public function editCityManager(Request $request, $id)
     {
 
         $user = User::find($id);
@@ -151,7 +148,7 @@ class CityManagerController extends Controller
     #=======================================================================================#
     #			                           Delete Function                                	#
     #=======================================================================================#
-    public function deletecityManager($id)
+    public function deleteCityManager($id)
     {
 
         $singleUser = User::findorfail($id);
