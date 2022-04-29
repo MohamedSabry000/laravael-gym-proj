@@ -28,7 +28,7 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+Route::middleware('auth:sanctum','verified')->get('/user', function (Request $request) {
     return $request->user();
 });
 
@@ -39,8 +39,29 @@ Route::controller(AuthController::class)->group(function () {
     Route::get('logout', 'logout')->middleware('auth:sanctum');
 });
 
+Auth::routes(['verify'=>true]);
+Route::post('email/verification-notification', [EmailVerificationController::class, 'resend'])->middleware('auth:sanctum');
+Route::get('email/verify/{id}', [EmailVerificationController::class, 'verify'])->name('verification.verify');
 
 
+
+Route::post('/sanctum/token', function (Request $request){
+    $request->validate([
+        'email' => 'required|email',
+        'password' => 'required',
+        'device_name' => 'required',
+    ]);
+
+    $user = User::where('email', $request->email)->first();
+
+    if (! $user || ! Hash::check($request->password, $user->password)) {
+        throw ValidationException::withMessages([
+            'email' => ['The provided credentials are incorrect.'],
+        ]);
+    }
+
+    return $user->createToken($request->device_name)->plainTextToken;
+});
 
 
 
