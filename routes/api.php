@@ -52,6 +52,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
 //Traning Sessions Routes
 Route::get('remaining_sessions',[SessionsController::class,'remaining_training_sessions'])->middleware('auth:sanctum');
+Route::post('attendSession/{session}',[SessionsController::class,'attend_training_session'])->middleware('auth:sanctum');
 
 
 
