@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\File;
+use DataTables;
 
 class CityManagerController extends Controller
 {
@@ -27,7 +28,7 @@ class CityManagerController extends Controller
     public function store(Request $request)
     {
 
-        $validated = $request->validate([
+        $request->validate([
             'name' => 'required|max:20',
             'password' => 'required |min:6',
             'email' => 'required|string|unique:users,email,',
@@ -39,10 +40,10 @@ class CityManagerController extends Controller
             $imageName = 'imgs/defaultImg.jpg';
         } else {
             $image = $request->file('profile_image');
-            $name = time() . Str::random(30) . '.' . $image->getClientOriginalExtension();
+            $name = time() . \Str::random(30) . '.' . $image->getClientOriginalExtension();
             $destinationPath = public_path('/imgs');
             $image->move($destinationPath, $name);
-            $imageName = 'imgs/' . $name;
+            $imageName = 'http://localhost:8000/imgs/' . $name;
         }
 
         $user = new User();
@@ -83,7 +84,7 @@ class CityManagerController extends Controller
         
         return view('cityManager.list');
     }
-        public function list(){
+    public function list(){
         $usersFromDB =  User::role('cityManager')->withoutBanned()->get();
         // $usersFromDB = User::all();
         // $usersFromDB =  User::role('cityManager')->get();
@@ -133,7 +134,7 @@ class CityManagerController extends Controller
 
         if ($request->hasFile('profile_image')) {
             $image = $request->file('profile_image');
-            $name = time() . Str::random(30) . '.' . $image->getClientOriginalExtension();
+            $name = time() . \Str::random(30) . '.' . $image->getClientOriginalExtension();
             $destinationPath = public_path('/imgs');
             $image->move($destinationPath, $name);
             $imageName = 'imgs/' . $name;

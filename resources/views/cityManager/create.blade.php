@@ -1,5 +1,6 @@
-@extends('layouts.user-layout')
+@extends('adminlte::page')
 @section('content')
+
 
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper pb-4">
@@ -24,7 +25,7 @@
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="#">Home</a></li>
-                            <li class="breadcrumb-item active">New City Manger</li>
+                            <li class="breadcrumb-item active">New City Manager</li>
                         </ol>
                     </div>
                 </div>
