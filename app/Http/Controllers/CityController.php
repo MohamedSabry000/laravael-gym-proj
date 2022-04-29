@@ -79,9 +79,15 @@ class CityController extends Controller
     #=======================================================================================#
     public function show($id)
     {
-        $singleCity = City::findorfail($id);
-        $cityManager = User::findorfail($singleCity->manager_id);
-        return view("city.show", ['singleCity' => $singleCity, 'cityManager' => $cityManager->name]);
+        
+        $singleCity = User::findorfail($id);
+        $cityManager = City::find($singleCity->manager_id);
+        if (is_null($cityManager)) {
+            $cityManager = 'not assigned';
+        } else {
+            $cityManager = $cityManager->name;
+        }
+        return view("city.show", ['singleCity' => $singleCity, 'cityManager' => $cityManager]);
     }
     
     #			                          destroy Function                                  #
@@ -118,7 +124,7 @@ class CityController extends Controller
         return User::select('users.*', 'cities.manager_id')
             ->role('cityManager')
             ->leftJoin('cities', 'users.id', '=', 'cities.manager_id')
-
+            ->where('cities.manager_id', '=', null)
             ->get();
     }
     #=======================================================================================#
