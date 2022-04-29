@@ -310,7 +310,7 @@ return [
                 ],
                 [
                     'text' => 'Add New',
-                    'url'  => '#',
+                    'url'  => '/admin/addGymManager',
                 ],
             ],
         ],

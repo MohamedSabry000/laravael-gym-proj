@@ -36,11 +36,15 @@ Route::post('/admin/storegym', [App\Http\Controllers\GymController::class, 'stor
 Route::get('/admin/deletegym/{id}', [App\Http\Controllers\GymController::class, 'delete'])->name('deleteGym')->middleware('auth');
 Route::get('/admin/gym/{id}', [App\Http\Controllers\GymController::class, 'show'])->name('showGym')->middleware('auth');
 
-
+/**         Gym Managers         */
 Route::get('/admin/gymManagers', [App\Http\Controllers\GymManagerController::class, 'showGymManagers'])->name('showGymManagers')->middleware('auth');
+
+Route::get('/admin/addGymManager', [App\Http\Controllers\GymManagerController::class, 'create'])->name('gymManager.create')->middleware('auth');
+Route::post('/admin/gymManagers', [App\Http\Controllers\GymManagerController::class, 'store'])->name('gymManager.store')->middleware('auth');
+
 Route::get('/admin/gymManager/{id}', [App\Http\Controllers\GymManagerController::class, 'show'])->name('show')->middleware('auth');
 Route::get('/admin/gymManagerDel/{id}', [App\Http\Controllers\GymManagerController::class, 'delete'])->name('delete')->middleware('auth');
-
+/************************ */
 Route::get('/admin/allusers', [App\Http\Controllers\AdminController::class, 'showUsers'])->name('showUsers')->middleware('auth');
 
 /**         Cities         */
@@ -55,7 +59,8 @@ Route::put('/admin/storeEditCity/{id}', [App\Http\Controllers\CityController::cl
 Route::get('/admin/cities/{id}', [App\Http\Controllers\CityController::class, 'show'])->name('city.show')->middleware('auth');
 Route::get('/admin/delCities/{id}', [App\Http\Controllers\CityController::class, 'delete'])->name('city.delete')->middleware('auth');
 /************************* */
-/**         Caches         */
+
+/**         Coaches         */
 Route::get('/admin/allcoaches', [App\Http\Controllers\CoachController::class, 'showCoaches'])->name('showCoaches')->middleware('auth');
 Route::get('/admin/addcoach', [App\Http\Controllers\CoachController::class, 'create'])->name('create')->middleware('auth');
 Route::post('/allcoaches', [App\Http\Controllers\CoachController::class, 'store'])->name('coach.store')->middleware('auth');

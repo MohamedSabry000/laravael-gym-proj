@@ -6,16 +6,13 @@ use App\Models\GymManager;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\City;
+use App\Models\Gym;
 use DataTables;
-
 
 class GymManagerController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    #			                        list Function                                       #
+    #=======================================================================================#
     public function showGymManagers(Request $request)
     {
         if ($request->ajax()) {
@@ -23,52 +20,66 @@ class GymManagerController extends Controller
 
             return DataTables::of($data)
                     ->addIndexColumn()
-                    ->addColumn('show', function($row){
+                    ->addColumn('actions', function ($row) {
+                        $btn = '<a href="/admin/gymManager/'.$row->id.'" class="edit btn btn-primary btn-sm">View</a> ';
+                        $btn .= '<a href="/admin/gymManagerEdit/'.$row->id.'" class="edit btn btn-warning btn-sm">Edit</a> ';
+                        $btn .= '<a href="/admin/gymManagerDel/'.$row->id.'" class="edit btn btn-danger btn-sm">Delete</a>';
 
-                           $btn = "<a href='/admin/gymManager/".$row->id."' class='edit btn btn-primary btn-sm'>View</a>";
-
-
-                            return $btn;
+                        return $btn;
                     })
-                    ->addColumn('delete', function($row){
+                    ->addColumn('avatar', function ($row) {
+                        $avatar = "<img width='80' height='80' src='".$row->profile_image."' />";
 
-                           $btn = "<a href='/admin/gymManagerDel/".$row->id."' class='edit btn btn-danger btn-sm'>Delete</a>";
-
-
-                            return $btn;
+                        return $avatar;
                     })
-                    ->addColumn('avatar', function($row){
-
-                    $avatar = "<img width='80' height='80' src='".$row->profile_image."' />";
-
-                    return $avatar;
-                })
-                    ->rawColumns(['show','delete','avatar'])
+                    ->rawColumns(['actions','avatar'])
                     ->make(true);
         }
 
         return view('gymManager.list');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    #			                        create Function                                     #
+    #=======================================================================================#
     public function create()
     {
-        //
+        $users = User::all();
+        $gyms = Gym::all();
+        $cities = City::all();
+        return view('gymManager.create', [
+            'users' => $users,
+            'cities' => $cities,
+            'gyms' => $gyms,
+        ]);
     }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+    
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => ['required', 'string', 'min:2'],
+            'email' => ['required'],
+            'profile_image' => ['nullable', 'mimes:jpg,jpeg'],
+            'city_id' => ['required'],
+        ]);
+
+        if ($request->hasFile('profile_image') == null) {
+            $imageName = 'imgs/defaultImg.jpg';
+        } else {
+            $image = $request->file('profile_image');
+            $name = time() . \Str::random(30) . '.' . $image->getClientOriginalExtension();
+            $destinationPath = public_path('/imgs');
+            $image->move($destinationPath, $name);
+            $imageName = 'http://localhost:8000/imgs/' . $name;
+        }
+
+        $user = new User();
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->city_id = $request->city_id;
+        $user->profile_image = $imageName;
+        $user->assignRole('coach');
+        $user->save();
+        return redirect(route('showCoaches'));
     }
 
     /**

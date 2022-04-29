@@ -30,14 +30,14 @@ class GymController extends Controller
                 $name = time() . \Str::random(30) . '.' . $image->getClientOriginalExtension();
                 $destinationPath = public_path('/imgs');
                 $image->move($destinationPath, $name);
-                $imageName = 'imgs/' . $name;
+                $imageName = 'http://localhost:8000/imgs/' . $name;
             }        //store the request data in the db
         Gym::create([
             'name'        => $data['name'],
             'cover_image' => $imageName,
             'city_id'     => $data['city_id'],
         ]);
-        dd($imageName);
+        // dd($imageName);
         return redirect(route('showGyms'));
     }   
 
