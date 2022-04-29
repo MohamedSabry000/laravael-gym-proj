@@ -64,7 +64,7 @@ class CityManagerController extends Controller
     public function showCityManager(Request $request)
     {
         if ($request->ajax()) {
-            $data = CityManager::select('*');
+            $data = User::select('*');
             return DataTables::of($data)
                     ->addIndexColumn()
                     ->addColumn('CityManagerName', function ($row) {
