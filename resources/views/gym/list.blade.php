@@ -42,6 +42,7 @@
                             <tr>
                                 <th class="project-state">Gyms Name</th>
                                 <th class="project-state">Gyms Cover Image</th>
+                                <th class="project-state">Created at</th>
                                 <th class="project-state">Gym City Name</th>
                                 <th class="project-state">Action</th>
                             </tr>
@@ -93,6 +94,8 @@
                 columns: [
                     {data: 'name',      name: 'name'},
                     {data: 'avatar',    name: 'cover image',overable:false,searchable:false},
+                    {data: 'created_at',name: 'created_at'},
+
                     {data: 'city_name', name: 'city name'},
                     {data: 'action',    name: 'view', orderable: false, searchable: false},
                 ]

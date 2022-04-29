@@ -9,10 +9,16 @@ use App\Models\Gym;
 use App\Models\City;
 use App\Models\User;
 use Illuminate\Support\Facades\File;
+use DataTables; 
+use Illuminate\Support\Facades\Auth;
+
 
 class GymController extends Controller
 {   
 
+    #=======================================================================================# 
+    #			                           Store Function                                 	#
+    #=======================================================================================#
     public function store(Request $request) 
     {
         $request->validate([
@@ -24,33 +30,56 @@ class GymController extends Controller
         $data = $request->all();
        
         if ($request->hasFile('cover_image') == null) {
-                $imageName = 'imgs/defaultImg.jpg';
+                $imageName = 'http://localhost:8000/defaultImg.jpg';
             } else {
                 $image = $request->file('cover_image');
                 $name = time() . \Str::random(30) . '.' . $image->getClientOriginalExtension();
                 $destinationPath = public_path('/imgs');
                 $image->move($destinationPath, $name);
-                $imageName = 'imgs/' . $name;
+                $imageName = 'http://localhost:8000/imgs/' . $name;
             }        //store the request data in the db
         Gym::create([
             'name'        => $data['name'],
             'cover_image' => $imageName,
             'city_id'     => $data['city_id'],
         ]);
-        dd($imageName);
+     
         return redirect(route('showGyms'));
     }   
 
-    public function list()
+
+      #=======================================================================================#
+    #			                            List Function                             	    #
+    #=======================================================================================#
+    public function showGyms(Request $request)
     {
-        $gymsFromDB = Gym::all();
-        if (count($gymsFromDB) <= 0) { //for gym empty statement
-            return view('empty');
+        
+        if ($request->ajax()) {        
+            // $data = Gym::all();
+            return DataTables::of($data)->addIndexColumn() ->addColumn('action', function($row){    
+            // Crud operations
+            $btn =  "<a href='/admin/gym/".$row->id."' class='btn btn btn-primary'>View</a>";
+            $btn .= "<a href='/admin/editgym/".$row->id."' class = 'btn btn-success'>Edit</a>";
+            $btn .= "<a href='/admin/deletegym/".$row->id."' class = 'btn btn-danger'>Delete</a>";
+            return $btn;
+            })->addColumn('city_name', function($row){
+            
+                return !empty($row->city->name) ? $row->city->name : 'no city found';
+            })->addColumn('avatar', function($row){
+                $avatar = "<img width='80' height='80' src='".$row->cover_image."' />";
+                return $avatar;
+                
+            })->addColumn('created_at', function($row){
+                // $avatar = "<img width='80' height='80' src='".$row->cover_image."' />";
+                return $date = $row->created_at->format('Y.m.d');
+                
+            })->rawColumns(['action','avatar'])->make(true);
         }
-        return view("gym.list", ['gyms' => $gymsFromDB]);
+
+        return view('gym.list');
     }
     #=======================================================================================#
-    #			                            Show Function                                 	#
+#			                            Show Function                                 	#
     #=======================================================================================#
 
     public function show($id)
@@ -75,9 +104,7 @@ class GymController extends Controller
             ]);
             
         }
-    #=======================================================================================#
-    #			                           Store Function                                 	#
-    #=======================================================================================#
+  
     // public function store(Request $request)
     // {
     //     $request->validate([

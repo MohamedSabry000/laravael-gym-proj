@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\GymController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -30,11 +30,12 @@ Route::get('/admin/allusers', [App\Http\Controllers\AdminController::class, 'sho
 Route::get('/admin/cities', [App\Http\Controllers\CityController::class, 'showCites'])->name('showCites')->middleware('auth');
 
 /* Routes for gyms */
-Route::get('/admin/gyms', [App\Http\Controllers\AdminController::class, 'showGyms'])->name('showGyms')->middleware('auth');
-Route::get('/admin/addgym', [App\Http\Controllers\GymController::class , 'create'])->name('createGym')->middleware('auth');
-Route::post('/admin/storegym', [App\Http\Controllers\GymController::class, 'store'])->name('storeGym')->middleware('auth');
-Route::get('/admin/deletegym/{id}', [App\Http\Controllers\GymController::class, 'delete'])->name('deleteGym')->middleware('auth');
-Route::get('/admin/gym/{id}', [App\Http\Controllers\GymController::class, 'show'])->name('showGym')->middleware('auth');
+Route::get('/admin/gyms', [GymController::class, 'showGyms'])->name('showGyms')->middleware('auth');
+Route::get('/admin/addgym', [GymController::class , 'create'])->name('createGym')->middleware('auth');
+Route::get('/admin/editgym/{id}',[GymController::class , 'edit'])->name('editGym')->middleware('auth');
+Route::post('/admin/storegym', [GymController::class, 'store'])->name('storeGym')->middleware('auth');
+Route::get('/admin/deletegym/{id}', [GymController::class, 'delete'])->name('deleteGym')->middleware('auth');
+Route::get('/admin/gym/{id}', [GymController::class, 'show'])->name('showGym')->middleware('auth');
 
 
 
