@@ -362,12 +362,12 @@ return [
             'icon'    => 'fas fa-fw fa-cube',
             'submenu' => [
                 [
-                    'text' => 'Add Session',
-                    'url'  => '#',
+                    'text' => 'List Sessions',
+                    'url'  => '/admin/tarning-sessions',
                 ],
                 [
-                    'text' => 'Create Session',
-                    'url'  => '#',
+                    'text' => 'Add Session',
+                    'url'  => '/admin/addTarningSessions',
                 ],
             ],
         ],

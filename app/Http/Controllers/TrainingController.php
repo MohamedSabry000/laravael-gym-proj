@@ -84,20 +84,41 @@ class TrainingController extends Controller
         $data = array('user_id' => $user_id, "training_session_id" => $id);
         DB::table('training_session_user')->insert($data);
 
-        return redirect()->route('TrainingSessions.listSessions');
+        return redirect(('TrainingSessions.listSessions'));
     }
     #=======================================================================================#
     #			                             show                                         	#
     #=======================================================================================#
+    public function showSessions(Request $request)
+    {
+        if ($request->ajax()) {
+            $data = TrainingSession::select('*');
+            return DataTables::of($data)
+                    ->addIndexColumn()
+
+                    ->addColumn('action', function ($row) {
+                        $btn = '<a href="/admin/tarning-session/'.$row->id.'" class="edit btn btn-primary btn-sm">View</a> ';
+                        $btn .= '<a href="/admin/addEditSession/'.$row->id.'" class="edit btn btn-warning btn-sm">Edit</a> ';
+                        $btn .= '<a href="/admin/delTaraningSession/'.$row->id.'" class="edit btn btn-danger btn-sm">Delete</a>';
+    
+                        return $btn;
+                    })
+                    ->rawColumns(['action'])
+                    ->make(true);
+        }
+        return view('TrainingSessions.listSessions');
+        // return view('trainingPackeges.show_training_package', ['package' => $package]);
+    }
     public function show($id)
     {
         $userId = DB::select("select user_id from training_session_user where training_session_id = $id");
 
         $user = User::find($userId);
-
+        
         $trainingSession = TrainingSession::findorfail($id);
         return view('TrainingSessions.show_training_session', ['trainingSession' => $trainingSession]);
     }
+
     #=======================================================================================#
     #			                             edit                                         	#
     #=======================================================================================#
@@ -163,14 +184,10 @@ class TrainingController extends Controller
     {
 
 
-        if (count(DB::select("select * from training_session_user where training_session_id = $id")) == 0) {
             $trainingSession = TrainingSession::findorfail($id);
             $trainingSession->delete();
-            return response()->json([
-                'success' => '1'
-            ]);
-        } else {
-            return response()->json(['failed' => '0']);
-        }
+            return redirect(route('showSessions'));
+       
     }
+
 }

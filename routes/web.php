@@ -83,6 +83,17 @@ Route::get('/admin/delTaraningPackage/{id}', [App\Http\Controllers\TrainingPacka
 Route::get('/admin/addEditPackage/{id}', [App\Http\Controllers\TrainingPackagesController::class, 'edit'])->name('traningPackage.edit')->middleware('auth');
 Route::put('/admin/storeEditPackage/{id}', [App\Http\Controllers\TrainingPackagesController::class, 'editPackage'])->name('traningPackage.storeEdit')->middleware('auth');
 
+////***************************traning sessions */
+
+Route::get('/admin/tarning-sessions', [App\Http\Controllers\TrainingController::class, 'showSessions'])->name('showSessions')->middleware('auth');
+// Route::get('/admin/addTraningPackage', [App\Http\Controllers\TrainingPackagesController::class, 'create'])->name('traningPackage.create')->middleware('auth');
+// Route::post('/tarning-packages', [App\Http\Controllers\TrainingPackagesController::class, 'store'])->name('traningPackage.store')->middleware('auth');
+// Route::get('/admin/tarning-packages/{id}', [App\Http\Controllers\TrainingPackagesController::class, 'show'])->name('trainingPackeges.show')->middleware('auth');
+Route::get('/admin/delTaraningSession/{id}', [App\Http\Controllers\TrainingController::class, 'deleteSession'])->name('trainingPackage.delete')->middleware('auth');
+// // Route::post('/admin/storeCity', [App\Http\Controllers\CityController::class, 'store'])->name('store')->middleware('auth');
+
+// Route::get('/admin/addEditPackage/{id}', [App\Http\Controllers\TrainingPackagesController::class, 'edit'])->name('traningPackage.edit')->middleware('auth');
+// Route::put('/admin/storeEditPackage/{id}', [App\Http\Controllers\TrainingPackagesController::class, 'editPackage'])->name('traningPackage.storeEdit')->middleware('auth');
 
 // Route::get('admin', function () {
 //     return view('admin');
