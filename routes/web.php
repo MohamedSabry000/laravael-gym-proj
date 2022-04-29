@@ -68,7 +68,15 @@ Route::get('/admin/delCoaches/{id}', [App\Http\Controllers\CoachController::clas
 /************************* */
 
 
+////***************************traning packages */
 
+Route::get('/admin/tarning-packages', [App\Http\Controllers\TrainingPackagesController::class, 'showPackages'])->name('showPackages')->middleware('auth');
+
+Route::get('/admin/addTraningPackage', [App\Http\Controllers\TrainingPackagesController::class, 'create'])->name('traningPackage.create')->middleware('auth');
+Route::put('/admin/storeEditTraningPackage/{id}', [App\Http\Controllers\TrainingPackagesController::class, 'editCity'])->name('city.storeEdit')->middleware('auth');
+
+Route::get('/admin/tarning-packages/{id}', [App\Http\Controllers\TrainingPackagesController::class, 'show'])->name('city.show')->middleware('auth');
+Route::get('/admin/delTaraningPackage/{id}', [App\Http\Controllers\TrainingPackagesController::class, 'delete'])->name('city.delete')->middleware('auth');
 // Route::post('/admin/storeCity', [App\Http\Controllers\CityController::class, 'store'])->name('store')->middleware('auth');
 
 // Route::get('admin', function () {
