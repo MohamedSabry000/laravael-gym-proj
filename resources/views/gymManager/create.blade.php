@@ -1,80 +1,144 @@
 @extends('adminlte::page')
-
-@section('title', 'Create City')
-
-
 @section('content')
-    <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper pb-4">
-        <!-- Content Header (Page header) -->
-        <section class="content-header">
-            <div class="container-fluid">
-                <div class="row mb-2">
-                    <div class="col-sm-6">
-                        <h1>New City</h1>
-                    </div>
-                    <div class="col-sm-6">
-                        <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="#">Home</a></li>
-                            <li class="breadcrumb-item active">Create New City</li>
-                        </ol>
-                    </div>
+
+
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper pb-4">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
                 </div>
-            </div><!-- /.container-fluid -->
-        </section>
-        <!-- Main content -->
-        <section class="content">
-            <form  method="post" class="w-75 m-auto">
-                @csrf
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="card card-primary">
-                            <div class="card-header">
-                                <h3 class="card-title">Create</h3>
-                                <div class="card-tools">
-                                    <button type="button" class="btn btn-tool" data-card-widget="collapse"
-                                        title="Collapse">
-                                        <i class="fas fa-minus"></i>
-                                    </button>
-                                </div>
+                @endif
+                <div class="col-sm-6">
+                    <h1>New Coach</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item active">Create New Gym Manager</li>
+                    </ol>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+    <!-- Main content -->
+    <section class="content">
+        <form action="{{ route('gymManager.store') }}" method="post" enctype="multipart/form-data" class="w-75 m-auto">
+            @csrf
+            <div class="row">
+                <div class="col-md-12">
+                    @if (session('status'))
+                    <h6 class="alart-success">{{ session('status') }}</h6>
+                    @endif
+                    <div class="card card-primary">
+                        <div class="card-header">
+                            <h3 class="card-title">Create Gym Manager</h3>
+                            <div class="card-tools">
+                                <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                                    <i class="fas fa-minus"></i>
+                                </button>
                             </div>
-                            <div class="card-body">
-                                <div class="form-group">
-                                    <label class="form-label" for="name">Name</label>
-                                    <input autofocus required minlength="4" maxlength="100" type="text" id="name"
-                                        name="name" class=" form-control @error('name') is-invalid @enderror">
-                                    @error('name')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
-                                <div class="form-group">
-                                    <label for="manager_id">City Manger</label>
-                                    <label style="color: #aeb1b6; ">(optional)</label>
-                                    <select class=" form-control @error('manager_id') is-invalid @enderror"
-                                        name="manager_id" id="manager_id">
-                                        <optgroup label="Available City Managers">
-                                            <option hidden>optional</option>
-                            
-                                        </optgroup>
-                                    </select>
-                                    @error('manager_id')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
-                                <div class="col-12">
-                                    <a href="{{ url()->previous() }}" class="btn btn-secondary">Cancel</a>
-                                    <input type="submit" value="Add New City" class="btn btn-success float-right">
-                                </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="name">Name</label>
+                                <input autofocus required minlength="3" maxlength="50" type="text" id="name"
+                                    class="form-control" value="" name="name">
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input required type="email" id="email" class="form-control" value="" name="email">
+                            </div>
+                            <div class="form-group">
+                                <label for="city">City</label>
+                                <select required class=" form-control" name="city_id" id="city">
+                                    <optgroup label="Available City">
+                                        @foreach ($cities as $city)
+                                        <option value={{ $city->id }}>{{ $city->name }}</option>
+                                        @endforeach
+                                    </optgroup>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="city">Gym</label>
+                                <select required class=" form-control" name="city_id" id="city">
+                                    <optgroup label="Available City">
+                                        @foreach ($gyms as $gym)
+                                        <option value={{ $gym->id }}>{{ $gym->name }}</option>
+                                        @endforeach
+                                    </optgroup>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="image">Image Cover</label>
+                                <input type="file" class="form-control" id="image" name="profile_image">
                             </div>
                         </div>
                     </div>
                 </div>
-            </form>
-    </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <a href="#" class="btn btn-secondary">Cancel</a>
+                    <input type="submit" value="Save Changes" class="btn btn-success float-right">
+                </div>
+            </div>
+        </form>
     </section>
-    </div>
+    @section('js')
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.js"></script>
+
+        $(function() {
+
+            var table = $('.data-table').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: "{{ route('showCoaches') }}",
+                columns: [{
+                        data: 'id',
+                        name: 'id'
+                    },
+                    {
+                        data: 'name',
+                        name: 'name'
+                    },
+                    {
+                        data: 'email',
+                        name: 'email'
+                    },
+                    {
+                        data: 'city_id',
+                        name: 'city_id'
+                    },
+                    {
+
+                        data: 'avatar',
+                        name: 'profile_image',
+                        overable: false,
+                        searchable: false
+
+                    },
+
+                    {
+                        data: 'action',
+                        name: 'action',
+                        orderable: false,
+                        searchable: false
+                    },
+                ]
+            });
+
+        });
+        </script>
+    @stop
+</div>
 @endsection

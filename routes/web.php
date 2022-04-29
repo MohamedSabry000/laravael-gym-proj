@@ -39,11 +39,15 @@ Route::get('/admin/gym/{id}', [App\Http\Controllers\GymController::class, 'show'
 Route::get('/admin/addEditGym/{id}', [App\Http\Controllers\GymController::class, 'edit'])->name('gym.addEdit')->middleware('auth');
 Route::put('/admin/storeEditGym/{id}', [App\Http\Controllers\GymController::class, 'editGym'])->name('gym.storeEditGym')->middleware('auth');
 
-
+/**         Gym Managers         */
 Route::get('/admin/gymManagers', [App\Http\Controllers\GymManagerController::class, 'showGymManagers'])->name('showGymManagers')->middleware('auth');
+
+Route::get('/admin/addGymManager', [App\Http\Controllers\GymManagerController::class, 'create'])->name('gymManager.create')->middleware('auth');
+Route::post('/admin/gymManagers', [App\Http\Controllers\GymManagerController::class, 'store'])->name('gymManager.store')->middleware('auth');
+
 Route::get('/admin/gymManager/{id}', [App\Http\Controllers\GymManagerController::class, 'show'])->name('show')->middleware('auth');
 Route::get('/admin/gymManagerDel/{id}', [App\Http\Controllers\GymManagerController::class, 'delete'])->name('delete')->middleware('auth');
-
+/************************ */
 Route::get('/admin/allusers', [App\Http\Controllers\AdminController::class, 'showUsers'])->name('showUsers')->middleware('auth');
 
 /**         Cities         */
