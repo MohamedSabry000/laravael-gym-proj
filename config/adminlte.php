@@ -367,13 +367,13 @@ return [
                 ],
                 [
                     'text' => 'Add Session',
-                    'url'  => '/admin/addTarningSessions',
+                    'url'  => '/admin/addTraningSession',
                 ],
             ],
         ],
         [
             'text'    => 'Attendance Table',
-            'url'     => '#',
+            'url'     => '/admin/attendance',
             'icon'    => 'fas fa-fw fa-book',
         ],
         [

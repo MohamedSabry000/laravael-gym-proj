@@ -42,7 +42,7 @@ class CityController extends Controller
                         return User::find($row->manager_id)->name??"not assiend";
                     })
                     ->addColumn('action', function ($row) {
-                        $btn = '<a href="/admin/cities/'.$row->id.'" class="edit btn btn-primary btn-sm">View</a> ';
+                        $btn =  '<a href="/admin/cities/'.$row->id.'" class="edit btn btn-primary btn-sm">View</a> ';
                         $btn .= '<a href="/admin/addEditCity/'.$row->id.'" class="edit btn btn-warning btn-sm">Edit</a> ';
                         $btn .= '<a href="/admin/delCities/'.$row->id.'" class="edit btn btn-danger btn-sm">Delete</a>';
     

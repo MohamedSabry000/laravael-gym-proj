@@ -2,6 +2,7 @@
 
 @section('title', 'List')
 @section('content')
+
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper content-inner-wrapper">
         <!-- Content Header (Page header) -->
@@ -42,8 +43,11 @@
                             <tr>
                                 <th class="project-state">Gyms Name</th>
                                 <th class="project-state">Gyms Cover Image</th>
+                                <th class="project-state">Created at</th>
                                 <th class="project-state">Gym City Name</th>
+                                <?= ($role) ? "<th class='project-state'>Manager name</th>": '<th></th>' ?>
                                 <th class="project-state">Action</th>
+                                
                             </tr>
                         </thead>
                         <tbody>
@@ -79,11 +83,9 @@
     <!-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script> -->
     <!-- <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script> -->
     <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
-
     <script type="text/javascript">
-        $(document).ready( function () {
-            $('#myTable').DataTable();
-        } );
+
+      
         $(function () {
 
             var table = $('.data-table').DataTable({
@@ -91,10 +93,12 @@
                 serverSide: true,
                 ajax: "{{ route('showGyms') }}",
                 columns: [
-                    {data: 'name',      name: 'name'},
-                    {data: 'avatar',    name: 'cover image',overable:false,searchable:false},
-                    {data: 'city_name', name: 'city name'},
-                    {data: 'action',    name: 'view', orderable: false, searchable: false},
+                    {data: 'name',           name: 'name'},
+                    {data: 'avatar',         name: 'cover image',overable:false,searchable:false},
+                    {data: 'created_at',     name: 'created_at'},
+                    {data: 'city_name',      name: 'city name'},
+                    {data: 'managername1' ,  name: 'manager name'},
+                    {data: 'action',         name: 'view', orderable: false, searchable: false},
                 ]
             });
 

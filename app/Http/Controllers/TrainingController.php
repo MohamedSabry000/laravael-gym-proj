@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Attendance;
+use App\Models\TrainingPackage;
 use Illuminate\Http\Request;
 use App\Models\TrainingSession;
 use App\Models\User;
@@ -35,19 +36,26 @@ class TrainingController extends Controller
     public function create()
     {
         $trainingSessions = TrainingSession::all();
-
         $users = User::all();
+        $packages = TrainingPackage::all();
 
         foreach ($users as $user) {
             if ($user->hasRole('coach')) {
                 $coaches[] = $user;
             }
         }
-        return view('TrainingSessions.training_session', [
+        foreach ($packages as $package) {
+            if ($package->id) {
+                $Tpackages[] = $package;
+            }
+        }
+        return view('TrainingSessions.create', [
             'trainingSessions' => $trainingSessions,
             'coaches' => $coaches,
+            'Tpackages' =>$Tpackages,
         ]);
     }
+    
     #=======================================================================================#
     #			                             store                                         	#
     #=======================================================================================#
@@ -62,8 +70,6 @@ class TrainingController extends Controller
 
         ]);
 
-
-
         $validate_old_seesions = TrainingSession::where('day', '=', $request->day)->where("starts_at", "!=", null)->where("finishes_at", "!=", null)->where(function ($q) use ($request) {
             $q->whereRaw("starts_at = '$request->starts_at' and finishes_at ='$request->finishes_at'")
                 ->orwhereRaw("starts_at < '$request->starts_at' and finishes_at > '$request->finishes_at'")
@@ -73,6 +79,8 @@ class TrainingController extends Controller
                 ->orwhereRaw("'starts_at' > 'finishes_at'")
                 ->orwhereRaw("starts_at > '$request->starts_at' and finishes_at < '$request->finishes_at'");
         })->get()->toArray();
+
+        
 
 
         if (count($validate_old_seesions) > 0)
@@ -84,7 +92,7 @@ class TrainingController extends Controller
         $data = array('user_id' => $user_id, "training_session_id" => $id);
         DB::table('training_session_user')->insert($data);
 
-        return redirect(('TrainingSessions.listSessions'));
+        return redirect(route('showSessions'));
     }
     #=======================================================================================#
     #			                             show                                         	#
@@ -97,7 +105,7 @@ class TrainingController extends Controller
                     ->addIndexColumn()
 
                     ->addColumn('action', function ($row) {
-                        $btn = '<a href="/admin/tarning-session/'.$row->id.'" class="edit btn btn-primary btn-sm">View</a> ';
+                        $btn = '<a href="/admin/tarning-sessions/'.$row->id.'" class="edit btn btn-primary btn-sm">View</a> ';
                         $btn .= '<a href="/admin/addEditSession/'.$row->id.'" class="edit btn btn-warning btn-sm">Edit</a> ';
                         $btn .= '<a href="/admin/delTaraningSession/'.$row->id.'" class="edit btn btn-danger btn-sm">Delete</a>';
     
@@ -107,16 +115,14 @@ class TrainingController extends Controller
                     ->make(true);
         }
         return view('TrainingSessions.listSessions');
-        // return view('trainingPackeges.show_training_package', ['package' => $package]);
     }
     public function show($id)
     {
-        $userId = DB::select("select user_id from training_session_user where training_session_id = $id");
 
-        $user = User::find($userId);
         
         $trainingSession = TrainingSession::findorfail($id);
-        return view('TrainingSessions.show_training_session', ['trainingSession' => $trainingSession]);
+        $package = TrainingPackage::findorfail($trainingSession->training_package_id);
+        return view('TrainingSessions.show', ['trainingSession' => $trainingSession, 'package' => $package]);
     }
 
     #=======================================================================================#
@@ -132,9 +138,6 @@ class TrainingController extends Controller
     }
 
 
-    #=======================================================================================#
-    #			                             update                                         #
-    #=======================================================================================#
     public function editSession(Request $request, $id)
     {
         $request->validate([
@@ -167,7 +170,7 @@ class TrainingController extends Controller
 
         TrainingSession::where('id', $id)->update([
 
-            'name' => $request->all()['name'],
+            'name' => $request->name,
             'day' => $request->day,
             'starts_at' => $request->starts_at,
             'finishes_at' => $request->finishes_at,

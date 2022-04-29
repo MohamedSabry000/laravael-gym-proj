@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\GymController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -31,13 +31,13 @@ Route::get('/admin/allusers', [App\Http\Controllers\AdminController::class, 'sho
 
 
 /* Routes for gyms */
-Route::get('/admin/gyms', [App\Http\Controllers\AdminController::class, 'showGyms'])->name('showGyms')->middleware('auth');
-Route::get('/admin/addgym', [App\Http\Controllers\GymController::class , 'create'])->name('createGym')->middleware('auth');
-Route::post('/admin/storegym', [App\Http\Controllers\GymController::class, 'store'])->name('storeGym')->middleware('auth');
-Route::get('/admin/deletegym/{id}', [App\Http\Controllers\GymController::class, 'delete'])->name('deleteGym')->middleware('auth');
-Route::get('/admin/gym/{id}', [App\Http\Controllers\GymController::class, 'show'])->name('showGym')->middleware('auth');
-Route::get('/admin/addEditGym/{id}', [App\Http\Controllers\GymController::class, 'edit'])->name('gym.addEdit')->middleware('auth');
-Route::put('/admin/storeEditGym/{id}', [App\Http\Controllers\GymController::class, 'editGym'])->name('gym.storeEditGym')->middleware('auth');
+Route::get('/admin/gyms', [GymController::class, 'showGyms'])->name('showGyms')->middleware('auth');
+Route::get('/admin/addgym', [GymController::class , 'create'])->name('createGym')->middleware('auth');
+Route::post('/admin/storegym', [GymController::class, 'store'])->name('storeGym')->middleware('auth');
+Route::get('/admin/deletegym/{id}', [GymController::class, 'delete'])->name('deleteGym')->middleware('auth');
+Route::get('/admin/gym/{id}', [GymController::class, 'show'])->name('showGym')->middleware('auth');
+Route::get('/admin/addEditGym/{id}', [GymController::class, 'edit'])->name('gym.addEdit')->middleware('auth');
+Route::put('/admin/storeEditGym/{id}', [GymController::class, 'editGym'])->name('gym.storeEditGym')->middleware('auth');
 
 /**         Gym Managers         */
 Route::get('/admin/gymManagers', [App\Http\Controllers\GymManagerController::class, 'showGymManagers'])->name('showGymManagers')->middleware('auth');
@@ -90,14 +90,19 @@ Route::put('/admin/storeEditPackage/{id}', [App\Http\Controllers\TrainingPackage
 ////***************************traning sessions */
 
 Route::get('/admin/tarning-sessions', [App\Http\Controllers\TrainingController::class, 'showSessions'])->name('showSessions')->middleware('auth');
-// Route::get('/admin/addTraningPackage', [App\Http\Controllers\TrainingPackagesController::class, 'create'])->name('traningPackage.create')->middleware('auth');
-// Route::post('/tarning-packages', [App\Http\Controllers\TrainingPackagesController::class, 'store'])->name('traningPackage.store')->middleware('auth');
-// Route::get('/admin/tarning-packages/{id}', [App\Http\Controllers\TrainingPackagesController::class, 'show'])->name('trainingPackeges.show')->middleware('auth');
+Route::get('/admin/addTraningSession', [App\Http\Controllers\TrainingController::class, 'create'])->name('traningSession.create')->middleware('auth');
+Route::post('/tarning-sessions', [App\Http\Controllers\TrainingController::class, 'store'])->name('traningSession.store')->middleware('auth');
+Route::get('/admin/tarning-sessions/{id}', [App\Http\Controllers\TrainingController::class, 'show'])->name('trainingSession.show')->middleware('auth');
 Route::get('/admin/delTaraningSession/{id}', [App\Http\Controllers\TrainingController::class, 'deleteSession'])->name('trainingSession.delete')->middleware('auth');
-// // Route::post('/admin/storeCity', [App\Http\Controllers\CityController::class, 'store'])->name('store')->middleware('auth');
 
 Route::get('/admin/addEditSession/{id}', [App\Http\Controllers\TrainingController::class, 'edit'])->name('traningSession.edit')->middleware('auth');
 Route::put('/admin/storeEditSession/{id}', [App\Http\Controllers\TrainingController::class, 'editSession'])->name('traningSession.storeEdit')->middleware('auth');
+
+
+
+
+//****************************Attendance Table */
+Route::get('/admin/attendance', [App\Http\Controllers\AttendanceController::class, 'showAttendance'])->name('showAttendance')->middleware('auth');
 
 // Route::get('admin', function () {
 //     return view('admin');
