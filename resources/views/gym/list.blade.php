@@ -45,8 +45,8 @@
                                 <th class="project-state">Gyms Cover Image</th>
                                 <th class="project-state">Created at</th>
                                 <th class="project-state">Gym City Name</th>
-                                <th class="project-state">Action</th>
                                 <?= ($role) ? "<th class='project-state'>Manager name</th>": '<th></th>' ?>
+                                <th class="project-state">Action</th>
                                 
                             </tr>
                         </thead>
@@ -83,11 +83,9 @@
     <!-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script> -->
     <!-- <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script> -->
     <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
-
     <script type="text/javascript">
-        $(document).ready( function () {
-            $('#myTable').DataTable();
-        } );
+
+      
         $(function () {
 
             var table = $('.data-table').DataTable({
@@ -99,8 +97,8 @@
                     {data: 'avatar',         name: 'cover image',overable:false,searchable:false},
                     {data: 'created_at',     name: 'created_at'},
                     {data: 'city_name',      name: 'city name'},
+                    {data: 'managername1' ,  name: 'manager name'},
                     {data: 'action',         name: 'view', orderable: false, searchable: false},
-                    {data: 'managername1' ,  name: 'manager name'}
                 ]
             });
 

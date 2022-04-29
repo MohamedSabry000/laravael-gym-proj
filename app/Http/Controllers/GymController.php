@@ -56,44 +56,37 @@ class GymController extends Controller
         $data = Gym::with('city.manager')->get();
         $role = Auth::user()->hasRole('admin');
         
-        // foreach( $data as $d ) {
-        //     if( !empty($d->city->manager) ) {
-        //         echo $d->city->manager->name;   
-        //     }
-        // }
-
         if ($request->ajax()) {        
            
-            return DataTables::of($data)->addIndexColumn() ->addColumn('action', function($row){    
+            return DataTables::of($data)->addIndexColumn()->addColumn('action', function($row){    
             // Crud operations
-            $btn =  "<a href='/admin/gym/".$row->id."' class='btn btn btn-primary'>View</a>";
-            $btn .= "<a href='/admin/addEditGym/".$row->id."' class = 'btn btn-success'>Edit</a>";
-            $btn .= "<a href='/admin/deletegym/".$row->id."' class = 'btn btn-danger'>Delete</a>";
+            $btn =  "<a href='/admin/gym/".$row->id."' class='btn btn-sm btn-primary'>View</a>";
+            $btn .= "<a href='/admin/addEditGym/".$row->id."' class = 'btn btn-sm btn-success'>Edit</a>";
+            $btn .= "<a href='/admin/deletegym/".$row->id."' class = 'btn btn-sm btn-danger'>Delete</a>";
             return $btn;
             })->addColumn('city_name', function($row){
-                // Check if city name not null
-                return !empty($row->city->name) ? $row->city->name : 'no city found';
+                    // Check if city name not null
+                    return !empty($row->city->name) ? $row->city->name : 'no city found';
             })->addColumn('avatar', function($row){
-                $avatar = "<img width='80' height='80' src='".$row->cover_image."' />";
-                return $avatar;
-                
+                    $avatar = "<img width='50' height='50' src='".$row->cover_image."' />";
+                    return $avatar;
+                    
             })->addColumn('created_at', function($row){
-                $date = $row->created_at->format('Y.m.d');
-                return $date;               
+                    $date = $row->created_at->format('Y-m-d');
+                    return $date;               
             })->addColumn('managername1', function($row){
-                $role2 = Auth::user()->hasRole('admin');
-                // global $role;
-                $managerName = '';
-                
-                if( $role2 ) {
-                    // $managerName = 'ayhaga';
-                    $managerName = !empty($row->city)  ? !empty($row->city->manager) ? $row->city->manager->name : 'no manager assigned' : 'no manager assigned';
-                 }
-                 return  $managerName ;
+                    $roleAdmin = Auth::user()->hasRole('admin');
+            
+                    $managerName = '';    
+                    if( $roleAdmin ) {
+                        $managerName = !empty($row->city)  ? !empty($row->city->manager) ? $row->city->manager->name : 'no manager' : 'no manager';
+                    }
+                    return  $managerName ;
             })->rawColumns(['action','avatar'])->make(true);
         }
 
-        return view('gym.list',['role'=>$role]);
+        return view('gym.list',[ 
+                                'role' => $role ]);
     }
     #=======================================================================================#
 #			                            Show Function                                 	#
@@ -155,8 +148,8 @@ class GymController extends Controller
     #=======================================================================================#
     public function edit($id)
 
-    {   
-        $users = User::role('gymManager');
+    {
+        $users = User::with('gym');
         $cities = City::all();
         $singleGym = Gym::find($id);
         return view("gym.edit", ['gym' => $singleGym, 'users' => $users, 'cities' => $cities,]);
@@ -170,7 +163,6 @@ class GymController extends Controller
         $request->validate([
             'name'         => 'required|max:20',
             'city_id'      => 'required',
-
             'cover_image'  => 'nullable|image|mimes:jpg,jpeg',
         ]);
 

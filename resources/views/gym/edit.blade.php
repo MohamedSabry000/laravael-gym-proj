@@ -12,6 +12,7 @@
     </ul>
 </div>
 @endif
+<?php dd($users) ?>
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper pb-4">
     <!-- Content Header (Page header) -->
