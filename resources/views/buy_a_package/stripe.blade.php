@@ -56,22 +56,22 @@
       @csrf
 
       <div class="form-group">
-            <label for="city">City</label>
-            <select required class=" form-control" name="city_id" id="city">
-                <optgroup label="Available City">
-                    @foreach ($cities as $city)
-                    <option value={{ $city->id }}>{{ $city->name }}</option>
+            <label for="city">Users</label>
+            <select required class=" form-control" name="user_id" id="users">
+                <optgroup label="Available Users">
+                    @foreach ($users as $user)
+                    <option value={{ $user->id }}>{{ $user->name }} * {{ $user->email }}</option>
                     @endforeach
                 </optgroup>
             </select>
         </div>
 
         <div class="form-group">
-            <label for="city">City</label>
-            <select required class=" form-control" name="city_id" id="city">
-                <optgroup label="Available City">
-                    @foreach ($cities as $city)
-                    <option value={{ $city->id }}>{{ $city->name }}</option>
+            <label for="city">Packages</label>
+            <select required class=" form-control" name="package_id" id="package">
+                <optgroup label="Available Package">
+                    @foreach ($packages as $package)
+                    <option value={{ $package->id }}>{{ $package->name }} => {{ $package->price }}$</option}}>
                     @endforeach
                 </optgroup>
             </select>
@@ -119,7 +119,7 @@
 
       <div class="row">
           <div class="col-xs-12">
-              <button class="btn btn-primary btn-lg btn-block" type="submit">Pay Now ($100)</button>
+              <button class="btn btn-primary btn-lg btn-block" type="submit">Pay Now</button>
           </div>
       </div>
         
