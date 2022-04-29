@@ -373,7 +373,7 @@ return [
         ],
         [
             'text'    => 'Attendance Table',
-            'url'     => '#',
+            'url'     => '/admin/attendance',
             'icon'    => 'fas fa-fw fa-book',
         ],
         [
