@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\TrainingPackage;
+use App\Models\Gym;
+
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -29,10 +31,12 @@ class TrainingPackagesController extends Controller
     public function create()
     {
         $packages = TrainingPackage::all();
+        $gyms=Gym::all();
 
 
-        return view('trainingPackeges.creatPackege', [
+        return view('trainingPackeges.create', [
             'packages' => $packages,
+            'gyms' => $gyms
 
         ]);
     }
@@ -58,7 +62,7 @@ class TrainingPackagesController extends Controller
 
 
 
-        return redirect()->route('trainingPackeges.listPackeges');
+        return redirect(route('showPackages'));
     }
     #=======================================================================================#
     #			                             show                                         	#
