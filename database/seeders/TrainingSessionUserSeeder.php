@@ -15,7 +15,7 @@ class TrainingSessionUserSeeder extends Seeder
      */
     public function run()
     {
-        for ($i = 0; $i < 10; $i++) {
+        for ($i = 0; $i < 25; $i++) {
             DB::table('training_session_user')->insert([
                 'user_id' => rand(1, 25),
                 'training_session_id' => rand(1, 10),

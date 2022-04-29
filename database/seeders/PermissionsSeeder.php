@@ -26,28 +26,28 @@ class PermissionsSeeder extends Seeder
         #			                         create permissions                              	#
         #=======================================================================================#
         $loginPermission = Permission::create(['name' => 'login']);
-        // $updateProfilePermission = Permission::create(['name' => 'updateProfile']);
-        // $showTrainingSessionsPermission = Permission::create(['name' => 'showTrainingSessions']);
-        // $showAttendanceHistoryPermission = Permission::create(['name' => 'showAttendanceHistory']);
-        // $attendTrainingSessionPermission = Permission::create(['name' => 'attendTrainingSession']);
-        // $showRemainingSessionsPermission = Permission::create(['name' => 'showRemainingSessions']);
+        $updateProfilePermission = Permission::create(['name' => 'updateProfile']);
+        $showTrainingSessionsPermission = Permission::create(['name' => 'showTrainingSessions']);
+        $showAttendanceHistoryPermission = Permission::create(['name' => 'showAttendanceHistory']);
+        $attendTrainingSessionPermission = Permission::create(['name' => 'attendTrainingSession']);
+        $showRemainingSessionsPermission = Permission::create(['name' => 'showRemainingSessions']);
         $crudUserPermission = Permission::create(['name' => 'crudUser']);
-        // $banUsersPermission = Permission::create(['name' => 'banUsers']);
-        // $assignCoachPermission = Permission::create(['name' => 'assignCoach']);
-        // $buyPackageForUserPermission = Permission::create(['name' => 'buyPackageForUser']);
-        // $crudCoachPermission = Permission::create(['name' => 'crudCoach']);
-        // $banCoachPermission = Permission::create(['name' => 'banCoach']);
-        // $showPurchasesHistoryPermission = Permission::create(['name' => 'showPurchasesHistory']);
-        // $showRevenuePermission = Permission::create(['name' => 'showRevenue']);
-        // $crudAttendancePermission = Permission::create(['name' => 'crudAttendance']);
-        // $crudTrainingSessionsPermission = Permission::create(['name' => 'crudTrainingSessions']);
-        // $crudGymPermission = Permission::create(['name' => 'crudGym']);
-        // $banGymManagerPermission = Permission::create(['name' => 'banGymManager']);
-        // $crudGymManagerPermission = Permission::create(['name' => 'crudGymManager']);
-        // $crudCityPermission = Permission::create(['name' => 'crudCity']);
-        // $banCityManagerPermission = Permission::create(['name' => 'banCityManager']);
-        // $crudCityManagerPermission = Permission::create(['name' => 'crudCityManager']);
-        // $crudTrainingPackagePermission = Permission::create(['name' => 'crudTrainingPackage']);
+        $banUsersPermission = Permission::create(['name' => 'banUsers']);
+        $assignCoachPermission = Permission::create(['name' => 'assignCoach']);
+        $buyPackageForUserPermission = Permission::create(['name' => 'buyPackageForUser']);
+        $crudCoachPermission = Permission::create(['name' => 'crudCoach']);
+        $banCoachPermission = Permission::create(['name' => 'banCoach']);
+        $showPurchasesHistoryPermission = Permission::create(['name' => 'showPurchasesHistory']);
+        $showRevenuePermission = Permission::create(['name' => 'showRevenue']);
+        $crudAttendancePermission = Permission::create(['name' => 'crudAttendance']);
+        $crudTrainingSessionsPermission = Permission::create(['name' => 'crudTrainingSessions']);
+        $crudGymPermission = Permission::create(['name' => 'crudGym']);
+        $banGymManagerPermission = Permission::create(['name' => 'banGymManager']);
+        $crudGymManagerPermission = Permission::create(['name' => 'crudGymManager']);
+        $crudCityPermission = Permission::create(['name' => 'crudCity']);
+        $banCityManagerPermission = Permission::create(['name' => 'banCityManager']);
+        $crudCityManagerPermission = Permission::create(['name' => 'crudCityManager']);
+        $crudTrainingPackagePermission = Permission::create(['name' => 'crudTrainingPackage']);
         #=======================================================================================#
         #			                            create roles                                  	#
         #=======================================================================================#
@@ -61,25 +61,25 @@ class PermissionsSeeder extends Seeder
         #=======================================================================================#
         $adminRole->syncPermissions([
             $loginPermission,
-            // $updateProfilePermission,
-            // $showTrainingSessionsPermission,
+            $updateProfilePermission,
+            $showTrainingSessionsPermission,
             $crudUserPermission,
-            // $banUsersPermission,
-            // $assignCoachPermission,
-            // $buyPackageForUserPermission,
-            // $crudCoachPermission,
-            // $banCoachPermission,
-            // $showPurchasesHistoryPermission,
-            // $showRevenuePermission,
-            // $crudAttendancePermission,
-            // $crudTrainingSessionsPermission,
-            // $crudGymPermission,
-            // $banGymManagerPermission,
-            // $crudGymManagerPermission,
-            // $crudCityPermission,
-            // $banCityManagerPermission,
-            // $crudCityManagerPermission,
-            // $crudTrainingPackagePermission
+            $banUsersPermission,
+            $assignCoachPermission,
+            $buyPackageForUserPermission,
+            $crudCoachPermission,
+            $banCoachPermission,
+            $showPurchasesHistoryPermission,
+            $showRevenuePermission,
+            $crudAttendancePermission,
+            $crudTrainingSessionsPermission,
+            $crudGymPermission,
+            $banGymManagerPermission,
+            $crudGymManagerPermission,
+            $crudCityPermission,
+            $banCityManagerPermission,
+            $crudCityManagerPermission,
+            $crudTrainingPackagePermission
         ]);
 
         #=======================================================================================#
@@ -87,58 +87,58 @@ class PermissionsSeeder extends Seeder
         #=======================================================================================#
         $cityManagerRole->syncPermissions([
             $loginPermission,
-            // $updateProfilePermission,
-            // $showTrainingSessionsPermission,
-            // $crudUserPermission,
-            // $banUsersPermission,
-            // $assignCoachPermission,
-            // $buyPackageForUserPermission,
-            // $crudCoachPermission,
-            // $banCoachPermission,
-            // $showPurchasesHistoryPermission,
-            // $showRevenuePermission,
-            // $crudAttendancePermission,
-            // $crudTrainingSessionsPermission,
-            // $crudGymPermission,
-            // $banGymManagerPermission,
-            // $crudGymManagerPermission
+            $updateProfilePermission,
+            $showTrainingSessionsPermission,
+            $crudUserPermission,
+            $banUsersPermission,
+            $assignCoachPermission,
+            $buyPackageForUserPermission,
+            $crudCoachPermission,
+            $banCoachPermission,
+            $showPurchasesHistoryPermission,
+            $showRevenuePermission,
+            $crudAttendancePermission,
+            $crudTrainingSessionsPermission,
+            $crudGymPermission,
+            $banGymManagerPermission,
+            $crudGymManagerPermission
         ]);
         #=======================================================================================#
         #			                    give gym Manager permissions                            #
         #=======================================================================================#
         $gymManagerRole->syncPermissions([
             $loginPermission,
-            // $updateProfilePermission,
-            // $showTrainingSessionsPermission,
-            // $crudUserPermission,
-            // $banUsersPermission,
-            // $assignCoachPermission,
-            // $buyPackageForUserPermission,
-            // $crudCoachPermission,
-            // $banCoachPermission,
-            // $showPurchasesHistoryPermission,
-            // $showRevenuePermission,
-            // $crudAttendancePermission,
-            // $crudTrainingSessionsPermission,
+            $updateProfilePermission,
+            $showTrainingSessionsPermission,
+            $crudUserPermission,
+            $banUsersPermission,
+            $assignCoachPermission,
+            $buyPackageForUserPermission,
+            $crudCoachPermission,
+            $banCoachPermission,
+            $showPurchasesHistoryPermission,
+            $showRevenuePermission,
+            $crudAttendancePermission,
+            $crudTrainingSessionsPermission,
         ]);
         #=======================================================================================#
         #			                      give user permissions                             	#
         #=======================================================================================#
         $userRole->syncPermissions([
             $loginPermission,
-            // $updateProfilePermission,
-            // $showTrainingSessionsPermission,
-            // $showAttendanceHistoryPermission,
-            // $attendTrainingSessionPermission,
-            // $showRemainingSessionsPermission,
+            $updateProfilePermission,
+            $showTrainingSessionsPermission,
+            $showAttendanceHistoryPermission,
+            $attendTrainingSessionPermission,
+            $showRemainingSessionsPermission,
         ]);
         #=======================================================================================#
         #			                      give coach permissions                             	#
         #=======================================================================================#
         $coachRole->syncPermissions([
             $loginPermission,
-            // $updateProfilePermission,
-            // $showTrainingSessionsPermission,
+            $updateProfilePermission,
+            $showTrainingSessionsPermission,
         ]);
     }
 }
