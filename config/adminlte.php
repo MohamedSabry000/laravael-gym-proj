@@ -263,11 +263,11 @@ return [
             'submenu' => [
                 [
                     'text' => 'All City Managers',
-                    'url'  => '#',
+                    'url'  => '/admin/allCityManagers',
                 ],
                 [
                     'text' => 'Add New',
-                    'url'  => '#',
+                    'url'  => '/admin/addCityManager',
                 ],
             ],
         ],
