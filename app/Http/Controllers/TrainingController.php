@@ -168,7 +168,7 @@ class TrainingController extends Controller
 
         TrainingSession::where('id', $id)->update([
 
-            'name' => $request->all()['name'],
+            'name' => $request->name,
             'day' => $request->day,
             'starts_at' => $request->starts_at,
             'finishes_at' => $request->finishes_at,
