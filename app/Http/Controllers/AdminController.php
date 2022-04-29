@@ -77,7 +77,7 @@ class AdminController extends Controller
             return DataTables::of($data)->addIndexColumn() ->addColumn('action', function($row){    
             // Crud operations
             $btn =  "<a href='/admin/gym/".$row->id."' class='btn btn btn-primary'>View</a>";
-            $btn .= "<a href = '".$row->id."' class = 'btn btn-success'>Edit</a>";
+            $btn .= '<a href="/admin/addEditGym/'.$row->id.'" class="edit btn btn-warning btn-sm">Edit</a> ';
             $btn .= "<a href = '/admin/deletegym/".$row->id."' class = 'btn btn-danger'>Delete</a>";
             return $btn;
             })->addColumn('city_name', function($row){
