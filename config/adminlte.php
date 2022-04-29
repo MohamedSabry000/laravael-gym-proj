@@ -367,7 +367,7 @@ return [
                 ],
                 [
                     'text' => 'Add Session',
-                    'url'  => '/admin/addTarningSessions',
+                    'url'  => '/admin/addTraningSession',
                 ],
             ],
         ],
