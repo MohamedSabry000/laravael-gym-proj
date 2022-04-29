@@ -39,9 +39,9 @@ class EmailVerificationController extends Controller
         }
 
         $user = User::findOrFail($user_id);
+        // dd($user);
 
         if (!$user->hasVerifiedEmail()) {
-            dd($user_id);
             $user->markEmailAsVerified();
             $token = $user->createToken('GymProjectToken')->plainTextToken;
             $user->notify(new WelcomeEmailNotification($user));
