@@ -10,7 +10,7 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1>All Cities</h1>
+                        <h1>All Gym Managers</h1>
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
@@ -41,9 +41,9 @@
                         <thead>
                             <tr>
                                 <th class="project-state">ID</th>
+                                <th class="project-state">Picture</th>
                                 <th class="project-state"> Name</th>
                                  <th class="project-state">Email</th>
-                                <th class="project-state">Picture</th>
                                 <th class="project-state">National ID</th>
                                 <th class="project-state"> Actions</th>
                                 <th class="project-state"></th>
@@ -94,13 +94,12 @@
                     ajax: "{{ route('showGymManagers') }}",
                     columns: [
                         {data: 'id', name: 'id'},
+                        {data: 'avatar', name: 'profile_image',overable:false,searchable:false},
                         {data: 'name', name: 'name'},
                         {data: 'email', name: 'email'},
-                        {data: 'avatar', name: 'profile_image',overable:false,searchable:false},
                         {data: 'national_id', name: 'national_id'},
 
-                        {data: 'show', name: 'show', orderable: false, searchable: false},
-                        {data: 'delete', name: 'delete', orderable: false, searchable: false},
+                        {data: 'actions', name: 'actions', orderable: false, searchable: false}
                     ]
                 });
 
