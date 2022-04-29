@@ -137,6 +137,6 @@ class TrainingPackagesController extends Controller
     {
         $package = TrainingPackage::findorfail($id);
         $package->delete();
-        return response()->json(['success' => 'Record deleted successfully!']);
+        return redirect(route('showPackages'));
     }
 }
