@@ -46,7 +46,9 @@ Route::get('email/verify/{id}', [EmailVerificationController::class, 'verify'])-
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('update_profile', [AuthController::class, 'updateProfile']);
+    Route::get('get_sessions', [SessionsController::class, 'getSessionsForUser']);
 });
+
 
 
 
