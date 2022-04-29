@@ -85,8 +85,7 @@ class GymController extends Controller
             })->rawColumns(['action','avatar'])->make(true);
         }
 
-        return view('gym.list',[ 
-                                'role' => $role ]);
+        return view('gym.list',['role' => $role ]);
     }
     #=======================================================================================#
 #			                            Show Function                                 	#
