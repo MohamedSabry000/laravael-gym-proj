@@ -128,12 +128,14 @@ class TrainingController extends Controller
 
         $trainingSession = TrainingSession::find($id);
 
-        return view('TrainingSessions.edit_training_session', ['trainingSession' => $trainingSession, 'trainingSessions' => $trainingSessions]);
+        return view('TrainingSessions.edit', ['trainingSession' => $trainingSession, 'trainingSessions' => $trainingSessions]);
     }
+
+
     #=======================================================================================#
     #			                             update                                         #
     #=======================================================================================#
-    public function update(Request $request, $id)
+    public function editSession(Request $request, $id)
     {
         $request->validate([
             'name' => ['required', 'string'],
@@ -163,8 +165,6 @@ class TrainingController extends Controller
             return back()->withErrors("You can't edit this session because there are users in it!")->withInput();
         }
 
-
-
         TrainingSession::where('id', $id)->update([
 
             'name' => $request->all()['name'],
@@ -175,18 +175,24 @@ class TrainingController extends Controller
 
 
         ]);
-        return redirect()->route('TrainingSessions.listSessions');
+        return redirect(route('showSessions'));
     }
+    
+
     #=======================================================================================#
-    #			                             destroy                                       	#
+    #			                             delete                                       	#
     #=======================================================================================#
     public function deleteSession($id)
     {
 
-
+        if (count(DB::select("select * from training_session_user where training_session_id = $id")) == 0) {
             $trainingSession = TrainingSession::findorfail($id);
             $trainingSession->delete();
             return redirect(route('showSessions'));
+        }
+        else {
+            return back()->withErrors("You can't delete this session because there are users in it!")->withInput();
+        }
        
     }
 
