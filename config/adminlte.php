@@ -349,11 +349,11 @@ return [
             'submenu' => [
                 [
                     'text' => 'Add Package',
-                    'url'  => '#',
+                    'url'  => '/admin/addTraningPackage/',
                 ],
                 [
                     'text' => 'List Packages',
-                    'url'  => '#',
+                    'url'  => '/admin/tarning-packages',
                 ],
             ],
         ],

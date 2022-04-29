@@ -4,11 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\TrainingPackage;
+use App\Models\Gym;
+
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 
+use DataTables;
 class TrainingPackagesController extends Controller
 {
     #=======================================================================================#
@@ -28,10 +31,12 @@ class TrainingPackagesController extends Controller
     public function create()
     {
         $packages = TrainingPackage::all();
+        $gyms=Gym::all();
 
 
-        return view('trainingPackeges.creatPackege', [
+        return view('trainingPackeges.create', [
             'packages' => $packages,
+            'gyms' => $gyms
 
         ]);
     }
@@ -57,16 +62,39 @@ class TrainingPackagesController extends Controller
 
 
 
-        return redirect()->route('trainingPackeges.listPackeges');
+        return redirect(route('showPackages'));
     }
     #=======================================================================================#
     #			                             show                                         	#
     #=======================================================================================#
+    public function showPackages(Request $request)
+    {
+        if ($request->ajax()) {
+            $data = TrainingPackage::select('*');
+            return DataTables::of($data)
+                    ->addIndexColumn()
+
+                    ->addColumn('action', function ($row) {
+                        $btn = '<a href="/admin/tarning-packages/'.$row->id.'" class="edit btn btn-primary btn-sm">View</a> ';
+                        $btn .= '<a href="/admin/addEditPackage/'.$row->id.'" class="edit btn btn-warning btn-sm">Edit</a> ';
+                        $btn .= '<a href="/admin/delTaraningPackage/'.$row->id.'" class="edit btn btn-danger btn-sm">Delete</a>';
+    
+                        return $btn;
+                    })
+                    ->rawColumns(['action'])
+                    ->make(true);
+        }
+        return view('trainingPackeges.list');
+        // return view('trainingPackeges.show_training_package', ['package' => $package]);
+    }
     public function show($id)
     {
-        $package = TrainingPackage::findorfail($id);
-        return view('trainingPackeges.show_training_package', ['package' => $package]);
+        
+        $package = TrainingPackage::find($id);
+ 
+        return view("trainingPackeges.show", ['package' => $package]);
     }
+    
     #=======================================================================================#
     #			                             edit                                         	#
     #=======================================================================================#
@@ -75,13 +103,12 @@ class TrainingPackagesController extends Controller
         $packages = TrainingPackage::all();
 
         $package = TrainingPackage::find($id);
+        $gyms = Gym::all();
 
-        return view('trainingPackeges.editPackege', ['package' => $package, 'packages' => $packages]);
+        return view('trainingPackeges.edit', ['package' => $package, 'packages' => $packages, 'gyms' => $gyms]);
     }
-    #=======================================================================================#
-    #			                             update                                         #
-    #=======================================================================================#
-    public function update(Request $request, $id)
+
+    public function editPackage(Request $request, $id)
     {
         $request->validate([
             'name' => ['required'],
@@ -89,19 +116,15 @@ class TrainingPackagesController extends Controller
             'sessions_number' => ['required', 'numeric', 'min:1', 'max:60']
         ]);
 
+        $packages = TrainingPackage::findorfail($id);
 
-        TrainingPackage::where('id', $id)->update([
-
-            'name' => $request->all()['name'],
-            'price' => $request->price * 100,
-            'sessions_number' => $request->sessions_number,
-
-
-
-
-        ]);
-        return redirect()->route('trainingPackeges.listPackeges');
+        $packages->name = $request->name;
+        $packages->price = $request->price;
+        $packages->sessions_number = $request->sessions_number;
+        $packages->update();
+        return redirect(route('showPackages'));
     }
+
     #=======================================================================================#
     #			                             destroy                                       	#
     #=======================================================================================#
@@ -109,6 +132,6 @@ class TrainingPackagesController extends Controller
     {
         $package = TrainingPackage::findorfail($id);
         $package->delete();
-        return response()->json(['success' => 'Record deleted successfully!']);
+        return redirect(route('showPackages'));
     }
 }

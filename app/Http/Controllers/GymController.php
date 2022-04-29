@@ -17,6 +17,7 @@ class GymController extends Controller
     {
         $request->validate([
             'name'        => ['required', 'string', 'min:2'],
+            
             'cover_image' => ['nullable', 'mimes:jpg,jpeg'],
             'city_id'     => ['required'],
         ]);
@@ -37,7 +38,6 @@ class GymController extends Controller
             'cover_image' => $imageName,
             'city_id'     => $data['city_id'],
         ]);
-        // dd($imageName);
         return redirect(route('showGyms'));
     }   
 
@@ -112,7 +112,7 @@ class GymController extends Controller
     public function edit($id)
 
     {
-        $users = User::role('gymManager')->withoutBanned()->get();
+        $users = User::with('gym');
         $cities = City::all();
         $singleGym = Gym::find($id);
         return view("gym.edit", ['gym' => $singleGym, 'users' => $users, 'cities' => $cities,]);
@@ -120,32 +120,35 @@ class GymController extends Controller
 
 
     //Update Function
-    public function update(Request $request, $id)
+    public function editGym(Request $request, $id)
     {
         $gym = Gym::find($id);
-        $validated = $request->validate([
+        $request->validate([
             'name'         => 'required|max:20',
             'city_id'      => 'required',
+
             'cover_image'  => 'nullable|image|mimes:jpg,jpeg',
         ]);
 
         $gym->name = $request->name;
-
-        if ($request->hasFile('cover_image')) {
+        if ($request->hasFile('cover_image') == null) {
+            $imageName =  $request->cover_image_saved;
+        } else {
             $image = $request->file('cover_image');
             $name = time() . \Str::random(30) . '.' . $image->getClientOriginalExtension();
             $destinationPath = public_path('/imgs');
             $image->move($destinationPath, $name);
-            $imageName = 'imgs/' . $name;
-            if (isset($gym->cover_image))
-                File::delete(public_path('imgs/' . $gym->cover_image));
-            $gym->cover_image = $imageName;
+            $imageName = 'http://localhost:8000/imgs/' . $name;
         }
-        $gym->save();
-        
-        return redirect()->route('gym.list');
+        $gym = Gym::findorfail($id);
+
+        $gym->name = $request->name;
+        $gym->city_id = $request->city_id;
+        $gym->cover_image = $imageName;
+        $gym->update();
+        return redirect(route('showGyms'));
     }
-    
+
     //Delete Function
     public function delete($id)
     {
