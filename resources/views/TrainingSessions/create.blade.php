@@ -72,8 +72,8 @@
                                 <input type="time" id="finishes_at" class="form-control" name="finishes_at">
                             </div>
                             <div class="form-group">
-                                <label for="training_package">Training Package</label>
-                                <select id="training_package" class="form-control custom-select" name="user_id">
+                                <label for="training_package_id">Training Package</label>
+                                <select id="training_package_id" class="form-control custom-select" name="training_package_id">
                                     @foreach ($Tpackages as $package)
                                     <option value="{{$package->id}}"> {{ $package->name }}</option>
                                     @endforeach
