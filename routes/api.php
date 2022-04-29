@@ -46,26 +46,12 @@ Route::get('email/verify/{id}', [EmailVerificationController::class, 'verify'])-
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('update_profile', [AuthController::class, 'updateProfile']);
-    // Route::get('get_sessions', [SessionsController::class, 'getSessionsForUser']);
 });
-// Route::post('/sanctum/token', function (Request $request){
-//     $request->validate([
-//         'email' => 'required|email',
-//         'password' => 'required',
-//         'device_name' => 'required',
-//     ]);
 
-//     $user = User::where('email', $request->email)->first();
 
-//     if (! $user || ! Hash::check($request->password, $user->password)) {
-//         throw ValidationException::withMessages([
-//             'email' => ['The provided credentials are incorrect.'],
-//         ]);
-//     }
 
-//     return $user->createToken($request->device_name)->plainTextToken;
-// });
-
+//Traning Sessions Routes
+Route::get('remaining_sessions',[SessionsController::class,'remaining_training_sessions'])->middleware('auth:sanctum');
 
 
 
