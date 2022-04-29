@@ -3,7 +3,9 @@
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GymController;
+use App\Http\Controllers\StripePaymentController;
 use App\Http\Controllers\CityManagerController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -120,6 +122,10 @@ Route::put('/admin/storeEditSession/{id}', [App\Http\Controllers\TrainingControl
 //****************************Attendance Table */
 Route::get('/admin/attendance', [App\Http\Controllers\AttendanceController::class, 'showAttendance'])->name('showAttendance')->middleware('auth');
 
+
+/**************************** Stripe ********* */
+Route::get('stripe/buyPackage', [StripePaymentController::class, 'stripe']);
+Route::post('stripe/buyPackage', [StripePaymentController::class, 'stripePost'])->name('stripe.post');
 // Route::get('admin', function () {
 //     return view('admin');
 // });

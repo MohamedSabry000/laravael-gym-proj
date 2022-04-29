@@ -383,7 +383,7 @@ return [
         ],
         [
             'text'    => 'Buy Package For Users',
-            'url'     => '#',
+            'url'     => '/stripe/buyPackage',
             'icon'    => 'fas fa-fw fa-user',
         ],
         // [
