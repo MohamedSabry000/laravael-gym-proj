@@ -112,7 +112,7 @@ class GymController extends Controller
     public function edit($id)
 
     {
-        $users = User::role('gymManager');
+        $users = User::with('gym');
         $cities = City::all();
         $singleGym = Gym::find($id);
         return view("gym.edit", ['gym' => $singleGym, 'users' => $users, 'cities' => $cities,]);
