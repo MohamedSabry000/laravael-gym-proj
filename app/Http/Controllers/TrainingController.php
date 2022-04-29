@@ -80,6 +80,8 @@ class TrainingController extends Controller
                 ->orwhereRaw("starts_at > '$request->starts_at' and finishes_at < '$request->finishes_at'");
         })->get()->toArray();
 
+        
+
 
         if (count($validate_old_seesions) > 0)
             return back()->withErrors("please check your time")->withInput();
