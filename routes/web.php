@@ -6,6 +6,7 @@ use App\Http\Controllers\GymController;
 use App\Http\Controllers\StripePaymentController;
 use App\Http\Controllers\CityManagerController;
 
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
