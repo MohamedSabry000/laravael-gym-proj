@@ -51,13 +51,17 @@ class CityController extends Controller
                     ->rawColumns(['action','ManagerName'])
                     ->make(true);
         }
-        
         return view('city.list');
     }
 
-    #=======================================================================================#
     #			                          store Function                                   #
     #=======================================================================================#
+    public function create()
+    {
+        $cityManagers = $this->selectCityManagers();
+        return view("city.create", ['cityManagers' => $cityManagers]);
+    }
+    
     public function store(Request $request)
     {
         $requestData = request()->all();
@@ -71,54 +75,21 @@ class CityController extends Controller
         return redirect(route('showCites'));
     }
 
-    #=======================================================================================#
     #			                          show Function                                   	#
     #=======================================================================================#
     public function show($id)
     {
-        $singleCity = City::findorfail($id);
-        $cityManager = User::findorfail($singleCity->manager_id);
-        return view("city.show", ['singleCity' => $singleCity, 'cityManager' => $cityManager->name]);
+        
+        $singleCity = User::findorfail($id);
+        $cityManager = City::find($singleCity->manager_id);
+        if (is_null($cityManager)) {
+            $cityManager = 'not assigned';
+        } else {
+            $cityManager = $cityManager->name;
+        }
+        return view("city.show", ['singleCity' => $singleCity, 'cityManager' => $cityManager]);
     }
-    // public function show($cityID)
-    // {
-    //     $totalRevenue = 0;
-    //     $gymsManagers = 0;
-    //     $coaches = 0;
-    //     $users = 0;
-
-    //     $cityData = City::find($cityID);
-    //     $userOfCity = $cityData->users;
-
-    //     $citiesManagers = User::find($cityData->manager_id);
-
-    //     foreach ($userOfCity as $usersID) {
-    //         $totalRevenue += (Revenue::where('user_id', '=', $usersID['id'])->sum('price')) / 100;
-    //     }
-    //     $revenueInDollars = number_format($totalRevenue, 2, ',', '.');
-
-    //     $gyms = count(Gym::where('city_id', '=', $cityID)->get());
-
-    //     //get users by type in cityManager city
-    //     foreach ($userOfCity as $singleUser) {
-    //         if ($singleUser->hasRole('gymManager')) {
-    //             $gymsManagers++;
-    //         } elseif ($singleUser->hasRole('coach')) {
-    //             $coaches++;
-    //         } elseif ($singleUser->hasRole('user')) {
-    //             $users++;
-    //         }
-    //     }
-    //     return view("city.show", [
-    //         'citiesManagers' => $citiesManagers,
-    //         'gyms' => $gyms,
-    //         'gymsManagers' => $gymsManagers,
-    //         'coaches' => $coaches,
-    //         'users' => $users,
-    //         'revenueInDollars' => $revenueInDollars,
-    //     ]);
-    // }
-    #=======================================================================================#
+    
     #			                          destroy Function                                  #
     #=======================================================================================#
     public function delete($id)
@@ -127,7 +98,7 @@ class CityController extends Controller
         $city->delete();
         return redirect(route('showCites'));
     }
-    #=======================================================================================#
+
     #			                          edit Function                                     #
     #=======================================================================================#
     public function edit($id)
@@ -135,53 +106,14 @@ class CityController extends Controller
         $singleCity = City::findorfail($id);
         $cityManagers = $this->selectCityManagers();
         return view("city.edit", ['singleCity' => $singleCity, 'cityManagers' => $cityManagers]);
-
-        
-        // $cityManagers = $this->selectCityManagers();
-        // return view('city.edit', ['cityData' => $cityData, 'cityManagers' => $cityManagers]);
     }
+
     public function editCity(Request $request, $id)
     {
         $requestData = request()->all();
         $city = City::findorfail($id);
         $city->update($requestData);
         return redirect(route('showCites'));
-    }
-    // public function edit($cityID)
-    // {
-    //     $cityData = City::find($cityID);
-    //     $cityManagers = $this->selectCityManagers();
-    //     return view('city.edit', ['cityData' => $cityData, 'cityManagers' => $cityManagers]);
-    // }
-    #=======================================================================================#
-    #			                          create Function                                   #
-    #=======================================================================================#
-    public function create()
-    {
-        $cityManagers = $this->selectCityManagers();
-        return view("city.create", ['cityManagers' => $cityManagers]);
-    }
-    
-    
-
-    #=======================================================================================#
-    #			                 restored deleted Cities Function                           #
-    #=======================================================================================#
-    public function showDeleted()
-    {
-        $deletedCity = City::onlyTrashed()->get();
-        if (count($deletedCity) <= 0) { //for empty statement
-            return view('empty');
-        }
-        return view('city.showDeleted', ['deletedCity' => $deletedCity]);
-    }
-    #=======================================================================================#
-    #			                 restore deleted Cities Function                            #
-    #=======================================================================================#
-    public function restore($cityID)
-    {
-        City::withTrashed()->find($cityID)->restore();
-        return $this->showDeleted();
     }
 
     #=======================================================================================#
@@ -192,9 +124,8 @@ class CityController extends Controller
         return User::select('users.*', 'cities.manager_id')
             ->role('cityManager')
             ->leftJoin('cities', 'users.id', '=', 'cities.manager_id')
-
+            ->where('cities.manager_id', '=', null)
             ->get();
     }
     #=======================================================================================#
-    #                                      store
 }

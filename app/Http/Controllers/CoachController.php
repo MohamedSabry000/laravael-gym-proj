@@ -11,7 +11,6 @@ use DataTables;
 
 class CoachController extends Controller
 {
-    #=======================================================================================#
     #			                        list Function                                       #
     #=======================================================================================#
     public function list()
@@ -22,16 +21,31 @@ class CoachController extends Controller
         }
         return view("coach.list", ['coaches' => $coachesFromDB]);
     }
-    #=======================================================================================#
-    #			                        show Function                                       #
-    #=======================================================================================#
-    public function show($id)
+    
+    public function showCoaches(Request $request)
     {
-        $singleCoach = User::findorfail($id);
-        return view("coach.show", ['singleCoach' => $singleCoach]);
+        if ($request->ajax()) {
+            $data = User::role('coach');
+
+            return DataTables::of($data)
+                    ->addIndexColumn()
+                    ->addColumn('action', function ($row) {    
+                        $btn = '<a href="/admin/allcoaches/'.$row->id.'" class="edit btn btn-primary btn-sm">View</a> ';
+                        $btn .= '<a href="/admin/addEditCoach/'.$row->id.'" class="edit btn btn-warning btn-sm">Edit</a> ';
+                        $btn .= '<a href="/admin/delCoach/'.$row->id.'" class="edit btn btn-danger btn-sm">Delete</a>';
+    
+                        return $btn;
+                    })->addColumn('avatar', function ($row) {
+                        $avatar = "<img width='80' height='80' src='".$row->profile_image."' />";
+
+                        return $avatar;
+                    })->rawColumns(['action','avatar'])
+                    ->make(true);
+        }
+        
+        return view('coach.list');
     }
 
-    #=======================================================================================#
     #			                        create Function                                     #
     #=======================================================================================#
     public function create()
@@ -43,9 +57,7 @@ class CoachController extends Controller
             'cities' => $cities,
         ]);
     }
-    #=======================================================================================#
-    #			                        store Function                                      #
-    #=======================================================================================#
+    
     public function store(Request $request)
     {
         $request->validate([
@@ -62,7 +74,7 @@ class CoachController extends Controller
             $name = time() . \Str::random(30) . '.' . $image->getClientOriginalExtension();
             $destinationPath = public_path('/imgs');
             $image->move($destinationPath, $name);
-            $imageName = 'imgs/' . $name;
+            $imageName = 'http://localhost:8000/imgs/' . $name;
         }
 
         $user = new User();
@@ -72,81 +84,73 @@ class CoachController extends Controller
         $user->profile_image = $imageName;
         $user->assignRole('coach');
         $user->save();
-        return redirect(route('showCoaches'));    
+        return redirect(route('showCoaches'));
     }
 
+    
+    #			                        show Function                                       #
     #=======================================================================================#
+    public function show($id)
+    {
+        $singleCoach = User::findorfail($id);
+        $cityCoach = City::find($singleCoach->city_id);
+        if (is_null($cityCoach)) {
+            $cityCoach = 'not assigned';
+        } else {
+            $cityCoach = $cityCoach->name;
+        }
+
+        return view("coach.show", ['singleCoach' => $singleCoach, 'cityCoach' => $cityCoach]);
+    }
+
     #			                        Edit Function                                       #
     #=======================================================================================#
     public function edit($id)
     {
-        $users = User::all();
-        $singleCoach = User::find($id);
-        return view("coach.edit", ['coach' => $singleCoach, 'users' => $users]);
+        $singleCoach = User::findorfail($id);
+        $cities = City::all(); 
+
+        return view("coach.edit", ['singleCoach' => $singleCoach, 'cities' => $cities]);
     }
 
-    #=======================================================================================#
-    #			                        Update Function                                     #
-    #=======================================================================================#
-    public function update(Request $request, $id)
+    public function editCoach(Request $request, $id)
     {
-
-        $user = User::find($id);
-        $validated = $request->validate([
-            'name' => 'required|max:50',
-            'email' => 'required|string|unique:users,email,' . $user->id,
-            'profile_image' => 'mimes:jpg,jpeg',
+        $request->validate([
+            'name' => ['required', 'string', 'min:2'],
+            'email' => ['required'],
+            'profile_image' => ['nullable', 'mimes:jpg,jpeg'],
+            'city_id' => ['required'],
         ]);
 
-        $user->name = $request->name;
-        $user->email = $request->email;
-
-        if ($request->hasFile('profile_image')) {
+        if ($request->hasFile('profile_image') == null) {
+            $imageName =  $request->profile_image_saved;
+        } else {
             $image = $request->file('profile_image');
             $name = time() . \Str::random(30) . '.' . $image->getClientOriginalExtension();
             $destinationPath = public_path('/imgs');
             $image->move($destinationPath, $name);
-            $imageName = 'imgs/' . $name;
-            if (isset($user->profile_image))
-                File::delete(public_path('imgs/' . $user->profile_image));
-            $user->profile_image = $imageName;
+            $imageName = 'http://localhost:8000/imgs/' . $name;
         }
-        $user->save();
-        return redirect()->route('coach.list');
-    }
 
+        $coach = User::findorfail($id);
+
+        $coach->name = $request->name;
+        $coach->email = $request->email;
+        $coach->city_id = $request->city_id;
+        $coach->profile_image = $imageName;
+        $coach->update();
+
+        return redirect(route('showCoaches'));
+    }
+    
     #=======================================================================================#
     #			                        Delete Function                                     #
     #=======================================================================================#
-    public function deleteCoach($id)
+    public function delete($id)
     {
-        $singleCoach = User::find($id);
+        $singleCoach = User::findorfail($id);
         $singleCoach->delete();
         return response()->json(['success' => 'Record deleted successfully!']);
     }
 
-    public function showCoaches(Request $request)
-    {
-        if ($request->ajax()) {
-            $data = User::role('coach');
-
-            return DataTables::of($data)
-                    ->addIndexColumn()
-                    ->addColumn('action', function($row){
-     
-                           $btn = "<a href='/admin/allcoaches/".$row->id."' class='edit btn btn-primary btn-sm'>View</a>";
-    
-                            return $btn;
-                    })->addColumn('avatar', function($row){
-
-                        $avatar = "<img width='80' height='80' src='".$row->profile_image."' />";
-
-                        return $avatar;
-                    })->rawColumns(['action','avatar'])
-                    ->make(true);
-        }
-        
-        return view('coach.list');
-    }
-    
 }

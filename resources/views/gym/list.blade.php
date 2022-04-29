@@ -2,6 +2,7 @@
 
 @section('title', 'List')
 @section('content')
+
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper content-inner-wrapper">
         <!-- Content Header (Page header) -->
@@ -45,6 +46,8 @@
                                 <th class="project-state">Created at</th>
                                 <th class="project-state">Gym City Name</th>
                                 <th class="project-state">Action</th>
+                                <?= ($role) ? "<th class='project-state'>Manager name</th>": '<th></th>' ?>
+                                
                             </tr>
                         </thead>
                         <tbody>
@@ -92,12 +95,12 @@
                 serverSide: true,
                 ajax: "{{ route('showGyms') }}",
                 columns: [
-                    {data: 'name',      name: 'name'},
-                    {data: 'avatar',    name: 'cover image',overable:false,searchable:false},
-                    {data: 'created_at',name: 'created_at'},
-
-                    {data: 'city_name', name: 'city name'},
-                    {data: 'action',    name: 'view', orderable: false, searchable: false},
+                    {data: 'name',           name: 'name'},
+                    {data: 'avatar',         name: 'cover image',overable:false,searchable:false},
+                    {data: 'created_at',     name: 'created_at'},
+                    {data: 'city_name',      name: 'city name'},
+                    {data: 'action',         name: 'view', orderable: false, searchable: false},
+                    {data: 'managername1' ,  name: 'manager name'}
                 ]
             });
 

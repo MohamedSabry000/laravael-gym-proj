@@ -53,30 +53,47 @@ class GymController extends Controller
     #=======================================================================================#
     public function showGyms(Request $request)
     {
+        $data = Gym::with('city.manager')->get();
+        $role = Auth::user()->hasRole('admin');
         
+        // foreach( $data as $d ) {
+        //     if( !empty($d->city->manager) ) {
+        //         echo $d->city->manager->name;   
+        //     }
+        // }
+
         if ($request->ajax()) {        
-            // $data = Gym::all();
+           
             return DataTables::of($data)->addIndexColumn() ->addColumn('action', function($row){    
             // Crud operations
             $btn =  "<a href='/admin/gym/".$row->id."' class='btn btn btn-primary'>View</a>";
-            $btn .= "<a href='/admin/editgym/".$row->id."' class = 'btn btn-success'>Edit</a>";
+            $btn .= "<a href='/admin/addEditGym/".$row->id."' class = 'btn btn-success'>Edit</a>";
             $btn .= "<a href='/admin/deletegym/".$row->id."' class = 'btn btn-danger'>Delete</a>";
             return $btn;
             })->addColumn('city_name', function($row){
-            
+                // Check if city name not null
                 return !empty($row->city->name) ? $row->city->name : 'no city found';
             })->addColumn('avatar', function($row){
                 $avatar = "<img width='80' height='80' src='".$row->cover_image."' />";
                 return $avatar;
                 
             })->addColumn('created_at', function($row){
-                // $avatar = "<img width='80' height='80' src='".$row->cover_image."' />";
-                return $date = $row->created_at->format('Y.m.d');
+                $date = $row->created_at->format('Y.m.d');
+                return $date;               
+            })->addColumn('managername1', function($row){
+                $role2 = Auth::user()->hasRole('admin');
+                // global $role;
+                $managerName = '';
                 
+                if( $role2 ) {
+                    // $managerName = 'ayhaga';
+                    $managerName = !empty($row->city)  ? !empty($row->city->manager) ? $row->city->manager->name : 'no manager assigned' : 'no manager assigned';
+                 }
+                 return  $managerName ;
             })->rawColumns(['action','avatar'])->make(true);
         }
 
-        return view('gym.list');
+        return view('gym.list',['role'=>$role]);
     }
     #=======================================================================================#
 #			                            Show Function                                 	#
@@ -138,8 +155,8 @@ class GymController extends Controller
     #=======================================================================================#
     public function edit($id)
 
-    {
-        $users = User::role('gymManager')->withoutBanned()->get();
+    {   
+        $users = User::role('gymManager');
         $cities = City::all();
         $singleGym = Gym::find($id);
         return view("gym.edit", ['gym' => $singleGym, 'users' => $users, 'cities' => $cities,]);
@@ -147,32 +164,35 @@ class GymController extends Controller
 
 
     //Update Function
-    public function update(Request $request, $id)
+    public function editGym(Request $request, $id)
     {
         $gym = Gym::find($id);
-        $validated = $request->validate([
+        $request->validate([
             'name'         => 'required|max:20',
             'city_id'      => 'required',
+
             'cover_image'  => 'nullable|image|mimes:jpg,jpeg',
         ]);
 
         $gym->name = $request->name;
-
-        if ($request->hasFile('cover_image')) {
+        if ($request->hasFile('cover_image') == null) {
+            $imageName =  $request->cover_image_saved;
+        } else {
             $image = $request->file('cover_image');
             $name = time() . \Str::random(30) . '.' . $image->getClientOriginalExtension();
             $destinationPath = public_path('/imgs');
             $image->move($destinationPath, $name);
-            $imageName = 'imgs/' . $name;
-            if (isset($gym->cover_image))
-                File::delete(public_path('imgs/' . $gym->cover_image));
-            $gym->cover_image = $imageName;
+            $imageName = 'http://localhost:8000/imgs/' . $name;
         }
-        $gym->save();
-        
-        return redirect()->route('gym.list');
+        $gym = Gym::findorfail($id);
+
+        $gym->name = $request->name;
+        $gym->city_id = $request->city_id;
+        $gym->cover_image = $imageName;
+        $gym->update();
+        return redirect(route('showGyms'));
     }
-    
+
     //Delete Function
     public function delete($id)
     {

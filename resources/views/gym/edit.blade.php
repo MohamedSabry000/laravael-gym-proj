@@ -7,7 +7,7 @@
 <div class="alert alert-danger">
     <ul>
         @foreach ($errors->all() as $error)
-            <li>{{ $error }}</li>
+        <li>{{ $error }}</li>
         @endforeach
     </ul>
 </div>
@@ -32,8 +32,9 @@
     </section>
     <!-- Main content -->
     <section class="content">
- 
-        <form action="{{route('gym.update',['gym' => $gym['id']])}}" method="post" enctype="multipart/form-data" class="w-75 m-auto">
+
+        <form action="{{url('/admin/storeEditGym/'.$gym->id)}}" method="post" enctype="multipart/form-data"
+            class="w-75 m-auto">
             @csrf
             @method('PUT')
             <div class="row">
@@ -50,24 +51,26 @@
                         <div class="card-body">
                             <div class="form-group">
                                 <label for="name">Name</label>
-                                <input type="text" id="name" class="form-control" value="{{old('name') ?? $gym->name}}" name="name">
+                                <input type="text" id="name" class="form-control" value="{{old('name') ?? $gym->name}}"
+                                    name="name">
                             </div>
 
-        
-                           <div class="form-group">
+
+                            <div class="form-group">
                                 <label class="form-label">Gym Manger</label>
                                 <select class="form-control" name="user_id">
-                                     @foreach($users as $user) 
-                                <option value="{{$user->id}}" @if($user->id ==$gym->user_id) selected @endif >{{$user->name}}</option>
-                                 @endforeach 
+                                    @foreach($users as $user)
+                                    <option value="{{$user->id}}" @if($user->id ==$gym->user_id) selected @endif
+                                        >{{$user->name}}</option>
+                                    @endforeach
                                 </select>
-                            </div> 
+                            </div>
                             <div class="form-group">
                                 <label for="city">City</label>
                                 <select required class=" form-control" name="city_id" id="city">
                                     <optgroup label="Available City">
                                         @foreach ($cities as $city)
-                                            <option value={{ $city->id }}>{{ $city->name }}</option>
+                                        <option value={{ $city->id }}>{{ $city->name }}</option>
                                         @endforeach
                                     </optgroup>
                                 </select>
@@ -77,7 +80,8 @@
 
                             <div class="form-group">
                                 <label class="form-label" for="image">Image Cover</label>
-                                <input type="file" class="form-control" id="image" name="cover_image" value="{{old('cover_image') ?? asset($gym->cover_image)}}">
+                                <input type="file" class="form-control" id="image" name="cover_image"
+                                    value="{{old('cover_image') ?? asset($gym->cover_image)}}">
                             </div>
                         </div>
                     </div>

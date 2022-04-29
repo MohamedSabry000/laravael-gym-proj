@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 
+use DataTables;
 class TrainingPackagesController extends Controller
 {
     #=======================================================================================#
@@ -62,10 +63,25 @@ class TrainingPackagesController extends Controller
     #=======================================================================================#
     #			                             show                                         	#
     #=======================================================================================#
-    public function show($id)
+    public function showPackages(Request $request)
     {
-        $package = TrainingPackage::findorfail($id);
-        return view('trainingPackeges.show_training_package', ['package' => $package]);
+        if ($request->ajax()) {
+            $data = TrainingPackage::select('*');
+            return DataTables::of($data)
+                    ->addIndexColumn()
+
+                    ->addColumn('action', function ($row) {
+                        $btn = '<a href="/admin/cities/'.$row->id.'" class="edit btn btn-primary btn-sm">View</a> ';
+                        $btn .= '<a href="/admin/addTraningPackage/'.$row->id.'" class="edit btn btn-warning btn-sm">Edit</a> ';
+                        $btn .= '<a href="/admin/delTaraningPackage/'.$row->id.'" class="edit btn btn-danger btn-sm">Delete</a>';
+    
+                        return $btn;
+                    })
+                    ->rawColumns(['action'])
+                    ->make(true);
+        }
+        return view('trainingPackeges.list');
+        // return view('trainingPackeges.show_training_package', ['package' => $package]);
     }
     #=======================================================================================#
     #			                             edit                                         	#
