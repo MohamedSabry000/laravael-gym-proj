@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GymController;
+use App\Http\Controllers\CityManagerController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -65,13 +67,13 @@ Route::get('/admin/delCities/{id}', [App\Http\Controllers\CityController::class,
 Route::get('/admin/allCityManagers', [App\Http\Controllers\CityManagerController::class, 'showCityManager'])->name('showCites')->middleware('auth');
 
 Route::get('/admin/addCityManager', [App\Http\Controllers\CityManagerController::class, 'create'])->name('create')->middleware('auth');
-Route::post('/allCityManagers', [App\Http\Controllers\CityManagerController::class, 'store'])->name('city.store')->middleware('auth');
+Route::post('/allCityManagers', [App\Http\Controllers\CityManagerController::class, 'store'])->name('citymanager.store')->middleware('auth');
 
-Route::get('/admin/addEditCityManager/{id}', [App\Http\Controllers\CityManagerController::class, 'edit'])->name('city.addEdit')->middleware('auth');
-Route::put('/admin/storeEditCityManager/{id}', [App\Http\Controllers\CityManagerController::class, 'editCityManager'])->name('city.storeEdit')->middleware('auth');
+Route::get('/admin/addEditCityManager/{id}', [App\Http\Controllers\CityManagerController::class, 'edit'])->name('citymanager.addEdit')->middleware('auth');
+Route::put('/admin/storeEditCityManager/{id}', [App\Http\Controllers\CityManagerController::class, 'editCityManager'])->name('citymanager.storeEdit')->middleware('auth');
 
-Route::get('/admin/allCityManagers/{id}', [App\Http\Controllers\CityManagerController::class, 'show'])->name('city.show')->middleware('auth');
-Route::get('/admin/delCityManagers/{id}', [App\Http\Controllers\CityManagerController::class, 'deleteCityManager'])->name('city.delete')->middleware('auth');
+Route::get('/admin/allCityManagers/{id}', [App\Http\Controllers\CityManagerController::class, 'show'])->name('citymanager.show')->middleware('auth');
+Route::get('/admin/delCityManagers/{id}', [App\Http\Controllers\CityManagerController::class, 'deleteCityManager'])->name('citymanager.delete')->middleware('auth');
 
 /************************* */
 /**         Coches         */
