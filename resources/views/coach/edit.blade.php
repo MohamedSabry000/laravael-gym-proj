@@ -31,7 +31,8 @@
     </section>
     <!-- Main content -->
     <section class="content">
-        <form action="{{url('/admin/storeEditCoach/'.$singleCoach->id)}}" method="post" enctype="multipart/form-data" class="w-75 m-auto">
+        <form action="{{url('/admin/storeEditCoach/'.$singleCoach->id)}}" method="post" enctype="multipart/form-data"
+            class="w-75 m-auto">
             @csrf
             @method('PUT')
 
@@ -52,19 +53,22 @@
                         <div class="card-body">
                             <div class="form-group">
                                 <label for="name">Name</label>
-                                <input autofocus required minlength="3" maxlength="50" type="text" id="name" value="{{$singleCoach->name}}"
-                                    class="form-control" value="" name="name">
+                                <input autofocus required minlength="3" maxlength="50" type="text" id="name"
+                                    value="{{$singleCoach->name}}" class="form-control" value="" name="name">
                             </div>
                             <div class="form-group">
                                 <label for="email">Email</label>
-                                <input required type="email" id="email" class="form-control" name="email" value="{{$singleCoach->email}}" >
+                                <input required type="email" id="email" class="form-control" name="email"
+                                    value="{{$singleCoach->email}}">
                             </div>
                             <div class="form-group">
                                 <label for="city">City</label>
                                 <select required class=" form-control" name="city_id" id="city">
                                     <optgroup label="Available City">
                                         @foreach ($cities as $city)
-                                        <option value={{ $city->id }} <?php echo $city->id == $singleCoach->city_id? 'selected': '';  ?>>>{{ $city->name }}</option>
+                                        <option value={{ $city->id }}
+                                            <?php echo $city->id == $singleCoach->city_id? 'selected': '';  ?>>
+                                            >{{ $city->name }}</option>
                                         @endforeach
                                     </optgroup>
                                 </select>
