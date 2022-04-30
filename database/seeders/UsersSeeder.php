@@ -15,9 +15,9 @@ class UsersSeeder extends Seeder
      */
     public function run()
     {
-        User::factory(25)->create();
+        User::factory(10)->create();
         //to get last 100 row add in DB
-        $users = User::latest()->take(25)->get();
+        $users = User::latest()->take(10)->get();
 
         //give them role => user
         foreach ($users as $userRole) {

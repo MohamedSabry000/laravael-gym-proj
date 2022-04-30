@@ -15,6 +15,6 @@ class RevenueSeeder extends Seeder
      */
     public function run()
     {
-        Revenue::factory(15)->create();
+        Revenue::factory(10)->create();
     }
 }

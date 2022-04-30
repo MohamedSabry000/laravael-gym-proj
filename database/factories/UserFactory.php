@@ -31,9 +31,9 @@ class UserFactory extends Factory
             'birth_date' => $this->faker->dateTimeBetween('1990-01-01', '2012-12-31')->format('Y/m/d'), // outputs something like 17/09/2001
             'last_login_at' => $this->faker->dateTimeBetween('-1 month', '+1 month'),
             'total_sessions' => rand(1, 10),
-            'remain_session' => rand(1, 5),
-            'city_id' => rand(1, 15),
-            'gym_id' => rand(1, 20),
+            'remain_session' => rand(1, 10),
+            'city_id' => rand(1, 10),
+            'gym_id' => rand(1, 10),
         ];
     }
 
