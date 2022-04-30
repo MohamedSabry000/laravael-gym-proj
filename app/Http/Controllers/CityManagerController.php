@@ -54,6 +54,7 @@ class CityManagerController extends Controller
         $user->national_id = $request->national_id;
         $user->assignRole('cityManager');
         $user->save();
+
         return redirect(route('showCityManager'));
 
         // return redirect()->route('cityManager.list');
@@ -82,9 +83,10 @@ class CityManagerController extends Controller
                     ->rawColumns(['action','CityManagerName'])
                     ->make(true);
         }
-        return view(route('showCityManager'));
-//
-        // return view('cityManager.list');
+        // return view(route('showCityManager'));
+
+
+        return view('cityManager.list');
     }
     public function list(){
         $usersFromDB =  User::role('cityManager')->withoutBanned()->get();
