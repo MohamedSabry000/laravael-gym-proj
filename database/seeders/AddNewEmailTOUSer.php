@@ -16,12 +16,12 @@ class AddNewEmailTOUSer extends Seeder
      */
     public function run()
     {
-        
-        // $users = User::latest()->take(0)->get();
 
-        // //give them role => user
-        // foreach ($users as $userRole) {
-        //     $userRole->assignRole('user');
-        // }
+        $users = User::latest()->take(0)->get();
+
+        // give them role => user
+        foreach ($users as $userRole) {
+            $userRole->assignRole('user');
+        }
     }
 }
