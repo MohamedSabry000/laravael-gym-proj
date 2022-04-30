@@ -2,41 +2,40 @@
 @section('content')
 
 
-<!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper pb-4">
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-        <div class="container-fluid">
-            <div class="row mb-2">
-            <!-- Errors Section -->
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper pb-4">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <!-- Errors Section -->
+                    @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
 
-                @if ($errors->any())
-                <div class="alert alert-danger">
-                    <ul>
-                        @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
+                    <div class="col-sm-6">
+                        <h1>Create City Manager</h1>
+                    </div>
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="#">Home</a></li>
+                            <li class="breadcrumb-item active">New City Manager</li>
+                        </ol>
+                    </div>
                 </div>
-                @endif
-                
-                <div class="col-sm-6">
-                    <h1>New City Manager</h1>
-                </div>
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active">New City Manager</li>
-                    </ol>
-                </div>
-            </div>
-        </div><!-- /.container-fluid -->
-    </section>
-    <!-- Main content -->
-    <section class="content">
-        <form action="{{ route('cityManager.store') }}" method="post" enctype="multipart/form-data" 
-        class="w-75 m-auto">
-        @csrf
+            </div><!-- /.container-fluid -->
+        </section>
+        <!-- Main content -->
+        <section class="content">
+            <form action="{{ route('cityManager.store') }}" method="post" enctype="multipart/form-data"
+                class="w-75 m-auto">
+                @csrf
                 <div class="row">
                     <div class="col-md-12">
                         <div class="card card-primary">
@@ -71,20 +70,20 @@
                                 </div>
                                 <div class="  form-group">
                                     <label for="nationalID">National ID</label>
-                                    <input type="text" required id="nationalID" class="form-control" name="national_id"
+                                    <input type="text" required id="w" class="form-control" name="national_id"
                                         placeholder="The national id must be between 10 and 17 digits.">
                                 </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-12">
-                    <a href="#" class="btn btn-secondary">Cancel</a>
-                    <input type="submit" value="Save Changes" class="btn btn-success float-right">
+                <div class="row">
+                    <div class="col-12">
+                        <a href="#" class="btn btn-secondary">Cancel</a>
+                        <input type="submit" value="Save Changes" class="btn btn-success float-right">
+                    </div>
                 </div>
-            </div>
-        </form>
-    </section>
-</div>
+            </form>
+        </section>
+    </div>
 @endsection
