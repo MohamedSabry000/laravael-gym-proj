@@ -130,3 +130,10 @@ Route::post('stripe/buyPackage', [StripePaymentController::class, 'stripePost'])
 // Route::get('admin', function () {
 //     return view('admin');
 // });
+
+
+
+
+//***************************************Banned Users */
+Route::get('/admin/bannedUsers', [App\Http\Controllers\BannedUsersController::class, 'showbannedUsers'])->name('showbannedUsers')->middleware('auth')->middleware('role:admin|cityManager|gymManager');
+Route::get('/admin/bannedUsers/{id}', [App\Http\Controllers\BannedUsersController::class, 'UnBanUser'])->name('UnBanUser')->middleware('auth')->middleware('role:admin|cityManager|gymManager');

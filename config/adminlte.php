@@ -378,7 +378,7 @@ return [
         ],
         [
             'text'    => 'Banned Users',
-            'url'     => '#',
+            'url'     => '/admin/bannedUsers',
             'icon'    => 'fas fa-fw fa-user',
         ],
         [

@@ -41,6 +41,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'city_id',
         'gym_id',
         'updated_at',
+        'banned_status',
     ];
 
     public function city()
