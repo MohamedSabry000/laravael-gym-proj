@@ -22,7 +22,7 @@ class GymManagerController extends Controller
                     ->addIndexColumn()
                     ->addColumn('actions', function ($row) {
                         $btn = '<a href="/admin/gymManager/'.$row->id.'" class="edit btn btn-primary btn-sm">View</a> ';
-                        $btn .= '<a href="/admin/gymManagerEdit/'.$row->id.'" class="edit btn btn-warning btn-sm">Edit</a> ';
+                        $btn .= '<a href="/admin/addEditManager/'.$row->id.'" class="edit btn btn-warning btn-sm">Edit</a> ';
                         $btn .= '<a href="/admin/gymManagerDel/'.$row->id.'" class="edit btn btn-danger btn-sm">Delete</a>';
 
                         return $btn;
@@ -83,47 +83,52 @@ class GymManagerController extends Controller
         return redirect(route('showGymManagers'));
     }
     
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\GymManager  $gymManager
-     * @return \Illuminate\Http\Response
-     */
+
     public function show($id)
     {
         $singleManager = User::findorfail($id);
         return view("gymManager.show", ['singleManager' => $singleManager]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\GymManager  $gymManager
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(GymManager $gymManager)
+    public function edit($id)
     {
-        //
+        $singleManager= User::findorfail($id);
+        $cities = City::all(); 
+
+        return view("gymManager.edit", ['singleManager' => $singleManager, 'cities' => $cities]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\GymManager  $gymManager
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, GymManager $gymManager)
+    public function editManager(Request $request, $id)
     {
-        //
-    }
+        $request->validate([
+            'name' => ['required', 'string', 'min:2'],
+            'email' => ['required'],
+            'profile_image' => ['nullable', 'mimes:jpg,jpeg'],
+            'city_id' => ['required'],
+        ]);
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\GymManager  $gymManager
-     * @return \Illuminate\Http\Response
-     */
+        if ($request->hasFile('profile_image') == null) {
+            $imageName =  $request->profile_image_saved;
+        } else {
+            $image = $request->file('profile_image');
+            $name = time() . \Str::random(30) . '.' . $image->getClientOriginalExtension();
+            $destinationPath = public_path('/imgs');
+            $image->move($destinationPath, $name);
+            $imageName = 'http://localhost:8000/imgs/' . $name;
+        }
+
+        $manager = User::findorfail($id);
+
+        $manager->name = $request->name;
+        $manager->email = $request->email;
+        $manager->city_id = $request->city_id;
+        $manager->profile_image = $imageName;
+        $manager->update();
+
+        return redirect(route('showGymManagers'));
+    }
+    
+
     public function delete($id)
     {
         $singleManager = User::findorfail($id);
