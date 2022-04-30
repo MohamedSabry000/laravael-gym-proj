@@ -155,5 +155,11 @@ class CityManagerController extends Controller
     #=======================================================================================#
     #			                           Delete Function                                	#
     #=======================================================================================#
+    public function deleteCityManager($id)
+    {
 
+        $singleUser = User::findorfail($id);
+        $singleUser->delete();
+        return redirect(route('showCityManager'));
+    }
 }
