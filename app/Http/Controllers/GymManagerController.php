@@ -52,6 +52,7 @@ class GymManagerController extends Controller
             'gyms' => $gyms,
         ]);
     }
+
     
     public function store(Request $request)
     {
@@ -77,11 +78,11 @@ class GymManagerController extends Controller
         $user->email = $request->email;
         $user->city_id = $request->city_id;
         $user->profile_image = $imageName;
-        $user->assignRole('coach');
+        $user->assignRole('gymManager');
         $user->save();
-        return redirect(route('showCoaches'));
+        return redirect(route('showGymManagers'));
     }
-
+    
     /**
      * Display the specified resource.
      *
