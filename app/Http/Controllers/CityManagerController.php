@@ -76,7 +76,7 @@ class CityManagerController extends Controller
                     ->addColumn('action', function ($row) {
                         $btn = '<a href="/admin/allCityManagers/'.$row->id.'" class="edit btn btn-primary btn-sm">View</a> ';
                         $btn .= '<a href="/admin/addEditCityManager/'.$row->id.'" class="edit btn btn-warning btn-sm">Edit</a> ';
-                        $btn .= '<a href="/admin/cityManagerDel/'.$row->id.'" class="edit btn btn-danger btn-sm">Delete</a>';
+                        $btn .= '<a href="/admin/delCityManagers/'.$row->id.'" class="edit btn btn-danger btn-sm">Delete</a>';
     
                         return $btn;
                     })->addColumn('avatar', function ($row) {
@@ -124,7 +124,7 @@ class CityManagerController extends Controller
     {
 
         $user = User::find($id);
-        $validated = $request->validate([
+       $request->validate([
             'name' => 'required|max:20',
             'password' => 'required |min:6',
             'email' => 'required|string|unique:users,email,' . $user->id,
@@ -155,11 +155,5 @@ class CityManagerController extends Controller
     #=======================================================================================#
     #			                           Delete Function                                	#
     #=======================================================================================#
-    public function deleteCityManager($id)
-    {
 
-        $singleUser = User::findorfail($id);
-        $singleUser->delete();
-        return redirect(route('showCityManager'));
-    }
 }

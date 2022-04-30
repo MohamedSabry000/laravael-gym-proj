@@ -33,8 +33,8 @@
     </section>
     <!-- Main content -->
     <section class="content">
-        <form action="{{ url('/admin/storeEditCity/'.$singleUser->id)}}" method="post" enctype="multipart/form-data"
-            class="w-75 m-auto">
+        <form action="{{ url('/admin/storeEditCityManager/'.$singleUser->id)}}" method="post"
+            enctype="multipart/form-data" class="w-75 m-auto">
             @method('PUT')
             @csrf
             <div class="row">
