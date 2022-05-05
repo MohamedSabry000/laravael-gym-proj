@@ -34,89 +34,99 @@ Route::get('/admin/allusers', [App\Http\Controllers\AdminController::class, 'sho
 
 
 /* Routes for gyms */
-Route::get('/admin/gyms', [GymController::class, 'showGyms'])->name('showGyms')->middleware('auth')->middleware('role:admin|cityManager');
-Route::get('/admin/addgym', [GymController::class , 'create'])->name('createGym')->middleware('auth')->middleware('role:admin|cityManager');
-Route::post('/admin/storegym', [GymController::class, 'store'])->name('storeGym')->middleware('auth')->middleware('role:admin|cityManager');
-Route::get('/admin/deletegym/{id}', [GymController::class, 'delete'])->name('deleteGym')->middleware('auth')->middleware('role:admin|cityManager');
-Route::get('/admin/gym/{id}', [GymController::class, 'show'])->name('showGym')->middleware('auth')->middleware('role:admin|cityManager');
-Route::get('/admin/addEditGym/{id}', [GymController::class, 'edit'])->name('gym.addEdit')->middleware('auth')->middleware('role:admin|cityManager');
-Route::put('/admin/storeEditGym/{id}', [GymController::class, 'editGym'])->name('gym.storeEditGym')->middleware('auth')->middleware('role:admin|cityManager');
+Route::prefix('admin')->middleware(['auth', 'role:cityManager'])->group(function () {
+    Route::get('/gyms', [GymController::class, 'showGyms'])->name('showGyms');
+    Route::get('/addgym', [GymController::class , 'create'])->name('createGym');
+    Route::post('/storegym', [GymController::class, 'store'])->name('storeGym');
+    Route::get('/deletegym/{id}', [GymController::class, 'delete'])->name('deleteGym');
+    Route::get('/gym/{id}', [GymController::class, 'show'])->name('showGym');
+    Route::get('/addEditGym/{id}', [GymController::class, 'edit'])->name('gym.addEdit');
+    Route::put('/storeEditGym/{id}', [GymController::class, 'editGym'])->name('gym.storeEditGym');
+});
 
 /**         Gym Managers         */
-Route::get('/admin/gymManagers', [App\Http\Controllers\GymManagerController::class, 'showGymManagers'])->name('showGymManagers')->middleware('auth');
-
-Route::get('/admin/addGymManager', [App\Http\Controllers\GymManagerController::class, 'create'])->name('gymManager.create')->middleware('auth');
-Route::post('/admin/gymManagers', [App\Http\Controllers\GymManagerController::class, 'store'])->name('gymManager.store')->middleware('auth');
-
-Route::get('/admin/gymManager/{id}', [App\Http\Controllers\GymManagerController::class, 'show'])->name('show')->middleware('auth');
-Route::get('/admin/gymManagerDel/{id}', [App\Http\Controllers\GymManagerController::class, 'delete'])->name('delete')->middleware('auth');
-Route::get('/admin/addEditManager/{id}', [App\Http\Controllers\GymManagerController::class, 'edit'])->name('manager.addEdit')->middleware('auth');
-Route::put('/admin/storeEditManager/{id}', [App\Http\Controllers\GymManagerController::class, 'editManager'])->name('manager.storeEdit')->middleware('auth');
+Route::prefix('admin')->middleware(['auth'])->group(function () {
+    Route::get('/gymManagers', [App\Http\Controllers\GymManagerController::class, 'showGymManagers'])->name('showGymManagers');
+    Route::get('/addGymManager', [App\Http\Controllers\GymManagerController::class, 'create'])->name('gymManager.create');
+    Route::post('/gymManagers', [App\Http\Controllers\GymManagerController::class, 'store'])->name('gymManager.store');
+    Route::get('/gymManager/{id}', [App\Http\Controllers\GymManagerController::class, 'show'])->name('show');
+    Route::get('/gymManagerDel/{id}', [App\Http\Controllers\GymManagerController::class, 'delete'])->name('delete');
+    Route::get('/addEditManager/{id}', [App\Http\Controllers\GymManagerController::class, 'edit'])->name('manager.addEdit');
+    Route::put('/storeEditManager/{id}', [App\Http\Controllers\GymManagerController::class, 'editManager'])->name('manager.storeEdit');
+});
 /************************ */
 Route::get('/admin/allusers', [App\Http\Controllers\AdminController::class, 'showUsers'])->name('showUsers')->middleware('auth');
 
 /**         Cities         */
-Route::get('/admin/cities', [App\Http\Controllers\CityController::class, 'showCites'])->name('showCites')->middleware('auth')->middleware('role:admin');
+Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
+    Route::get('/cities', [App\Http\Controllers\CityController::class, 'showCites'])->name('showCites');
 
-Route::get('/admin/addCity', [App\Http\Controllers\CityController::class, 'create'])->name('create')->middleware('auth')->middleware('role:admin');
-Route::post('/admin/cities', [App\Http\Controllers\CityController::class, 'store'])->name('city.store')->middleware('auth')->middleware('role:admin');
+    Route::get('/addCity', [App\Http\Controllers\CityController::class, 'create'])->name('create');
+    Route::post('/cities', [App\Http\Controllers\CityController::class, 'store'])->name('city.store');
 
-Route::get('/admin/addEditCity/{id}', [App\Http\Controllers\CityController::class, 'edit'])->name('city.addEdit')->middleware('auth')->middleware('role:admin');
-Route::put('/admin/storeEditCity/{id}', [App\Http\Controllers\CityController::class, 'editCity'])->name('city.storeEdit')->middleware('auth')->middleware('role:admin');
+    Route::get('/addEditCity/{id}', [App\Http\Controllers\CityController::class, 'edit'])->name('city.addEdit');
+    Route::put('/storeEditCity/{id}', [App\Http\Controllers\CityController::class, 'editCity'])->name('city.storeEdit');
 
-Route::get('/admin/cities/{id}', [App\Http\Controllers\CityController::class, 'show'])->name('city.show')->middleware('auth')->middleware('role:admin');
-Route::get('/admin/delCities/{id}', [App\Http\Controllers\CityController::class, 'delete'])->name('city.delete')->middleware('auth')->middleware('role:admin');
+    Route::get('/cities/{id}', [App\Http\Controllers\CityController::class, 'show'])->name('city.show');
+    Route::get('/delCities/{id}', [App\Http\Controllers\CityController::class, 'delete'])->name('city.delete');
+});
 
 
 /**         City Managers         */
-Route::get('/admin/allCityManagers', [App\Http\Controllers\CityManagerController::class, 'showCityManager'])->name('showCityManager')->middleware('auth')->middleware('role:admin');
+Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
+    Route::get('/allCityManagers', [App\Http\Controllers\CityManagerController::class, 'showCityManager'])->name('showCityManager')->middleware('auth');
 
-Route::get('/admin/addCityManager', [App\Http\Controllers\CityManagerController::class, 'create'])->name('create')->middleware('auth')->middleware('role:admin');
-Route::post('/allCityManagers', [App\Http\Controllers\CityManagerController::class, 'store'])->name('cityManager.store')->middleware('auth')->middleware('role:admin');
+    Route::get('/addCityManager', [App\Http\Controllers\CityManagerController::class, 'create'])->name('create')->middleware('auth');
+    Route::post('/allCityManagers', [App\Http\Controllers\CityManagerController::class, 'store'])->name('cityManager.store')->middleware('auth');
 
-Route::get('/admin/addEditCityManager/{id}', [App\Http\Controllers\CityManagerController::class, 'edit'])->name('citymanager.addEdit')->middleware('auth')->middleware('role:admin');
-Route::put('/admin/storeEditCityManager/{id}', [App\Http\Controllers\CityManagerController::class, 'editCityManager'])->name('citymanager.storeEdit')->middleware('auth')->middleware('role:admin');
+    Route::get('/addEditCityManager/{id}', [App\Http\Controllers\CityManagerController::class, 'edit'])->name('citymanager.addEdit')->middleware('auth');
+    Route::put('/storeEditCityManager/{id}', [App\Http\Controllers\CityManagerController::class, 'editCityManager'])->name('citymanager.storeEdit')->middleware('auth');
 
-Route::get('/admin/allCityManagers/{id}', [App\Http\Controllers\CityManagerController::class, 'show'])->name('cityManager.show')->middleware('auth')->middleware('role:admin');
-Route::get('/admin/delCityManagers/{id}', [App\Http\Controllers\CityManagerController::class, 'deleteCityManager'])->name('citymanager.delete')->middleware('auth')->middleware('role:admin');
+    Route::get('/allCityManagers/{id}', [App\Http\Controllers\CityManagerController::class, 'show'])->name('cityManager.show')->middleware('auth');
+    Route::get('/delCityManagers/{id}', [App\Http\Controllers\CityManagerController::class, 'deleteCityManager'])->name('citymanager.delete')->middleware('auth');
+});
 
 /************************* */
 /**         Coches         */
-Route::get('/admin/allcoaches', [App\Http\Controllers\CoachController::class, 'showCoaches'])->name('showCoaches')->middleware('auth')->middleware('role:admin|cityManager|gymManager');
-Route::get('/admin/addcoach', [App\Http\Controllers\CoachController::class, 'create'])->name('create')->middleware('auth')->middleware('role:admin|cityManager|gymManager');
-Route::post('/allcoaches', [App\Http\Controllers\CoachController::class, 'store'])->name('coach.store')->middleware('auth')->middleware('role:admin|cityManager|gymManager');
+Route::prefix('admin')->middleware(['auth', 'role:admin|cityManager|gymManager'])->group(function () {
+    Route::get('/allcoaches', [App\Http\Controllers\CoachController::class, 'showCoaches'])->name('showCoaches')->middleware('auth');
+    Route::get('/addcoach', [App\Http\Controllers\CoachController::class, 'create'])->name('create')->middleware('auth');
+    Route::post('/allcoaches', [App\Http\Controllers\CoachController::class, 'store'])->name('coach.store')->middleware('auth');
 
-Route::get('/admin/addEditCoach/{id}', [App\Http\Controllers\CoachController::class, 'edit'])->name('coach.addEdit')->middleware('auth')->middleware('role:admin|cityManager|gymManager');
-Route::put('/admin/storeEditCoach/{id}', [App\Http\Controllers\CoachController::class, 'editCoach'])->name('coach.storeEdit')->middleware('auth')->middleware('role:admin|cityManager|gymManager');
+    Route::get('/addEditCoach/{id}', [App\Http\Controllers\CoachController::class, 'edit'])->name('coach.addEdit')->middleware('auth');
+    Route::put('/storeEditCoach/{id}', [App\Http\Controllers\CoachController::class, 'editCoach'])->name('coach.storeEdit')->middleware('auth');
 
-Route::get('/admin/allcoaches/{id}', [App\Http\Controllers\CoachController::class, 'show'])->name('coach.show')->middleware('auth')->middleware('role:admin|cityManager|gymManager');
-Route::get('/admin/delCoaches/{id}', [App\Http\Controllers\CoachController::class, 'delete'])->name('coach.delete')->middleware('auth')->middleware('role:admin|cityManager|gymManager');
+    Route::get('/allcoaches/{id}', [App\Http\Controllers\CoachController::class, 'show'])->name('coach.show')->middleware('auth');
+    Route::get('/delCoaches/{id}', [App\Http\Controllers\CoachController::class, 'delete'])->name('coach.delete')->middleware('auth');
+});
+
 /************************* */
 
 
 ////***************************traning packages */
+Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
+    Route::get('/tarning-packages', [App\Http\Controllers\TrainingPackagesController::class, 'showPackages'])->name('showPackages')->middleware('auth');
+    Route::get('/addTraningPackage', [App\Http\Controllers\TrainingPackagesController::class, 'create'])->name('traningPackage.create')->middleware('auth');
+    // Route::post('/tarning-packages', [App\Http\Controllers\TrainingPackagesController::class, 'store'])->name('traningPackage.store');
+    Route::get('/tarning-packages/{id}', [App\Http\Controllers\TrainingPackagesController::class, 'show'])->name('trainingPackeges.show')->middleware('auth');
+    Route::get('/delTaraningPackage/{id}', [App\Http\Controllers\TrainingPackagesController::class, 'deletePackage'])->name('trainingPackage.delete')->middleware('auth');
+    // Route::post('/storeCity', [App\Http\Controllers\CityController::class, 'store'])->name('store')->middleware('auth');
 
-Route::get('/admin/tarning-packages', [App\Http\Controllers\TrainingPackagesController::class, 'showPackages'])->name('showPackages')->middleware('auth')->middleware('role:admin');
-Route::get('/admin/addTraningPackage', [App\Http\Controllers\TrainingPackagesController::class, 'create'])->name('traningPackage.create')->middleware('auth')->middleware('role:admin');
-Route::post('/tarning-packages', [App\Http\Controllers\TrainingPackagesController::class, 'store'])->name('traningPackage.store')->middleware('auth')->middleware('role:admin');
-Route::get('/admin/tarning-packages/{id}', [App\Http\Controllers\TrainingPackagesController::class, 'show'])->name('trainingPackeges.show')->middleware('auth')->middleware('role:admin');
-Route::get('/admin/delTaraningPackage/{id}', [App\Http\Controllers\TrainingPackagesController::class, 'deletePackage'])->name('trainingPackage.delete')->middleware('auth')->middleware('role:admin');
-// Route::post('/admin/storeCity', [App\Http\Controllers\CityController::class, 'store'])->name('store')->middleware('auth');
-
-Route::get('/admin/addEditPackage/{id}', [App\Http\Controllers\TrainingPackagesController::class, 'edit'])->name('traningPackage.edit')->middleware('auth')->middleware('role:admin');
-Route::put('/admin/storeEditPackage/{id}', [App\Http\Controllers\TrainingPackagesController::class, 'editPackage'])->name('traningPackage.storeEdit')->middleware('auth')->middleware('role:admin');
+    Route::get('/addEditPackage/{id}', [App\Http\Controllers\TrainingPackagesController::class, 'edit'])->name('traningPackage.edit')->middleware('auth');
+    Route::put('/storeEditPackage/{id}', [App\Http\Controllers\TrainingPackagesController::class, 'editPackage'])->name('traningPackage.storeEdit')->middleware('auth');
+});
 
 ////***************************traning sessions */
+Route::prefix('admin')->middleware(['auth', 'role:admin|cityManager|gymManager'])->group(function () {
+    Route::get('/tarning-sessions', [App\Http\Controllers\TrainingController::class, 'showSessions'])->name('showSessions');
+    Route::get('/addTraningSession', [App\Http\Controllers\TrainingController::class, 'create'])->name('traningSession.create');
+    // Route::post('/tarning-sessions', [App\Http\Controllers\TrainingController::class, 'store'])->name('traningSession.store');
+    Route::get('/tarning-sessions/{id}', [App\Http\Controllers\TrainingController::class, 'show'])->name('trainingSession.show');
+    Route::get('/delTaraningSession/{id}', [App\Http\Controllers\TrainingController::class, 'deleteSession'])->name('trainingSession.delete');
 
-Route::get('/admin/tarning-sessions', [App\Http\Controllers\TrainingController::class, 'showSessions'])->name('showSessions')->middleware('auth')->middleware('role:admin|cityManager|gymManager');
-Route::get('/admin/addTraningSession', [App\Http\Controllers\TrainingController::class, 'create'])->name('traningSession.create')->middleware('auth')->middleware('role:admin|cityManager|gymManager');
-Route::post('/tarning-sessions', [App\Http\Controllers\TrainingController::class, 'store'])->name('traningSession.store')->middleware('auth')->middleware('role:admin|cityManager|gymManager');
-Route::get('/admin/tarning-sessions/{id}', [App\Http\Controllers\TrainingController::class, 'show'])->name('trainingSession.show')->middleware('auth')->middleware('role:admin|cityManager|gymManager');
-Route::get('/admin/delTaraningSession/{id}', [App\Http\Controllers\TrainingController::class, 'deleteSession'])->name('trainingSession.delete')->middleware('auth')->middleware('role:admin|cityManager|gymManager');
-
-Route::get('/admin/addEditSession/{id}', [App\Http\Controllers\TrainingController::class, 'edit'])->name('traningSession.edit')->middleware('auth')->middleware('role:admin|cityManager|gymManager');
-Route::put('/admin/storeEditSession/{id}', [App\Http\Controllers\TrainingController::class, 'editSession'])->name('traningSession.storeEdit')->middleware('auth')->middleware('role:admin|cityManager|gymManager');
-
+    Route::get('/addEditSession/{id}', [App\Http\Controllers\TrainingController::class, 'edit'])->name('traningSession.edit');
+    Route::put('/storeEditSession/{id}', [App\Http\Controllers\TrainingController::class, 'editSession'])->name('traningSession.storeEdit');
+});
 
 
 
@@ -125,15 +135,20 @@ Route::get('/admin/attendance', [App\Http\Controllers\AttendanceController::clas
 
 
 /**************************** Stripe ********* */
-Route::get('stripe/buyPackage', [StripePaymentController::class, 'stripe'])->middleware('auth')->middleware('role:admin|cityManager|gymManager|coach');
-Route::post('stripe/buyPackage', [StripePaymentController::class, 'stripePost'])->name('stripe.post')->middleware('auth')->middleware('role:admin|cityManager|gymManager|coach');
-// Route::get('admin', function () {
-//     return view('admin');
-// });
+Route::prefix('stripe')->middleware(['auth', 'role:admin|cityManager|gymManager|coach'])->group(function () {
+    Route::get('buyPackage', [StripePaymentController::class, 'stripe']);
+    Route::post('buyPackage', [StripePaymentController::class, 'stripePost'])->name('stripe.post');
+    // Route::get('admin', function () {
+    //     return view('admin');
+    // });
+});
+
 
 
 
 
 //***************************************Banned Users */
-Route::get('/admin/bannedUsers', [App\Http\Controllers\BannedUsersController::class, 'showbannedUsers'])->name('showbannedUsers')->middleware('auth')->middleware('role:admin|cityManager|gymManager');
-Route::get('/admin/bannedUsers/{id}', [App\Http\Controllers\BannedUsersController::class, 'UnBanUser'])->name('UnBanUser')->middleware('auth')->middleware('role:admin|cityManager|gymManager');
+Route::prefix('admin')->middleware(['auth', 'role:admin|cityManager|gymManager'])->group(function () {
+    Route::get('/bannedUsers', [App\Http\Controllers\BannedUsersController::class, 'showbannedUsers'])->name('showbannedUsers');
+    Route::get('/bannedUsers/{id}', [App\Http\Controllers\BannedUsersController::class, 'UnBanUser'])->name('UnBanUser');
+});
