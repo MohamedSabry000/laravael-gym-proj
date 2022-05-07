@@ -47,7 +47,7 @@
                                 <th class="project-state"> Sessions Number</th>
                                 <th class="project-state"> User Id</th>
 
-                                <th class="project-state"> Actions</th>
+                                <th class="project-state" style="width: 202px"> Actions</th>
 
                                 <th class="project-state"></th>
                             </tr>

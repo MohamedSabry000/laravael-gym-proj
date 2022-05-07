@@ -44,7 +44,7 @@
                             <th class="project-state">Coach Email</th>
                             <th class="project-state">City</th>
                             <th class="project-state">Coach Image</th>
-                            <th class="project-state">Action</th>
+                            <th class="project-state" style="width: 202px">Action</th>
 
                         </tr>
                     </thead>
