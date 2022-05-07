@@ -159,7 +159,7 @@ function deleteCity(id, manager) {
 function banUser(id) {
     if (confirm("Do you want to ban this user?")) {
         $.ajax({
-            url: '/banUser/' + id,
+            url: '/admin/banUser/' + id,
             type: 'get',
             data: {
                 _token: $("input[name=_token]").val()

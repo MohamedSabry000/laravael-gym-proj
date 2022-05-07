@@ -59,7 +59,7 @@
                                     src="{{ asset($user->profile_image) }}"></td>
                             <td class="project-actions text-right">
                                 <a class="btn btn-info btn-sm" href="{{ route('allUsers.show', $user['id']) }}">
-                                    <i class="fa fa-eye"></i>
+                                    view
                                 </a>
                                 <!-- <a class="btn btn-warning btn-sm text-white" href="{{ route('cityManager.edit', $user['id']) }}">
                                                                     <i class="fas fa-pencil-alt"></i></a> -->
