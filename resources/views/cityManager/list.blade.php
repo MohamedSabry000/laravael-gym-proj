@@ -128,7 +128,7 @@ $(function() {
   function banUser(id) {
     if (confirm("Do you want to ban this user?")) {
         $.ajax({
-            url: '/admin/admin/banUser/' + id,
+            url: '/admin/banUser/' + id,
             type: 'get',
             data: {
                 _token: $("input[name=_token]").val()
