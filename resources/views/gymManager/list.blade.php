@@ -4,12 +4,11 @@
 
 @section('content')
 <!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper content-inner-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
-        <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
+        <div class="container-fluid" >
+            <div class="row mb-2" >
+                <div class="col-sm-6" >
                     <h1>All Gym Managers</h1>
                 </div>
                 <div class="col-sm-6">
@@ -45,7 +44,7 @@
                             <th class="project-state"> Name</th>
                             <th class="project-state">Email</th>
                             <th class="project-state">National ID</th>
-                            <th class="project-state" style="width: 202px"> Actions</th>
+                            <th class="project-state" style="width: 622px"> Actionsss</th>
                             <th class="project-state"></th>
                         </tr>
                     </thead>
@@ -134,7 +133,7 @@
     </script>
     @stop
 
-</div>
+
 <!-- /.content-wrapper -->
 <script>
 function deleteCity(id, manager) {

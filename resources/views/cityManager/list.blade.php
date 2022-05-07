@@ -1,7 +1,7 @@
 @extends('adminlte::page')
 @section('content')
 <!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper">
+<div >
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <div class="container-fluid">
