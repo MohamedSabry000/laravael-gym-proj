@@ -46,7 +46,7 @@
                                 <th class="project-state">Created at</th>
                                 <th class="project-state">Gym City Name</th>
                                 <?= ($role) ? "<th class='project-state'>Manager name</th>": '<th></th>' ?>
-                                <th class="project-state">Action</th>
+                                <th class="project-state" style="width: 202px">Action</th>
                                 
                             </tr>
                         </thead>

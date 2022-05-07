@@ -45,7 +45,7 @@
                             <th class="project-state"> Name</th>
                             <th class="project-state">Email</th>
                             <th class="project-state">National ID</th>
-                            <th class="project-state"> Actions</th>
+                            <th class="project-state" style="width: 202px"> Actions</th>
                             <th class="project-state"></th>
                         </tr>
                     </thead>
