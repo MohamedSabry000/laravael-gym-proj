@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GymController;
 use App\Http\Controllers\StripePaymentController;
 use App\Http\Controllers\CityManagerController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -41,7 +42,7 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
     Route::get('/gymManagers', [App\Http\Controllers\GymManagerController::class, 'showGymManagers'])->name('showGymManagers');
     Route::post('/gymManagers', [App\Http\Controllers\GymManagerController::class, 'store'])->name('gymManager.store');
     Route::get('/gymManager/{id}', [App\Http\Controllers\GymManagerController::class, 'show'])->name('show');
-    
+
     Route::get('/cities', [App\Http\Controllers\CityController::class, 'showCites'])->name('showCites');
     Route::post('/cities', [App\Http\Controllers\CityController::class, 'store'])->name('city.store');
     Route::get('/cities/{id}', [App\Http\Controllers\CityController::class, 'show'])->name('city.show');
@@ -55,7 +56,7 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
 
     Route::get('/tarning-sessions', [App\Http\Controllers\TrainingController::class, 'showSessions'])->name('showSessions');
     Route::get('/tarning-sessions/{id}', [App\Http\Controllers\TrainingController::class, 'show'])->name('trainingSession.show');
-    
+
     Route::get('/allusers', [App\Http\Controllers\AdminController::class, 'showUsers'])->name('showUsers');
 });
 
@@ -89,7 +90,7 @@ Route::prefix('admin')->middleware(['auth', 'role:admin|cityManager'])->group(fu
     Route::get('/addEditGym/{id}', [GymController::class, 'edit'])->name('gym.addEdit');
     Route::put('/storeEditGym/{id}', [GymController::class, 'editGym'])->name('gym.storeEditGym');
 
-    
+
     Route::get('/addGymManager', [App\Http\Controllers\GymManagerController::class, 'create'])->name('gymManager.create');
     Route::get('/addEditManager/{id}', [App\Http\Controllers\GymManagerController::class, 'edit'])->name('manager.addEdit');
     Route::put('/storeEditManager/{id}', [App\Http\Controllers\GymManagerController::class, 'editManager'])->name('manager.storeEdit');
@@ -112,7 +113,7 @@ Route::prefix('admin')->middleware(['auth', 'role:admin|cityManager|gymManager']
 
     Route::get('/revenue', [App\Http\Controllers\RevenueController::class, 'index'])->name('revenue.index');
 });
-  
+
 
 /**************************** Stripe ********* */
 Route::prefix('stripe')->middleware(['auth', 'role:admin|cityManager|gymManager'])->group(function () {
@@ -126,3 +127,11 @@ Route::prefix('admin')->middleware(['auth', 'logs-out-banned-user', 'role:admin|
     Route::get('/bannedUsers', [App\Http\Controllers\BannedUsersController::class, 'showbannedUsers'])->name('showbannedUsers');
     Route::get('/bannedUsers/{id}', [App\Http\Controllers\BannedUsersController::class, 'UnBanUser'])->name('UnBanUser');
 });
+
+
+
+//*************************************user profile *************************/
+Route::get('/user/{id}', [UserController::class, 'show_profile'])->name('user.admin_profile')->middleware('auth')->middleware('role:admin|cityManager|gymManager');
+Route::get('/user/{users}/edit-profile', [UserController::class, 'edit_profile'])->name('user.edit_admin_profile')->middleware('auth')->middleware('role:admin|cityManager|gymManager');
+Route::put('/user/{users}', [UserController::class, 'update'])->name('user.update')->middleware('auth')->middleware('role:admin|cityManager|gymManager');
+

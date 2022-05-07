@@ -10,12 +10,8 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Auth;
 
-
-
-
 class UserController extends Controller
 {
-
     #=======================================================================================#
     #			                             create                                         #
     #=======================================================================================#
@@ -24,18 +20,7 @@ class UserController extends Controller
         return view('500');
     }
 
-    #=======================================================================================#
-    #			                             index                                         	#
-    #=======================================================================================#
-    public function index()
-    {
-        $users = User::all();
-
-        return view('layouts.user-layout', [
-            'users' => $users,
-
-        ]);
-    }
+    
     #=======================================================================================#
     #			                        show_profile                                      	#
     #=======================================================================================#
@@ -60,35 +45,40 @@ class UserController extends Controller
     #=======================================================================================#
     #			                             update                                        	#
     #=======================================================================================#
-    public function update(StoreRequest $request, $user_id)
+    public function update(Request $request, $user_id)
     {
-
         $user = User::find($user_id);
         $user->name = $request->name;
         $user->email = $request->email;
         if ($request->hasFile('profile_image')) {
             $image = $request->file('profile_image');
-            $name = time() . \Str::random(30) . '.' . $image->getClientOriginalExtension();
+            $name =
+                time() .
+                \Str::random(30) .
+                '.' .
+                $image->getClientOriginalExtension();
             $destinationPath = public_path('/imgs');
             $image->move($destinationPath, $name);
             $imageName = 'imgs/' . $name;
-            if ($user->profile_image)
+            if ($user->profile_image) {
                 File::delete(public_path('imgs/' . $user->profile_image));
+            }
             $user->profile_image = $imageName;
         }
         $user->save();
-        return redirect()->route('user.admin_profile', auth()->user()->id)->with('success', 'Your data successfully updated');
+        return redirect()
+            ->route('user.admin_profile', auth()->user()->id)
+            ->with('success', 'Your data successfully updated');
     }
     #=======================================================================================#
     #			                             store                                         	#
     #=======================================================================================#
-    public function store(StoreRequest $request)
+    public function store(Request $request)
     {
         $requestData = request()->all();
         User::create($requestData);
         return redirect()->route('user.admin_profile');
     }
-
 
     #=======================================================================================#
     #			                             destroy                                       	#
@@ -119,16 +109,28 @@ class UserController extends Controller
         $allBannedUser = 0;
         switch ($userRole['0']) {
             case 'admin':
-                $allBannedUser = User::role(['cityManager', 'gymManager', 'coach', 'user'])->onlyBanned()->get();
+                $allBannedUser = User::role([
+                    'cityManager',
+                    'gymManager',
+                    'coach',
+                    'user',
+                ])
+                    ->onlyBanned()
+                    ->get();
                 break;
             case 'cityManager':
-                $allBannedUser = User::role(['gymManager', 'coach', 'user'])->onlyBanned()->get();
+                $allBannedUser = User::role(['gymManager', 'coach', 'user'])
+                    ->onlyBanned()
+                    ->get();
                 break;
             case 'gymManager':
-                $allBannedUser = User::role(['coach', 'user'])->onlyBanned()->get();
+                $allBannedUser = User::role(['coach', 'user'])
+                    ->onlyBanned()
+                    ->get();
                 break;
         }
-        if (count($allBannedUser) <= 0) { //for empty statement
+        if (count($allBannedUser) <= 0) {
+            //for empty statement
             return view('empty');
         }
         return view('ban.showBanned', [
