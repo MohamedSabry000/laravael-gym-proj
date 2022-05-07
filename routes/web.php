@@ -57,7 +57,6 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
     Route::get('/tarning-sessions', [App\Http\Controllers\TrainingController::class, 'showSessions'])->name('showSessions');
     Route::get('/tarning-sessions/{id}', [App\Http\Controllers\TrainingController::class, 'show'])->name('trainingSession.show');
 
-    Route::get('/allusers', [App\Http\Controllers\AdminController::class, 'showUsers'])->name('showUsers');
 });
 
 Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
@@ -131,6 +130,7 @@ Route::prefix('admin')->middleware(['auth', 'role:admin|cityManager|gymManager']
 
 
 //*************************************user profile *************************/
+Route::get('/allusers', [App\Http\Controllers\AdminController::class, 'showUsers'])->name('showUsers');
 Route::get('/user/{id}', [UserController::class, 'show_profile'])->name('user.admin_profile')->middleware('auth')->middleware('role:admin|cityManager|gymManager');
 Route::get('/user/{users}/edit-profile', [UserController::class, 'edit_profile'])->name('user.edit_admin_profile')->middleware('auth')->middleware('role:admin|cityManager|gymManager');
 Route::put('/user/{users}', [UserController::class, 'update'])->name('user.update')->middleware('auth')->middleware('role:admin|cityManager|gymManager');
