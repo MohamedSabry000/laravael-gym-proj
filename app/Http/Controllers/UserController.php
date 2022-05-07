@@ -10,9 +10,6 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Auth;
 
-
-
-
 class UserController extends Controller
 {
 
@@ -62,7 +59,6 @@ class UserController extends Controller
     #=======================================================================================#
     public function update(StoreRequest $request, $user_id)
     {
-
         $user = User::find($user_id);
         $user->name = $request->name;
         $user->email = $request->email;
@@ -72,8 +68,9 @@ class UserController extends Controller
             $destinationPath = public_path('/imgs');
             $image->move($destinationPath, $name);
             $imageName = 'imgs/' . $name;
-            if ($user->profile_image)
+            if ($user->profile_image) {
                 File::delete(public_path('imgs/' . $user->profile_image));
+            }
             $user->profile_image = $imageName;
         }
         $user->save();
@@ -104,7 +101,7 @@ class UserController extends Controller
     public function banUser($userID)
     {
         User::find($userID)->ban([
-            'comment' => 'كيفي كدا',
+            'comment' => 'Ban',
             'expired_at' => '+3 month',
         ]);
         return response()->json(['success' => 'Record deleted successfully!']);

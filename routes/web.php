@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GymController;
 use App\Http\Controllers\StripePaymentController;
 use App\Http\Controllers\CityManagerController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,7 +28,7 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('auth');
+Route::get('/home', [App\Http\Controllers\AdminController::class, 'index'])->name('home')->middleware('auth');
 Route::get('/admin', [App\Http\Controllers\AdminController::class, 'index'])->name('index')->middleware('auth');
 Route::get('/admin/cities', [App\Http\Controllers\CityController::class, 'showCites'])->name('showCites')->middleware('auth')->middleware('role:admin');
 Route::get('/admin/allusers', [App\Http\Controllers\AdminController::class, 'showUsers'])->name('showUsers')->middleware('auth')->middleware('role:admin|cityManager|gymManager');
@@ -122,7 +123,7 @@ Route::prefix('stripe')->middleware(['auth', 'role:admin|cityManager|gymManager'
 
 //***************************************Banned Users */
 Route::prefix('admin')->middleware(['auth', 'logs-out-banned-user', 'role:admin|cityManager|gymManager'])->group(function () {
-    Route::get('/banUser/{userID}', [UserController::class, 'banUser'])->name('user.banUser');
+    Route::get('/banUser/{userID}', [App\Http\Controllers\BannedUsersController::class, 'banUser'])->name('user.banUser');
     Route::get('/bannedUsers', [App\Http\Controllers\BannedUsersController::class, 'showbannedUsers'])->name('showbannedUsers');
     Route::get('/bannedUsers/{id}', [App\Http\Controllers\BannedUsersController::class, 'UnBanUser'])->name('UnBanUser');
 });

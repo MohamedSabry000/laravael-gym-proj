@@ -124,20 +124,21 @@ $(function() {
 @stop
 
 <script>
-//   function banUser(id) {
-//     if (confirm("Do you want to ban this user?")) {
-//         $.ajax({
-//             url: '/banUser/' + id,
-//             type: 'get',
-//             data: {
-//                 _token: $("input[name=_token]").val()
-//             },
-//             success: function(response) {
-//                 $("#did" + id).remove();
-//             }
-//         });
-//     }
-// }
+  function banUser(id) {
+    if (confirm("Do you want to ban this user?")) {
+        $.ajax({
+            url: '/admin/banUser/' + id,
+            type: 'get',
+            data: {
+                _token: $("input[name=_token]").val()
+            },
+            success: function(response) {
+                // $("#did" + id).remove();
+                console.log("success");
+            }
+        });
+    }
+}
 function deletecityManager(id) {
     if (confirm("Do you want to delete this record?")) {
         $.ajax({

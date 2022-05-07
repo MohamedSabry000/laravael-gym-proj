@@ -12,6 +12,7 @@ use App\Models\Revenue;
 use App\Models\GymManager;
 
 use DataTables;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class BannedUsersController extends Controller
@@ -30,12 +31,28 @@ class BannedUsersController extends Controller
         return response()->json(['success' => 'Record deleted successfully!']);
     }
 
-
     public function showbannedUsers(Request $request)
     {
         if ($request->ajax()) {
-            $data= DB::select("select * from users where banned_status = 1") ;
-            return DataTables::of($data)
+            $userRole = Auth::user()->getRoleNames();
+            $allBannedUser = 0;
+
+            // $data= DB::select("select * from users where banned_status = 1") ;
+            switch ($userRole['0']) {
+                case 'admin':
+                    $allBannedUser = User::role(['cityManager', 'gymManager', 'coach', 'user'])->onlyBanned()->get();
+                    break;
+                case 'cityManager':
+                    $allBannedUser = User::role(['gymManager', 'coach', 'user'])->onlyBanned()->get();
+                    break;
+                case 'gymManager':
+                    $allBannedUser = User::role(['coach', 'user'])->onlyBanned()->get();
+                    break;
+            }
+
+            // dd($allBannedUser);
+
+            return DataTables::of($allBannedUser)
                     ->addIndexColumn()
         
                     ->addColumn('action', function ($row) {
@@ -52,6 +69,8 @@ class BannedUsersController extends Controller
         }
         return view('bannedUsers.list');
     }
+
+
     public function UnBanUser($id)
     {
         $user = User::find($id);

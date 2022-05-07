@@ -179,6 +179,7 @@ return [
 
         Yajra\DataTables\DataTablesServiceProvider::class,
 
+        Cog\Laravel\Ban\Providers\BanServiceProvider::class,
 
     ],
 
