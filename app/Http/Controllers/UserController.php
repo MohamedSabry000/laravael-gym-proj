@@ -32,6 +32,15 @@ class UserController extends Controller
             'user' => $user,
         ]);
     }
+    public function show_curr_profile()
+    {
+        $user=Auth::user();
+        $cur_user = User::find($user->id);
+
+        return view('user.admin_profile', [
+            'user' => $cur_user,
+        ]);
+    }
 
     #=======================================================================================#
     #			                         edit_profile                                  	    #

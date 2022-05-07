@@ -1,5 +1,6 @@
 <?php
 
+
 return [
     /*
     |--------------------------------------------------------------------------
@@ -249,7 +250,7 @@ return [
         ['header' => 'account_settings'],
         [
             'text' => 'profile',
-            'url' => '/7aga',
+            'url' => '/user',
             'icon' => 'fas fa-fw fa-user',
         ],
 
