@@ -180,7 +180,8 @@ return [
     | URLs
     |--------------------------------------------------------------------------
     |
-    | Here we can modify the url settings of the admin panel.
+    |
+    
     |
     | For detailed instructions you can look the urls section here:
     | https://github.com/jeroennoten/Laravel-AdminLTE/wiki/Basic-Configuration
