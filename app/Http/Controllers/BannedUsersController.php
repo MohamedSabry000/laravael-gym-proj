@@ -73,6 +73,7 @@ class BannedUsersController extends Controller
 
     public function UnBanUser($id)
     {
+        User::find($id)->unban();
         $user = User::find($id);
         if ($user) {
             $user->banned_status = 0;

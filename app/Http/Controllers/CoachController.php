@@ -25,7 +25,7 @@ class CoachController extends Controller
     public function showCoaches(Request $request)
     {
         if ($request->ajax()) {
-            $data = User::role('coach');
+            $data = User::role('coach')->withoutBanned()->get();;
 
             return DataTables::of($data)
                     ->addIndexColumn()
@@ -33,7 +33,8 @@ class CoachController extends Controller
                         $btn = '<a href="/admin/allcoaches/'.$row->id.'" class="edit btn btn-primary btn-sm">View</a> ';
                         $btn .= '<a href="/admin/addEditCoach/'.$row->id.'" class="edit btn btn-warning btn-sm">Edit</a> ';
                         $btn .= '<a href="/admin/delCoach/'.$row->id.'" class="edit btn btn-danger btn-sm">Delete</a>';
-    
+                        $btn .= '<a href="/admin/allcoaches" onclick="banUser('.$row->id.')" class="btn btn-dark "><i class="fa fa-user-lock"></i></a>';
+
                         return $btn;
                     })->addColumn('avatar', function ($row) {
                         $avatar = "<img width='80' height='80' src='".$row->profile_image."' />";
