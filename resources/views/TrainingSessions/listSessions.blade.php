@@ -52,7 +52,7 @@
                             <th class="project-state">Day</th>
                             <th class="project-state">Sarts At</th>
                             <th class="project-state">Finishes At</th>
-                            <th class="project-state">Training Package</th>
+                            <th class="project-state" style="width: 202px">Training Package</th>
                             <th class="project-state">Action</th>
 
                         </tr>
