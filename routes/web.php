@@ -122,7 +122,7 @@ Route::prefix('stripe')->middleware(['auth', 'role:admin|cityManager|gymManager'
 });
 
 //***************************************Banned Users */
-Route::prefix('admin')->middleware(['auth', 'logs-out-banned-user', 'role:admin|cityManager|gymManager'])->group(function () {
+Route::prefix('admin')->middleware(['auth', 'role:admin|cityManager|gymManager'])->group(function () {
     Route::get('/banUser/{userID}', [App\Http\Controllers\BannedUsersController::class, 'banUser'])->name('user.banUser');
     Route::get('/bannedUsers', [App\Http\Controllers\BannedUsersController::class, 'showbannedUsers'])->name('showbannedUsers');
     Route::get('/bannedUsers/{id}', [App\Http\Controllers\BannedUsersController::class, 'UnBanUser'])->name('UnBanUser');
