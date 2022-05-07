@@ -16,7 +16,7 @@ class GymManagerController extends Controller
     public function showGymManagers(Request $request)
     {
         if ($request->ajax()) {
-            $data = User::role('gymManager');
+            $data = User::role('gymManager')->withoutBanned()->get();;
 
             return DataTables::of($data)
                     ->addIndexColumn()

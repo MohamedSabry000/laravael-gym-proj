@@ -66,7 +66,7 @@ class CityManagerController extends Controller
     public function showCityManager(Request $request)
     {
         if ($request->ajax()) {
-            $data = User::select('*');
+            $data = User::role('cityManager')->withoutBanned()->get();
             return DataTables::of($data)
                     ->addIndexColumn()
                     ->addColumn('CityManagerName', function ($row) {
