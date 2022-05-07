@@ -1,7 +1,7 @@
 <?php
 
-return [
 
+return [
     /*
     |--------------------------------------------------------------------------
     | Title
@@ -180,7 +180,8 @@ return [
     | URLs
     |--------------------------------------------------------------------------
     |
-    | Here we can modify the url settings of the admin panel.
+    |
+    
     |
     | For detailed instructions you can look the urls section here:
     | https://github.com/jeroennoten/Laravel-AdminLTE/wiki/Basic-Configuration
@@ -227,12 +228,12 @@ return [
     'menu' => [
         // Navbar items:
         [
-            'type'         => 'navbar-search',
-            'text'         => 'search',
+            'type' => 'navbar-search',
+            'text' => 'search',
             'topnav_right' => true,
         ],
         [
-            'type'         => 'fullscreen-widget',
+            'type' => 'fullscreen-widget',
             'topnav_right' => true,
         ],
 
@@ -243,153 +244,148 @@ return [
         ],
         [
             'text' => 'blog',
-            'url'  => 'admin/blog',
-            'can'  => 'manage-blog',
+            'url' => 'admin/blog',
+            'can' => 'manage-blog',
         ],
         ['header' => 'account_settings'],
         [
             'text' => 'profile',
-            'url'  => 'admin/settings',
+            'url' => '/user',
             'icon' => 'fas fa-fw fa-user',
         ],
-        // [
-        //     'text' => 'change_password',
-        //     'url'  => 'admin/settings',
-        //     'icon' => 'fas fa-fw fa-lock',
-        // ],
+
         [
-            'text'    => 'City Managers',
-            'icon'    => 'fas fa-fw fa-city',
+            'text' => 'City Managers',
+            'icon' => 'fas fa-fw fa-city',
             'submenu' => [
                 [
                     'text' => 'All City Managers',
-                    'url'  => '/admin/allCityManagers',
+                    'url' => '/admin/allCityManagers',
                 ],
                 [
                     'text' => 'Add New',
-                    'url'  => '/admin/addCityManager',
+                    'url' => '/admin/addCityManager',
                 ],
             ],
         ],
         [
-            'text'    => 'Cities',
-            'icon'    => 'fas fa-fw fa-city',
+            'text' => 'Cities',
+            'icon' => 'fas fa-fw fa-city',
             'submenu' => [
                 [
                     'text' => 'All Cities',
-                    'url'  => '/admin/cities',
+                    'url' => '/admin/cities',
                 ],
                 [
                     'text' => 'Add New',
-                    'url'  => '/admin/addCity',
+                    'url' => '/admin/addCity',
                 ],
             ],
         ],
         [
-            'text'    => 'Gyms',
-            'icon'    => 'fas fa-fw fa-dumbbell',
+            'text' => 'Gyms',
+            'icon' => 'fas fa-fw fa-dumbbell',
             'submenu' => [
                 [
                     'text' => 'Add Gym',
-                    'url'  => '/admin/addgym',
+                    'url' => '/admin/addgym',
                 ],
                 [
                     'text' => 'List Gyms',
-                    'url'  => '/admin/gyms',
+                    'url' => '/admin/gyms',
                 ],
-                
             ],
         ],
         [
-            'text'    => 'Gym Managers',
-            'icon'    => 'fas fa-fw fa-user-check',
+            'text' => 'Gym Managers',
+            'icon' => 'fas fa-fw fa-user-check',
             'submenu' => [
                 [
                     'text' => 'All Managers',
-                    'url'  => '/admin/gymManagers',
+                    'url' => '/admin/gymManagers',
                 ],
                 [
                     'text' => 'Add New',
-                    'url'  => '/admin/addGymManager',
+                    'url' => '/admin/addGymManager',
                 ],
             ],
         ],
         [
-            'text'    => 'Users',
-            'icon'    => 'fas fa-fw fa-address-book',
+            'text' => 'Users',
+            'icon' => 'fas fa-fw fa-address-book',
             'submenu' => [
                 [
                     'text' => 'All Users',
-                    'url'  => '/admin/allusers',
+                    'url' => '/admin/allusers',
                 ],
                 [
                     'text' => 'Add New',
-                    'url'  => '#',
+                    'url' => '#',
                 ],
             ],
         ],
         [
-            'text'    => 'Coaches',
-            'icon'    => 'fas fa-fw fa-user-ninja',
+            'text' => 'Coaches',
+            'icon' => 'fas fa-fw fa-user-ninja',
             'submenu' => [
                 [
                     'text' => 'All Coaches',
-                    'url'  => '/admin/allcoaches',
+                    'url' => '/admin/allcoaches',
                 ],
                 [
                     'text' => 'Add New',
-                    'url'  => '/admin/addcoach',
+                    'url' => '/admin/addcoach',
                 ],
             ],
         ],
 
         [
-            'text'    => 'Training Packages',
-            'icon'    => 'fas fa-fw fa-cubes',
+            'text' => 'Training Packages',
+            'icon' => 'fas fa-fw fa-cubes',
             'submenu' => [
                 [
                     'text' => 'Add Package',
-                    'url'  => '/admin/addTraningPackage/',
+                    'url' => '/admin/addTraningPackage/',
                 ],
                 [
                     'text' => 'List Packages',
-                    'url'  => '/admin/tarning-packages',
+                    'url' => '/admin/tarning-packages',
                 ],
             ],
         ],
         [
-            'text'    => 'Training Sessions',
-            'icon'    => 'fas fa-fw fa-cube',
+            'text' => 'Training Sessions',
+            'icon' => 'fas fa-fw fa-cube',
             'submenu' => [
                 [
                     'text' => 'List Sessions',
-                    'url'  => '/admin/tarning-sessions',
+                    'url' => '/admin/tarning-sessions',
                 ],
                 [
                     'text' => 'Add Session',
-                    'url'  => '/admin/addTraningSession',
+                    'url' => '/admin/addTraningSession',
                 ],
             ],
         ],
         [
-            'text'    => 'Attendance Table',
-            'url'     => '/admin/attendance',
-            'icon'    => 'fas fa-fw fa-book',
+            'text' => 'Attendance Table',
+            'url' => '/admin/attendance',
+            'icon' => 'fas fa-fw fa-book',
         ],
         [
-            'text'    => 'Banned Users',
-            'url'     => '/admin/bannedUsers',
-            'icon'    => 'fas fa-fw fa-user',
+            'text' => 'Banned Users',
+            'url' => '/admin/bannedUsers',
+            'icon' => 'fas fa-fw fa-user',
         ],
         [
-            'text'    => 'Buy Package For Users',
-            'url'     => '/stripe/buyPackage',
-            'icon'    => 'fas fa-fw fa-user',
+            'text' => 'Buy Package For Users',
+            'url' => '/stripe/buyPackage',
+            'icon' => 'fas fa-fw fa-user',
         ],
         [
-            'text'    => 'Revenue',
-            'url'     => '/admin/revenue',
-            'icon'    => 'fas fa-fw fa-money-bill-wave',
+            'text' => 'Revenue',
+            'url' => '/admin/revenue',
+            'icon' => 'fas fa-fw fa-money-bill-wave',
         ],
         // [
         //     'text'    => 'Attendance',
@@ -502,17 +498,20 @@ return [
                 [
                     'type' => 'js',
                     'asset' => false,
-                    'location' => '//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js',
+                    'location' =>
+                        '//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js',
                 ],
                 [
                     'type' => 'js',
                     'asset' => false,
-                    'location' => '//cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js',
+                    'location' =>
+                        '//cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js',
                 ],
                 [
                     'type' => 'css',
                     'asset' => false,
-                    'location' => '//cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css',
+                    'location' =>
+                        '//cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css',
                 ],
             ],
         ],
@@ -522,12 +521,14 @@ return [
                 [
                     'type' => 'js',
                     'asset' => false,
-                    'location' => '//cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js',
+                    'location' =>
+                        '//cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js',
                 ],
                 [
                     'type' => 'css',
                     'asset' => false,
-                    'location' => '//cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.css',
+                    'location' =>
+                        '//cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.css',
                 ],
             ],
         ],
@@ -537,7 +538,8 @@ return [
                 [
                     'type' => 'js',
                     'asset' => false,
-                    'location' => '//cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.0/Chart.bundle.min.js',
+                    'location' =>
+                        '//cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.0/Chart.bundle.min.js',
                 ],
             ],
         ],
@@ -557,12 +559,14 @@ return [
                 [
                     'type' => 'css',
                     'asset' => false,
-                    'location' => '//cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/themes/blue/pace-theme-center-radar.min.css',
+                    'location' =>
+                        '//cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/themes/blue/pace-theme-center-radar.min.css',
                 ],
                 [
                     'type' => 'js',
                     'asset' => false,
-                    'location' => '//cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/pace.min.js',
+                    'location' =>
+                        '//cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/pace.min.js',
                 ],
             ],
         ],
