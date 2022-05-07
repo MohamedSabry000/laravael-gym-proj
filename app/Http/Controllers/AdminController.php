@@ -22,7 +22,7 @@ class AdminController extends Controller
             return DataTables::of($data)
                     ->addIndexColumn()
                     ->addColumn('action', function ($row) {
-                        $btn = '<a href="javascript:void(0)" class="edit btn btn-primary btn-sm">View</a>';
+                        $btn = '<a href="/admin/user/'.$row->id.'" class="edit btn btn-primary btn-sm">View</a>';
 
                         return $btn;
                     })
@@ -32,7 +32,12 @@ class AdminController extends Controller
 
         return view('allUsers.show');
     }
+    public function show($id)
+    {
+        $user = User::findorfail($id);
     
+        return view("allUsers.show_profile",["user"=>$user]);
+    }
     public function showCites(Request $request)
     {
         if ($request->ajax()) {

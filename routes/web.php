@@ -131,7 +131,7 @@ Route::prefix('admin')->middleware(['auth', 'role:admin|cityManager|gymManager']
 
 //*************************************user profile *************************/
 Route::get('/allusers', [App\Http\Controllers\AdminController::class, 'showUsers'])->name('showUsers');
-Route::get('/user/{id}', [UserController::class, 'show_profile'])->name('user.admin_profile')->middleware('auth')->middleware('role:admin|cityManager|gymManager');
+Route::get('/admin/user/{id}', [App\Http\Controllers\AdminController::class, 'show'])->name('user.view_profile')->middleware('auth')->middleware('role:admin|cityManager|gymManager');
 Route::get('/user/{users}/edit-profile', [UserController::class, 'edit_profile'])->name('user.edit_admin_profile')->middleware('auth')->middleware('role:admin|cityManager|gymManager');
 Route::put('/user/{users}', [UserController::class, 'update'])->name('user.update')->middleware('auth')->middleware('role:admin|cityManager|gymManager');
 Route::get('/user', [UserController::class, 'show_curr_profile'])->name('user.admin_profile')->middleware('auth')->middleware('role:admin|cityManager|gymManager|user');
