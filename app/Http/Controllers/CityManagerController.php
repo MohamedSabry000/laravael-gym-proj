@@ -76,7 +76,7 @@ class CityManagerController extends Controller
                         $btn = '<a href="/admin/allCityManagers/'.$row->id.'" class="edit btn btn-primary btn-sm">View</a> ';
                         $btn .= '<a href="/admin/addEditCityManager/'.$row->id.'" class="edit btn btn-warning btn-sm">Edit</a> ';
                         $btn .= '<a href="/admin/delCityManagers/'.$row->id.'" class="edit btn btn-danger btn-sm">Delete</a>';
-                        $btn .= '<a href="javascript:void(0);" onclick="banUser('.$row->id.')" class="btn btn-dark "><i class="fa fa-user-lock"></i></a>';
+                        $btn .= '<a href="/admin/allCityManagers" onclick="banUser('.$row->id.')" class="btn btn-dark "><i class="fa fa-user-lock"></i></a>';
 
                         return $btn;
                     })->addColumn('avatar', function ($row) {

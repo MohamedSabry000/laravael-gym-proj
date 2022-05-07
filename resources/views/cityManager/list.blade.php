@@ -1,7 +1,7 @@
 @extends('adminlte::page')
 @section('content')
 <!-- Content Wrapper. Contains page content -->
-<div >
+<div class="">
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <div class="container-fluid">
@@ -57,8 +57,9 @@
         <!-- /.card -->
 
     </section>
-    @section('css')
+    
 </div>
+@section('css')
 <!-- /.content-wrapper -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css" />
 <!-- <link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet"> -->
