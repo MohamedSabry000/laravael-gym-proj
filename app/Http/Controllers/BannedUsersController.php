@@ -13,6 +13,7 @@ use App\Models\GymManager;
 
 use DataTables;
 use Illuminate\Support\Facades\DB;
+
 class BannedUsersController extends Controller
 {
     public function index()
@@ -20,10 +21,18 @@ class BannedUsersController extends Controller
         return view('admin.index');
     }
 
+    public function banUser($userID)
+    {
+        User::find($userID)->ban([
+            'comment' => 'Banned by admin',
+            'expired_at' => '2020-12-12',
+        ]);
+        return response()->json(['success' => 'Record deleted successfully!']);
+    }
+
 
     public function showbannedUsers(Request $request)
     {
-
         if ($request->ajax()) {
             $data= DB::select("select * from users where banned_status = 1") ;
             return DataTables::of($data)
@@ -43,13 +52,13 @@ class BannedUsersController extends Controller
         }
         return view('bannedUsers.list');
     }
-    public function UnBanUser($id){
+    public function UnBanUser($id)
+    {
         $user = User::find($id);
-        if($user) {
+        if ($user) {
             $user->banned_status = 0;
             $user->save();
         }
         return redirect(route('showbannedUsers'));
-
     }
 }

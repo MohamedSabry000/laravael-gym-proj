@@ -21,6 +21,7 @@ class Revenue extends Model
         'payment_method',
         'user_id',
         'training_package_id',
+        'amount',
     ];
     public function user()
     {

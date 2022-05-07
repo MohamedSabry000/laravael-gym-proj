@@ -79,14 +79,16 @@
 
       <div class='form-row row'>
           <div class='col-xs-12 form-group required'>
-              <label class='control-label'>Name on Card</label> <input
+              <label class='control-label'>Name on Card</label> 
+              <input name="card_name"
                   class='form-control' size='4' type='text'>
           </div>
       </div>
 
       <div class='form-row row'>
           <div class='col-xs-12 form-group card required'>
-              <label class='control-label'>Card Number</label> <input
+              <label class='control-label'>Card Number</label> 
+              <input name="card_number"
                   autocomplete='off' class='form-control card-number' size='20'
                   type='text'>
           </div>

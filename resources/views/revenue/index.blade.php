@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Edit City')
+@section('title', 'Show Revenue')
 
 @section('content')
     <!-- Content Wrapper. Contains page content -->
@@ -10,12 +10,12 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1>All Cities</h1>
+                        <h1>Revenue</h1>
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="#">Home</a></li>
-                            <li class="breadcrumb-item active">Cities</li>
+                            <li class="breadcrumb-item active">Revenue</li>
                         </ol>
                     </div>
                 </div>
@@ -23,10 +23,12 @@
         </section>
         <!-- Main content -->
         <section class="content">
+            <x-adminlte-info-box title="Total Amount" text="{{$amount}}" icon="fas fa-lg fa-money-bill-wave" color="success" icon-theme="purple"/>
+
             <!-- Default box -->
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">Cities</h3>
+                    <h3 class="card-title">Revenue</h3>
                     <div class="card-tools">
                         <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
                             <i class="fas fa-minus"></i>
@@ -40,13 +42,17 @@
                     <table class="table table-striped projects data-table ">
                         <thead>
                             <tr>
-                            <th class="project-state"> City ID</th>
+                                <th class="project-state"> Name</th>
+                                <th class="project-state"> Email</th>
 
-                                <th class="project-state"> City Name</th>
-                                <th class="project-state"> Manager Name</th>
-                                <th class="project-state"> Actions</th>
-
-                                <th class="project-state"></th>
+                                <th class="project-state">Package Name</th>
+                                <th class="project-state">Amount</th>
+                                @if($role == 'cityManager' || $role == 'admin')
+                                <th class="project-state">Gym Name</th>
+                                @endif
+                                @if($role == 'admin')
+                                <th class="project-state">City</th>     
+                                @endif
                             </tr>
                         </thead>
                         <tbody>
@@ -85,37 +91,50 @@
                 $('#myTable').DataTable();
             } );
             $(function () {
-                
-                var table = $('.data-table').DataTable({
-                    processing: true,
-                    serverSide: true,
-                    ajax: "{{ route('showCites') }}",
-                    columns: [
-                        {data: 'id', name: 'id'},
-                        {data: 'name', name: 'name'},
-                        {data: 'ManagerName', name: 'edit', orderable: false, searchable: false},
-                        {data: 'action', name: 'edit', orderable: false, searchable: false},
-                    ]
-                });
-                
-            });
-
-            function banUser(id) {
-                if (confirm("Do you want to ban this user?")) {
-                    $.ajax({
-                        url: '/admin/banUser/' + id,
-                        type: 'get',
-                        data: {
-                            _token: $("input[name=_token]").val()
-                        },
-                        success: function(response) {
-                            $("#did" + id).remove();
-                        }
+                $role = "{{$role}}";
+                if ($role == 'admin') {
+                    var table = $('.data-table').DataTable({
+                        processing: true,
+                        serverSide: true,
+                        ajax: "{{ route('revenue.index') }}",
+                        columns: [
+                            {data: 'user_name',name: 'user_name'},
+                            {data: 'user_email', name: 'user_email'},
+                            {data: 'package_name', name: 'package_name'},
+                            {data: 'amount', name: 'amount'},
+                            {data: 'gymName', name: 'gymName'},
+                            {data: 'cityName', name: 'cityName'},
+                        ]
+                    });
+                } else if ($role == 'cityManager') {
+                    var table = $('.data-table').DataTable({
+                        processing: true,
+                        serverSide: true,
+                        ajax: "{{ route('revenue.index') }}",
+                        columns: [
+                            {data: 'user_name',name: 'user_name'},
+                            {data: 'user_email', name: 'user_email'},
+                            {data: 'package_name', name: 'package_name'},
+                            {data: 'amount', name: 'amount'},
+                            {data: 'gymName', name: 'gymName'},
+                        ]
+                    });
+                } else {
+                    var table = $('.data-table').DataTable({
+                        processing: true,
+                        serverSide: true,
+                        ajax: "{{ route('revenue.index') }}",
+                        columns: [
+                            {data: 'user_name',name: 'user_name'},
+                            {data: 'user_email', name: 'user_email'},
+                            {data: 'package_name', name: 'package_name'},
+                            {data: 'amount', name: 'amount'},
+                        ]
                     });
                 }
-            }
+
+            });
         </script>
-        
     @stop
 
     </div>
@@ -127,7 +146,7 @@
             } else {
                 if (confirm("Do you want to delete this record?")) {
                     $.ajax({
-                        url: '/cities/' + id,
+                        url: '/Attendance/' + id,
                         type: 'DELETE',
                         data: {
                             _token: $("input[name=_token]").val()

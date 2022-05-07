@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\DB;
 
 
 use DataTables;
+
 class TrainingPackagesController extends Controller
 {
     #=======================================================================================#
@@ -47,12 +48,21 @@ class TrainingPackagesController extends Controller
     {
         $request->validate([
             'name' => ['required'],
-            'price' => ['required', 'numeric', 'min:10', 'max:90'],
+            'price' => ['required', 'numeric', 'min:10', 'max:1000'],
             'sessions_number' => ['required', 'numeric', 'min:1', 'max:40'],
+            'gym_id' => ['required'],
         ]);
 
         $requestData = request()->all();
-        $package = TrainingPackage::create($requestData);
+        $user = Auth::user();
+        $package = TrainingPackage::create(
+            [
+                'name' => $requestData['name'],
+                'price' => $requestData['price'],
+                'sessions_number' => $requestData['sessions_number'],
+                'user_id' => $user->id,
+            ]
+        );
 
         $id = $package->id;
 
@@ -89,7 +99,6 @@ class TrainingPackagesController extends Controller
     }
     public function show($id)
     {
-        
         $package = TrainingPackage::find($id);
  
         return view("trainingPackeges.show", ['package' => $package]);

@@ -27,7 +27,6 @@ class CityManagerController extends Controller
     #=======================================================================================#
     public function store(Request $request)
     {
-
         $request->validate([
             'name' => 'required|max:20',
             'password' => 'required |min:6',
@@ -77,7 +76,8 @@ class CityManagerController extends Controller
                         $btn = '<a href="/admin/allCityManagers/'.$row->id.'" class="edit btn btn-primary btn-sm">View</a> ';
                         $btn .= '<a href="/admin/addEditCityManager/'.$row->id.'" class="edit btn btn-warning btn-sm">Edit</a> ';
                         $btn .= '<a href="/admin/delCityManagers/'.$row->id.'" class="edit btn btn-danger btn-sm">Delete</a>';
-    
+                        // $btn .= '<a href="/admin/allCityManagers" onclick="banUser('.$row->id.')" class="btn btn-dark "><i class="fa fa-user-lock"></i></a>';
+
                         return $btn;
                     })->addColumn('avatar', function ($row) {
                         $avatar = "<img width='80' height='80' src='".$row->profile_image."' />";
@@ -91,7 +91,8 @@ class CityManagerController extends Controller
 
         return view('cityManager.list');
     }
-    public function list(){
+    public function list()
+    {
         $usersFromDB =  User::role('cityManager')->withoutBanned()->get();
         // $usersFromDB = User::all();
         // $usersFromDB =  User::role('cityManager')->get();
@@ -113,7 +114,6 @@ class CityManagerController extends Controller
     #=======================================================================================#
     public function edit($id)
     {
-
         $singleUser = User::find($id);
         return view("cityManager.edit", ['singleUser' => $singleUser]);
     }
@@ -122,9 +122,8 @@ class CityManagerController extends Controller
 
     public function editCityManager(Request $request, $id)
     {
-
         $user = User::find($id);
-       $request->validate([
+        $request->validate([
             'name' => 'required|max:20',
             'password' => 'required |min:6',
             'email' => 'required|string|unique:users,email,' . $user->id,
@@ -157,7 +156,6 @@ class CityManagerController extends Controller
     #=======================================================================================#
     public function deleteCityManager($id)
     {
-
         $singleUser = User::findorfail($id);
         $singleUser->delete();
         return redirect(route('showCityManager'));

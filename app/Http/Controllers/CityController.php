@@ -39,13 +39,13 @@ class CityController extends Controller
             return DataTables::of($data)
                     ->addIndexColumn()
                     ->addColumn('ManagerName', function ($row) {
-                        return User::find($row->manager_id)->name??"not assiend";
+                        return User::find($row->manager_id)? User::find($row->manager_id)->name:"not assiend";
                     })
                     ->addColumn('action', function ($row) {
                         $btn =  '<a href="/admin/cities/'.$row->id.'" class="edit btn btn-primary btn-sm">View</a> ';
                         $btn .= '<a href="/admin/addEditCity/'.$row->id.'" class="edit btn btn-warning btn-sm">Edit</a> ';
                         $btn .= '<a href="/admin/delCities/'.$row->id.'" class="edit btn btn-danger btn-sm">Delete</a>';
-    
+
                         return $btn;
                     })
                     ->rawColumns(['action','ManagerName'])
@@ -79,7 +79,6 @@ class CityController extends Controller
     #=======================================================================================#
     public function show($id)
     {
-        
         $singleCity = User::findorfail($id);
         $cityManager = City::find($singleCity->manager_id);
         if (is_null($cityManager)) {

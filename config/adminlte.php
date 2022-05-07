@@ -386,6 +386,11 @@ return [
             'url'     => '/stripe/buyPackage',
             'icon'    => 'fas fa-fw fa-user',
         ],
+        [
+            'text'    => 'Revenue',
+            'url'     => '/admin/revenue',
+            'icon'    => 'fas fa-fw fa-money-bill-wave',
+        ],
         // [
         //     'text'    => 'Attendance',
         //     'icon'    => 'fas fa-fw fa-user',

@@ -50,8 +50,6 @@
                                 <th class="project-state">Gym</th>
                                 <th class="project-state">City</th>
 
-                                <th class="project-state"> Actions</th>
-
                                 <th class="project-state"></th>
                             </tr>
                         </thead>
@@ -104,10 +102,6 @@
                         {data: 'session_name',name: 'session_name'},
                         {data: 'gym',name: 'gym'},
                         {data: 'city',name: 'city'},
-
-                        
-
-                        {data: 'action', name: 'edit', orderable: false, searchable: false},
                     ]
                 });
                 
