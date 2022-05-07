@@ -24,6 +24,7 @@ class GymManagerController extends Controller
                         $btn = '<a href="/admin/gymManager/'.$row->id.'" class="edit btn btn-primary btn-sm">View</a> ';
                         $btn .= '<a href="/admin/addEditManager/'.$row->id.'" class="edit btn btn-warning btn-sm">Edit</a> ';
                         $btn .= '<a href="/admin/gymManagerDel/'.$row->id.'" class="edit btn btn-danger btn-sm">Delete</a>';
+                        $btn .= '<a href="/admin/gymManagers" onclick="banUser('.$row->id.')" class="btn btn-dark "><i class="fa fa-user-lock"></i></a>';
 
                         return $btn;
                     })
